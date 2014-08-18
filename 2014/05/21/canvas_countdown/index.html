@@ -412,7 +412,7 @@ document.getElementById("startCountdown").addEventListener("click", canvasDrawCl
         }
         //render number
         function renderTime() {
-            canvas.width = document.getElementsByClassName("card")[0].offsetWidth - 40;
+            canvas.width = document.getElementsByClassName("card")[0].offsetWidth - 80;
             var hours = parseInt(curentShowTime / 3600),
                 minutes = parseInt((curentShowTime % 3600) / 60),
                 seconds = parseInt(curentShowTime % 60);
