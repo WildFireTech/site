@@ -4,7 +4,7 @@
  <title>寂寞先生</title>
  <link href="http://enml.github.io/blog/" rel="self"/>
  <link href="http://enml.github.io/blog"/>
- <updated>2014-08-18T21:20:45+08:00</updated>
+ <updated>2014-08-18T21:26:34+08:00</updated>
  <id>http://enml.github.io/blog</id>
  <author>
    <name>陈佳伟</name>
@@ -13,11 +13,11 @@
 
  
  <entry>
-   <title>收藏颜色</title>
+   <title>canvas</title>
    <link href="http://enml.github.io/blog/2014/05/21/canvas_countdown"/>
    <updated>2014-05-21T00:00:00+08:00</updated>
    <id>http://enml.github.io/blog/2014/05/21/canvas_countdown</id>
-   <content type="html">&lt;h1&gt;收藏颜色的工具&lt;/h1&gt;
+   <content type="html">&lt;h1&gt;canvas 实现倒计时动画&lt;/h1&gt;
 
 &lt;hr /&gt;
 </content>
