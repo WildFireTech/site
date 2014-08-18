@@ -8,6 +8,7 @@ http://enml.github.io/blog/rss.xml
 http://enml.github.io/blog/sitemap.txt
 http://enml.github.io/blog/tags.html
 
+http://enml.github.io/blog/2014/05/21/canvas_countdown
 http://enml.github.io/blog/2014/05/20/collect_color
 http://enml.github.io/blog/2014/05/10/template
 http://enml.github.io/blog/2014/05/03/view_render
