@@ -165,53 +165,9 @@
                             这是最简单的画线条方法，用moveTo()确定起点，再用lineTo()画线。有了线段我们可以干嘛？最直观的我们可以画几何图形，比如说三角形，矩形。当我们逻辑能力再强点，想象力再丰富点的时候，线段可以画出令人惊叹的画面。比如说下面的树，就是使用最简单的线段通过递归不断叠加画出来，因为通过random()函数对角度进行随机计算，因此你每一次刷新树的形状都会变化。
                         </p>
                         <canvas id="canvasOfTree"></canvas>
-                        <script>
-                            var canvasOfTree = document.getElementById("canvasOfTree"),
-                                contextOfTree = canvasOfTree.getContext("2d");
-                            canvasOfTree.width = document.getElementsByClassName("card")[0].offsetWidth - 80;
-                            canvasOfTree.height = 400;
-                            drawTree(contextOfTree, canvasOfTree.width / 2, canvasOfTree.height - 50, 40, -Math.PI / 2, 13, 14);
-
-                            var drawTree = function (ctx, startX, startY, length, angle, depth, branchWidth) {
-
-                                var rand = Math.random,
-                                    newLength, newAngle, newDepth, maxBranch = 3,
-                                    endX, endY, maxAngle = Math.PI / 2,
-                                    subBraches;
-
-                                ctx.beginPath();
-                                ctx.moveTo(startX, startY);
-                                endX = startX + length * Math.cos(angle);
-                                endY = startY + length * Math.sin(angle);
-                                ctx.lineCap = 'round';
-                                ctx.lineWidth = branchWidth;
-                                ctx.lineTo(endX, endY);
-
-                                if (depth <= 2) {
-                                    ctx.strokeStyle = 'rgb(0,' + (((rand() * 64) + 128) >> 0) + ',0)';
-                                } else {
-                                    ctx.strokeStyle = 'rgb(' + (((rand() * 64) + 64) >> 0) + ',50,25)';
-                                }
-
-                                ctx.stroke();
-
-                                newDepth = depth - 1;
-
-                                if (!newDepth)
-                                    return;
-
-                                subBranches = (rand() * (maxBranch - 1)) + 1;
-                                branchWidth *= 0.7;
-
-                                for (var i = 0; i < subBranches; i++) {
-                                    newAngle = angle + rand() * maxAngle - maxAngle * 0.5;
-                                    newLength = length * (0.75 + rand() * 0.25);
-                                    //      newAngle = rand()*5*Math.PI;
-                                    //      newLength=length*rand()*10;
-                                    drawTree(ctx, endX, endY, newLength, newAngle, newDepth, branchWidth);
-                                }
-                            }
-                        </script>
+                        
+                
+                   
 
                         <p>2.style 我们画出几何图形后，一切都是黑白的。这个时候需要的就是style相关的属性：
                         </p>
@@ -278,6 +234,51 @@ context.fillRect(20,20,100,80);
                                 }
                                 ctx.putImageData(imgData, 0, 0);
                             };
+                                        var canvasOfTree = document.getElementById("canvasOfTree"),
+                                contextOfTree = canvasOfTree.getContext("2d");
+                            canvasOfTree.width = document.getElementsByClassName("card")[0].offsetWidth - 80;
+                            canvasOfTree.height = 400;
+                            drawTree(contextOfTree, canvasOfTree.width / 2, canvasOfTree.height - 50, 40, -Math.PI / 2, 13, 14);
+
+                            var drawTree = function (ctx, startX, startY, length, angle, depth, branchWidth) {
+
+                                var rand = Math.random,
+                                    newLength, newAngle, newDepth, maxBranch = 3,
+                                    endX, endY, maxAngle = Math.PI / 2,
+                                    subBraches;
+
+                                ctx.beginPath();
+                                ctx.moveTo(startX, startY);
+                                endX = startX + length * Math.cos(angle);
+                                endY = startY + length * Math.sin(angle);
+                                ctx.lineCap = 'round';
+                                ctx.lineWidth = branchWidth;
+                                ctx.lineTo(endX, endY);
+
+                                if (depth <= 2) {
+                                    ctx.strokeStyle = 'rgb(0,' + (((rand() * 64) + 128) >> 0) + ',0)';
+                                } else {
+                                    ctx.strokeStyle = 'rgb(' + (((rand() * 64) + 64) >> 0) + ',50,25)';
+                                }
+
+                                ctx.stroke();
+
+                                newDepth = depth - 1;
+
+                                if (!newDepth)
+                                    return;
+
+                                subBranches = (rand() * (maxBranch - 1)) + 1;
+                                branchWidth *= 0.7;
+
+                                for (var i = 0; i < subBranches; i++) {
+                                    newAngle = angle + rand() * maxAngle - maxAngle * 0.5;
+                                    newLength = length * (0.75 + rand() * 0.25);
+                                    //      newAngle = rand()*5*Math.PI;
+                                    //      newLength=length*rand()*10;
+                                    drawTree(ctx, endX, endY, newLength, newAngle, newDepth, branchWidth);
+                                }
+                            }
                         </script>
 
                         <p>总结，今天介绍了canvas的主要绘图方法，这些方法基础功能很简单，但能实现极其惊艳的效果，具体就看自己能否把它用活。</p>
