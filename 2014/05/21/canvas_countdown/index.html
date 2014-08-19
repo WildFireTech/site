@@ -560,7 +560,7 @@
                     if (newBall[i].x + ball.radius < 0 || newBall[i].x - ball.radius > context.canvas.width) {
                         newBall.splice(i, 1);
                         i--;
-                        console.log(newBall.length);
+//                        console.log(newBall.length);
                     }
                     //停止interval当全部小球已滚出画面
                     if (newBall.length == 0) {
