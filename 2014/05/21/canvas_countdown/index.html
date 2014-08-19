@@ -134,38 +134,40 @@
 
                         </form>
                         <canvas id="canvasOfClock"></canvas>
-                        <div class="text">
+                        <div class="col-md-1">
                             <p>上面的倒计时是通过canvas绘制出来的，是在http://www.imooc.com/learn/133学习后写出来的，调整了界面，优化了性能。</p>
                             <p>今天主要想通过这个demo来对canvas动画进行一个总结。这里实际上对canvas的应用并不多，canvas只是充当画布进行显示，而复杂的在于把数组当成像素进行绘制以及动画的渲染过程。所谓的动画，其实就是通过很短的时间间隔把图像一帧一帧进行显示，我们叫做播放动画。当我们为一个物体设置一个X轴初速度Xv，加速度a，Y轴初速度Yv，然后每50毫秒进行一次计算，根据物理公式X=Xv*t+1/2*a*t*t，而我们为了50毫秒渲染一次已达到动画的效果，相当于每执行一次，物体的位移X+=Xv, Xv+=a。所以我们来看一下代码：</p>
                             <pre class="prettyprint linenums">
         function fallAnimation() {
-            for (var i = 0; i < newBall.length; i++) {
+            for (var i = 0; i &lt; newBall.length; i++) {
                 newBall[i].x += newBall[i].Vx;
                 newBall[i].y += newBall[i].Vy;
                 newBall[i].Vy += newBall[i].a;
-                bounces();
+                bounces();</p>
 
-                function bounces() {
-                    //反弹效果
-                    if (newBall[i].y >= (context.canvas.height - ball.radius)) {
-                        newBall[i].y = (context.canvas.height - ball.radius);
-                        newBall[i].Vy = -newBall[i].Vy * 0.75;
-                    }
-                    //delete the ball outside
-                    if (newBall[i].x + ball.radius < 0 || newBall[i].x - ball.radius > context.canvas.width) {
-                        newBall.splice(i, 1);
-                        i--;
-                        console.log(newBall.length);
-                    }
-                    //停止interval当全部小球已滚出画面
-                    if (newBall.length == 0) {
-                        clearInterval(start);
-                    }
+<pre><code>            function bounces() {
+                //反弹效果
+                if (newBall[i].y &gt;= (context.canvas.height - ball.radius)) {
+                    newBall[i].y = (context.canvas.height - ball.radius);
+                    newBall[i].Vy = -newBall[i].Vy * 0.75;
+                }
+                //delete the ball outside
+                if (newBall[i].x + ball.radius &lt; 0 || newBall[i].x - ball.radius &gt; context.canvas.width) {
+                    newBall.splice(i, 1);
+                    i--;
+                    console.log(newBall.length);
+                }
+                //停止interval当全部小球已滚出画面
+                if (newBall.length == 0) {
+                    clearInterval(start);
                 }
             }
         }
+    }
 
-                        </pre>
+                    &lt;/pre&gt;
+</code></pre>
+
                         </div>
 
                     </div>
