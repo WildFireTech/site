@@ -5,83 +5,19 @@
         <description>寂寞先生 - 陈佳伟</description>
         <link>http://enml.github.io/blog</link>
         <link>http://enml.github.io/blog</link>
-        <lastBuildDate>2014-08-19T10:38:10+08:00</lastBuildDate>
-        <pubDate>2014-08-19T10:38:10+08:00</pubDate>
+        <lastBuildDate>2014-08-18T21:26:34+08:00</lastBuildDate>
+        <pubDate>2014-08-18T21:26:34+08:00</pubDate>
         <ttl>1800</ttl>
 
 
         <item>
-                <title>canvas总结之图像处理</title>
-                <description>&lt;h1&gt;canvas总结之图像处理&lt;/h1&gt;
+                <title>canvas</title>
+                <description>&lt;h1&gt;canvas 实现倒计时动画&lt;/h1&gt;
 
 &lt;hr /&gt;
 </description>
-                <link>http://enml.github.io/blog/2014/05/24/canvas-image</link>
-                <guid>http://enml.github.io/blog/2014/05/24/canvas-image</guid>
-                <pubDate>2014-05-24T00:00:00+08:00</pubDate>
-        </item>
-
-        <item>
-                <title>canvas总结之Pixel Manipulation</title>
-                <description>&lt;h1&gt;canvas总结之Pixel Manipulation&lt;/h1&gt;
-
-&lt;hr /&gt;
-</description>
-                <link>http://enml.github.io/blog/2014/05/24/canvas-Pixel-Manipulation</link>
-                <guid>http://enml.github.io/blog/2014/05/24/canvas-Pixel-Manipulation</guid>
-                <pubDate>2014-05-24T00:00:00+08:00</pubDate>
-        </item>
-
-        <item>
-                <title>canvas总结之动画</title>
-                <description>&lt;h1&gt;canvas总结之动画&lt;/h1&gt;
-
-&lt;hr /&gt;
-
-&lt;p&gt; &lt;pre class=&quot;prettyprint linenums&quot;&gt;
-        function fallAnimation() {
-            for (var i = 0; i &amp;lt; newBall.length; i++) {
-                newBall[i].x += newBall[i].Vx;
-                newBall[i].y += newBall[i].Vy;
-                newBall[i].Vy += newBall[i].a;
-                bounces();&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;            function bounces() {
-                //反弹效果
-                if (newBall[i].y &amp;gt;= (context.canvas.height - ball.radius)) {
-                    newBall[i].y = (context.canvas.height - ball.radius);
-                    newBall[i].Vy = -newBall[i].Vy * 0.75;
-                }
-                //delete the ball outside
-                if (newBall[i].x + ball.radius &amp;lt; 0 || newBall[i].x - ball.radius &amp;gt; context.canvas.width) {
-                    newBall.splice(i, 1);
-                    i--;
-                    console.log(newBall.length);
-                }
-                //停止interval当全部小球已滚出画面
-                if (newBall.length == 0) {
-                    clearInterval(start);
-                }
-            }
-        }
-    }
-
-                    &amp;lt;/pre&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;
-</description>
-                <link>http://enml.github.io/blog/2014/05/23/canvas_countdown</link>
-                <guid>http://enml.github.io/blog/2014/05/23/canvas_countdown</guid>
-                <pubDate>2014-05-23T00:00:00+08:00</pubDate>
-        </item>
-
-        <item>
-                <title>canvas总结之method</title>
-                <description>&lt;h1&gt;canvas总结之method&lt;/h1&gt;
-
-&lt;hr /&gt;
-</description>
-                <link>http://enml.github.io/blog/2014/05/21/canvas-method</link>
-                <guid>http://enml.github.io/blog/2014/05/21/canvas-method</guid>
+                <link>http://enml.github.io/blog/2014/05/21/canvas_countdown</link>
+                <guid>http://enml.github.io/blog/2014/05/21/canvas_countdown</guid>
                 <pubDate>2014-05-21T00:00:00+08:00</pubDate>
         </item>
 
