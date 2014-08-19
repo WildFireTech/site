@@ -115,11 +115,52 @@
             <div class="row-fluid">
                 <div class="span12">
 
+                    <div class="card">
+                        <div class="date_label">
+                            <div class="day_month">
+                                05/24
+                            </div>
+                            <div class="year">
+                                2014
+                            </div>
+                        </div>
+                        <h1>canvas总结之图像处理</h1>
+
+                        <hr />
+
+                        <div class="read_more">
+                            <a class="fa fa-link" href="/site/2014/05/24/canvas-image">  查看全文&hellip;</a>
+                        </div>
+
+                    </div>
+
+
+
 
                     <div class="card">
                         <div class="date_label">
                             <div class="day_month">
-                                05/21
+                                05/24
+                            </div>
+                            <div class="year">
+                                2014
+                            </div>
+                        </div>
+                        <h1>canvas总结之Pixel Manipulation</h1>
+
+                        <hr />
+
+                        <div class="read_more">
+                            <a class="fa fa-link" href="/site/2014/05/24/canvas-Pixel-Manipulation">  查看全文&hellip;</a>
+                        </div>
+
+                    </div>
+
+
+                    <div class="card">
+                        <div class="date_label">
+                            <div class="day_month">
+                                05/23
                             </div>
                             <div class="year">
                                 2014
@@ -138,6 +179,24 @@
 
                         <div class="read_more">
                             <a class="fa fa-link" href="/site/2014/05/21/canvas_countdown">  查看全文&hellip;</a>
+                        </div>
+
+                    </div>
+                    <div class="card">
+                        <div class="date_label">
+                            <div class="day_month">
+                                05/21
+                            </div>
+                            <div class="year">
+                                2014
+                            </div>
+                        </div>
+                        <h1>canvas总结之method</h1>
+
+                        <hr />
+
+                        <div class="read_more">
+                            <a class="fa fa-link" href="/site/2014/05/21/canvas-method">  查看全文&hellip;</a>
                         </div>
 
                     </div>
@@ -514,11 +573,12 @@ function prime(num){
 
     </div>
 
-<script>window.onload = canvasDrawClock();
-    document.getElementById("startCountdown").addEventListener("click", canvasDrawClock);
+    <script>
+        window.onload = canvasDrawClock();
+        document.getElementById("startCountdown").addEventListener("click", canvasDrawClock);
 
-    function canvasDrawClock() {
-        var digit = [
+        function canvasDrawClock() {
+            var digit = [
         [
             [0, 0, 1, 1, 1, 0, 0],
             [0, 1, 1, 0, 1, 1, 0],
@@ -653,170 +713,170 @@ function prime(num){
         ] //:
     ];
 
-        var canvas = document.getElementById("canvasOfClock"),
-            context = canvas.getContext("2d");
-        canvas.width = document.getElementsByClassName("card")[0].offsetWidth - 80;
-        canvas.height = 440;
-        var ball = {
-                startX: 0.08 * context.canvas.width,
-                startY: 0.1 * context.canvas.height,
-                radius: 0.0055 * context.canvas.width,
-                marginX: 0.006 * context.canvas.width
-            },
-            newBall = [],
-            newBallColor = ["rgb(0,157,148)", "rgb(197,214,74)", "rgb(222,106,115)", "rgb(0,173,207)", "rgb(254,100,98)", "rgb(107,133,131)", "rgb(249,29,101)", "#D45255", "#fef1de", "#333"],
-            curent = new Date().getTime(),
-            endTime = curent + (document.getElementById("endTime").value) * 1000,
-            curentShowTime = countdownTime();
-
-
-
-
-        var start = setInterval(function () {
-                renderTime();
-                updateTime();
-                fallAnimation();
-            },
-            50
-        );
-        //clear setinterval() when click the "start" button again to prevent double setInterval() 
-        document.getElementById("startCountdown").addEventListener("click", function () {
-            clearInterval(start)
-        });
-        //clear setInterval() when click the "pause" button
-        document.getElementById("pauseCountdown").addEventListener("click", function () {
-            clearInterval(start)
-        });
-
-        function countdownTime() {
-            var curentTime = new Date().getTime(),
-                countdownTime = Math.round((endTime - curentTime) / 1000);
-            return countdownTime >= 0 ? countdownTime : 0;
-        }
-        //render number
-        function renderTime() {
+            var canvas = document.getElementById("canvasOfClock"),
+                context = canvas.getContext("2d");
             canvas.width = document.getElementsByClassName("card")[0].offsetWidth - 80;
-            var hours = parseInt(curentShowTime / 3600),
-                minutes = parseInt((curentShowTime % 3600) / 60),
-                seconds = parseInt(curentShowTime % 60);
-            context.clearRect(0, 0, context.canvas.width, context.canvas.height);
-            drawClock(ball.startX, ball.startY, parseInt(hours / 10), context);
-            drawClock(ball.startX + 14 * ball.radius + 18 + ball.marginX, ball.startY, parseInt(hours % 10), context);
-            drawClock(ball.startX + 2 * (14 * ball.radius + 18 + ball.marginX), ball.startY, 10, context);
-            drawClock(ball.startX + 3 * (14 * ball.radius + 18 + ball.marginX), ball.startY, parseInt(minutes / 10), context);
-            drawClock(ball.startX + 4 * (14 * ball.radius + 18 + ball.marginX), ball.startY, parseInt(minutes % 10), context);
-            drawClock(ball.startX + 5 * (14 * ball.radius + 18 + ball.marginX), ball.startY, 10, context);
-            drawClock(ball.startX + 6 * (14 * ball.radius + 18 + ball.marginX), ball.startY, parseInt(seconds / 10), context);
-            drawClock(ball.startX + 7 * (14 * ball.radius + 18 + ball.marginX), ball.startY, parseInt(seconds % 10), context);
-            //数字变动时添加新的小球在上面
-            for (var i = 0; i < newBall.length; i++) {
-                context.beginPath();
-                context.arc(newBall[i].x, newBall[i].y, ball.radius, 0, 2 * Math.PI, false);
-                context.closePath();
-                context.fillStyle = newBall[i].color;
-                context.fill();
-            }
-        }
-        //draw
-        function drawClock(startX, startY, num, context) {
-            for (var row = 0; row < 10; row++) {
-                for (var column = 0; column < 7; column++) {
-                    if (digit[num][row][column] == 1) {
-                        context.beginPath();
-                        context.arc(startX + ball.radius + 2 * column * (ball.radius + 1), startY + ball.radius + 2 * row * (ball.radius + 1), ball.radius, 0, 2 * Math.PI, false);
-                        context.closePath();
-                        context.fillStyle = "rgb(222,106,115) ";
-                        context.fill();
+            canvas.height = 440;
+            var ball = {
+                    startX: 0.08 * context.canvas.width,
+                    startY: 0.1 * context.canvas.height,
+                    radius: 0.0055 * context.canvas.width,
+                    marginX: 0.006 * context.canvas.width
+                },
+                newBall = [],
+                newBallColor = ["rgb(0,157,148)", "rgb(197,214,74)", "rgb(222,106,115)", "rgb(0,173,207)", "rgb(254,100,98)", "rgb(107,133,131)", "rgb(249,29,101)", "#D45255", "#fef1de", "#333"],
+                curent = new Date().getTime(),
+                endTime = curent + (document.getElementById("endTime").value) * 1000,
+                curentShowTime = countdownTime();
 
+
+
+
+            var start = setInterval(function () {
+                    renderTime();
+                    updateTime();
+                    fallAnimation();
+                },
+                50
+            );
+            //clear setinterval() when click the "start" button again to prevent double setInterval() 
+            document.getElementById("startCountdown").addEventListener("click", function () {
+                clearInterval(start)
+            });
+            //clear setInterval() when click the "pause" button
+            document.getElementById("pauseCountdown").addEventListener("click", function () {
+                clearInterval(start)
+            });
+
+            function countdownTime() {
+                var curentTime = new Date().getTime(),
+                    countdownTime = Math.round((endTime - curentTime) / 1000);
+                return countdownTime >= 0 ? countdownTime : 0;
+            }
+            //render number
+            function renderTime() {
+                canvas.width = document.getElementsByClassName("card")[0].offsetWidth - 80;
+                var hours = parseInt(curentShowTime / 3600),
+                    minutes = parseInt((curentShowTime % 3600) / 60),
+                    seconds = parseInt(curentShowTime % 60);
+                context.clearRect(0, 0, context.canvas.width, context.canvas.height);
+                drawClock(ball.startX, ball.startY, parseInt(hours / 10), context);
+                drawClock(ball.startX + 14 * ball.radius + 18 + ball.marginX, ball.startY, parseInt(hours % 10), context);
+                drawClock(ball.startX + 2 * (14 * ball.radius + 18 + ball.marginX), ball.startY, 10, context);
+                drawClock(ball.startX + 3 * (14 * ball.radius + 18 + ball.marginX), ball.startY, parseInt(minutes / 10), context);
+                drawClock(ball.startX + 4 * (14 * ball.radius + 18 + ball.marginX), ball.startY, parseInt(minutes % 10), context);
+                drawClock(ball.startX + 5 * (14 * ball.radius + 18 + ball.marginX), ball.startY, 10, context);
+                drawClock(ball.startX + 6 * (14 * ball.radius + 18 + ball.marginX), ball.startY, parseInt(seconds / 10), context);
+                drawClock(ball.startX + 7 * (14 * ball.radius + 18 + ball.marginX), ball.startY, parseInt(seconds % 10), context);
+                //数字变动时添加新的小球在上面
+                for (var i = 0; i < newBall.length; i++) {
+                    context.beginPath();
+                    context.arc(newBall[i].x, newBall[i].y, ball.radius, 0, 2 * Math.PI, false);
+                    context.closePath();
+                    context.fillStyle = newBall[i].color;
+                    context.fill();
+                }
+            }
+            //draw
+            function drawClock(startX, startY, num, context) {
+                for (var row = 0; row < 10; row++) {
+                    for (var column = 0; column < 7; column++) {
+                        if (digit[num][row][column] == 1) {
+                            context.beginPath();
+                            context.arc(startX + ball.radius + 2 * column * (ball.radius + 1), startY + ball.radius + 2 * row * (ball.radius + 1), ball.radius, 0, 2 * Math.PI, false);
+                            context.closePath();
+                            context.fillStyle = "rgb(222,106,115) ";
+                            context.fill();
+
+                        }
                     }
                 }
             }
-        }
 
 
 
-        //check number which changed and then addBall() to it
-        function updateTime() {
-            var nextTime = countdownTime();
-            var nextHours = parseInt(nextTime / 3600),
-                nextMinutes = parseInt((nextTime % 3600) / 60),
-                nextSeconds = parseInt(nextTime % 60);
-            var curentHours = parseInt(curentShowTime / 3600),
-                curentMinutes = parseInt((curentShowTime % 3600) / 60),
-                curentSeconds = parseInt(curentShowTime % 60);
-            if (nextTime != curentShowTime) {
-                if (parseInt(nextHours / 10) != parseInt(curentHours / 10)) {
-                    addBall(ball.startX, ball.startY, parseInt(nextHours / 10));
-                }
-                if (parseInt(nextHours % 10) != parseInt(curentHours % 10)) {
-                    addBall(ball.startX + 14 * ball.radius + 18 + ball.marginX, ball.startY, parseInt(nextHours % 10));
-                }
-                if (parseInt(nextMinutes / 10) != parseInt(curentMinutes / 10)) {
-                    addBall(ball.startX + 3 * (14 * ball.radius + 18 + ball.marginX), ball.startY, parseInt(nextMinutes / 10));
-                }
-                if (parseInt(nextMinutes % 10) != parseInt(curentMinutes % 10)) {
-                    addBall(ball.startX + 4 * (14 * ball.radius + 18 + ball.marginX), ball.startY, parseInt(nextMinutes % 10));
-                }
-                if (parseInt(nextSeconds / 10) != parseInt(curentSeconds / 10)) {
-                    addBall(ball.startX + 6 * (14 * ball.radius + 18 + ball.marginX), ball.startY, parseInt(nextSeconds / 10));
-                }
-                if (parseInt(nextSeconds % 10) != parseInt(curentSeconds % 10)) {
-                    addBall(ball.startX + 7 * (14 * ball.radius + 18 + ball.marginX), ball.startY, parseInt(nextSeconds % 10));
-                }
-
-                curentShowTime = nextTime;
-
-            }
-        }
-        //the addBall() function
-        function addBall(x, y, num) {
-            for (var iy = 0, len = digit[num].length; iy < len; iy++) {
-                for (var ix = 0, len = digit[num][iy].length; ix < len; ix++) {
-                    if (digit[num][iy][ix] == 1) {
-                        var atom = {
-                            x: x + ball.radius + 2 * ix * (ball.radius + 2),
-                            y: y + ball.radius + 2 * iy * (ball.radius + 2),
-                            Vx: Math.pow(-1, parseInt(Math.random() * 1000)) * Math.ceil(Math.random() * 5),
-                            Vy: -6,
-                            a: 1.5 + Math.random(),
-                            color: newBallColor[parseInt(Math.random() * 10)]
-                        };
-                        newBall.push(atom);
+            //check number which changed and then addBall() to it
+            function updateTime() {
+                var nextTime = countdownTime();
+                var nextHours = parseInt(nextTime / 3600),
+                    nextMinutes = parseInt((nextTime % 3600) / 60),
+                    nextSeconds = parseInt(nextTime % 60);
+                var curentHours = parseInt(curentShowTime / 3600),
+                    curentMinutes = parseInt((curentShowTime % 3600) / 60),
+                    curentSeconds = parseInt(curentShowTime % 60);
+                if (nextTime != curentShowTime) {
+                    if (parseInt(nextHours / 10) != parseInt(curentHours / 10)) {
+                        addBall(ball.startX, ball.startY, parseInt(nextHours / 10));
                     }
+                    if (parseInt(nextHours % 10) != parseInt(curentHours % 10)) {
+                        addBall(ball.startX + 14 * ball.radius + 18 + ball.marginX, ball.startY, parseInt(nextHours % 10));
+                    }
+                    if (parseInt(nextMinutes / 10) != parseInt(curentMinutes / 10)) {
+                        addBall(ball.startX + 3 * (14 * ball.radius + 18 + ball.marginX), ball.startY, parseInt(nextMinutes / 10));
+                    }
+                    if (parseInt(nextMinutes % 10) != parseInt(curentMinutes % 10)) {
+                        addBall(ball.startX + 4 * (14 * ball.radius + 18 + ball.marginX), ball.startY, parseInt(nextMinutes % 10));
+                    }
+                    if (parseInt(nextSeconds / 10) != parseInt(curentSeconds / 10)) {
+                        addBall(ball.startX + 6 * (14 * ball.radius + 18 + ball.marginX), ball.startY, parseInt(nextSeconds / 10));
+                    }
+                    if (parseInt(nextSeconds % 10) != parseInt(curentSeconds % 10)) {
+                        addBall(ball.startX + 7 * (14 * ball.radius + 18 + ball.marginX), ball.startY, parseInt(nextSeconds % 10));
+                    }
+
+                    curentShowTime = nextTime;
+
                 }
             }
-        }
-        //the  fall down animation of balls
-        function fallAnimation() {
-            for (var i = 0; i < newBall.length; i++) {
-                newBall[i].x += newBall[i].Vx;
-                newBall[i].y += newBall[i].Vy;
-                newBall[i].Vy += newBall[i].a;
-                bounces();
-
-                function bounces() {
-                    //反弹效果
-                    if (newBall[i].y >= (context.canvas.height - ball.radius)) {
-                        newBall[i].y = (context.canvas.height - ball.radius);
-                        newBall[i].Vy = -newBall[i].Vy * 0.75;
-                    }
-                    //delete the ball outside
-                    if (newBall[i].x + ball.radius < 0 || newBall[i].x - ball.radius > context.canvas.width) {
-                        newBall.splice(i, 1);
-                        i--;
-                        
-                    }
-                    //停止interval当全部小球已滚出画面
-                    if (newBall.length == 0) {
-                        clearInterval(start);
+            //the addBall() function
+            function addBall(x, y, num) {
+                for (var iy = 0, len = digit[num].length; iy < len; iy++) {
+                    for (var ix = 0, len = digit[num][iy].length; ix < len; ix++) {
+                        if (digit[num][iy][ix] == 1) {
+                            var atom = {
+                                x: x + ball.radius + 2 * ix * (ball.radius + 2),
+                                y: y + ball.radius + 2 * iy * (ball.radius + 2),
+                                Vx: Math.pow(-1, parseInt(Math.random() * 1000)) * Math.ceil(Math.random() * 5),
+                                Vy: -6,
+                                a: 1.5 + Math.random(),
+                                color: newBallColor[parseInt(Math.random() * 10)]
+                            };
+                            newBall.push(atom);
+                        }
                     }
                 }
             }
+            //the  fall down animation of balls
+            function fallAnimation() {
+                for (var i = 0; i < newBall.length; i++) {
+                    newBall[i].x += newBall[i].Vx;
+                    newBall[i].y += newBall[i].Vy;
+                    newBall[i].Vy += newBall[i].a;
+                    bounces();
+
+                    function bounces() {
+                        //反弹效果
+                        if (newBall[i].y >= (context.canvas.height - ball.radius)) {
+                            newBall[i].y = (context.canvas.height - ball.radius);
+                            newBall[i].Vy = -newBall[i].Vy * 0.75;
+                        }
+                        //delete the ball outside
+                        if (newBall[i].x + ball.radius < 0 || newBall[i].x - ball.radius > context.canvas.width) {
+                            newBall.splice(i, 1);
+                            i--;
+
+                        }
+                        //停止interval当全部小球已滚出画面
+                        if (newBall.length == 0) {
+                            clearInterval(start);
+                        }
+                    }
+                }
+            }
+
+
         }
-
-
-    }
-</script>
+    </script>
 </body>
 
 </html>
