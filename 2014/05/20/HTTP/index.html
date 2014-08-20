@@ -1,0 +1,306 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>HTTP协议的简析</title>
+    
+    <meta name="author" content="陈佳伟">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/site/assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css" rel="stylesheet">
+    <link href="/site/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="/site/assets/themes/twitter/css/prettify.css" rel="stylesheet" type="text/css">
+    <script src="/site/assets/themes/twitter/js/prettify.js"></script>
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+
+    <!-- atom & rss feed -->
+    <link href="/site/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/site/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+    
+<!--    font-awesome-->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  </head>
+
+  <body onload="prettyPrint()">
+    <div class="navbar">
+      <div class="navbar-inner">
+       <div class="nav-narrow">
+          <a class="brand" href="/site"><span class="fa fa-mortar-board (alias)">寂寞先生</span></a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/site/archive.html">文章</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/site/categories.html">分类</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/site/pages.html">页面</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/site/tags.html">标签</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-narrow">
+
+      <div class="content">
+        
+<!--
+<div class="page-header">
+  <h1>HTTP协议的简析 <small>Supporting tagline</small></h1>
+</div>
+-->
+ 
+
+<div class="row-fluid post-full">
+  <div class="span12 ">
+    <div class="content card">
+        <div class="date_label">
+          <div class="day_month">
+          05/20
+          </div>
+          <div class="year">
+          2014
+          </div>
+        </div>
+      <h1>HTTP协议的简析</h1>
+
+<hr />
+
+<p>HTTP协议是一种可靠的数据传输协议，位于应用层，在TCP协议的上层。我们现在使用的web服务几乎都是建立在HTTP协议之上，HTTP是互联网通信的公共语言。</p>
+
+<p>从宏观角度来看，HTTP连接是一个很简单的过程，客户端发起请求，服务端相应响应的数据，断开连接。这就是一个完整的连接过程，我们每天上网都在经历这个过程，当你访问一个url时，浏览器会把这个url进行解析，通过dns获取域名对应的IP地址，然后向这个IP地址发送一个HTTP请求，告诉服务器我需要什么数据，服务器处理这个HTTP请求后调用对应的资源，给客户端一个HTTP响应，这个响应中就包含了我们请求的资源。</p>
+<img src="/site/image/http.jpg">
+<p>上图是一个完整的HTTP连接过程。一般情况下请求中会包含3部分：</p>
+
+<ul>
+<li>start line(上图中的GET /something/some.gif HTTP/1.1)</li>
+<li>request header（键值对，比如Accept:text.*,用来告诉服务器我要接受的数据的格式是text）</li>
+<li>request body（get方法一般body为空，post方法会把提交给服务器的数据写在request body中）.</li>
+</ul>
+
+
+<p>同样服务器的respose中也会包含这三部分，但是内容不同。这里就不讲了。我们来讲数据的传输。</p>
+
+<p>HTTP是在应用层把我们的请求以及服务器的响应转化为<code>messages</code>(报文)发送给传输层的TCP协议进行传输，也就是说，HTTP事实上并不关心数据的传输过程，数据传输依赖的是极为可靠的TCP协议。说到TCP，我们就不得不说<code>三次握手</code>。TCP为了确保连接的可靠性，建立连接时必须遵循严格的三次握手确认才能连接成功。下图是示意图：</p>
+<img src="/site/image/tcp.jpg">
+<p>我尽可能用通俗的语言来讲解这个过程：</p>
+
+<ul>
+<li>第一次握手：client把自己的身份证（SYN）发给server，告诉server说我要跟你连接。</li>
+<li>第二次握手：server知道client想跟他连接后，就在收到的client的身份证上盖个章（ACK=SYN+1），然后把server自己的身份证(新的SYN)+盖了章的身份证一起发回给client，告诉他我同意你的连接请求。</li>
+<li>第三次握手：client看到自己的身份证已经盖了章，就相信这个请求确实是来自server并且server同意连接，所以client也在server的身份证上盖个章（新ACK=新SYN+1）发回给server。</li>
+</ul>
+
+
+<p>server收到自己的盖了章的身份证后就跟client建立连接，发送数据。现在的TCP栈都运行客户端在第三次握手时直接把<code>messages</code>发送给服务器。为什么要三次握手，而不是两次呢？据我目前的理解，三次握手是已最低的代价来保证数据传输的可靠性。我们假设只有两次握手即可建立连接发送数据，那么如果在第二次握手的过程中确认包丢失，client端收不到server的确认包，那么client会认为他们之间还不能建立连接，而server并不知道确认包丢失了，以为我已经确认了我们就可以建立连接，所以此时server就会跟client进行通信，但client肯定会拒收，server就一直重发数据，造成了一个死结。而很明显，三次握手就不会出现这种不可靠的情况，四次握手就更可靠了，但浪费资源。</p>
+
+<p>说完TCP建立连接的过程，我们再回过头来看一看HTTP报文是怎么传输的。下图所示</p>
+<img src="/site/image/tcphttp.JPG">
+<p>这是报文传输的过程，浏览器解析用户请求==>生成HTTP请求报文==>TCP三次握手跟服务器建立连接==>传送报文给服务器==>服务器处理报文请求，生成HTTP响应报文==>传送报文给客户端==>断开连接。</p>
+
+<p>我们对HTTP请求已经数据传输的过程有了大概的了解之后，我们再来谈谈一些HTTP报文的细节，关于状态码、请求方法。</p>
+
+<h3>状态码</h3>
+
+<ul>
+<li>100-199 ：信息提示</li>
+<li>200-299：成功</li>
+<li>300-399：重定向</li>
+<li>400-499：客户端错误</li>
+<li>500-599：服务器错误</li>
+</ul>
+
+
+<p>其中我们挑出几个常用的具有代表性的说一下。</p>
+
+<ul>
+<li>100 continue</li>
+</ul>
+
+
+<p>这是一个比较让人疑惑的状态码。它向服务器发送一个携带了值为100 continue的expect请求，服务器收到后响应一个100 continue状态码或者错误码。这看上去很多余，但事实上，的确有那么点多余，但是它有一个作用就是在发送实体之前先确认服务器是否接受这个实体，避免发送了一个服务器无法处理或使用的实体。</p>
+
+<ul>
+<li>200 ok</li>
+</ul>
+
+
+<p>这个最常见，你每一个成功的请求都会收到200 ok的状态码，告诉浏览器请求成功。</p>
+
+<ul>
+<li>304 no modified</li>
+</ul>
+
+
+<p>可以在请求里添加If-Modefied-Since:xxx的首部，服务器对请求资源进行检验后若确定在该时间内资源未被改动，则可以返回304 no modefied进行资源重定向，让浏览器直接使用本地副本。</p>
+
+<ul>
+<li>404 not found</li>
+</ul>
+
+
+<p>当服务器无法找到你所请求的资源，可能资源已不存在，可能客户端的请求有错误，这时候会返回404 not found，这个几乎每个上网的用户都会遇到。</p>
+
+<p>上面是比较常见的状态码的含义。在HTTP报文里面，状态码是一种很重要的信息，为客户端提供了一种理解事务处理结果的便捷方式。</p>
+
+<p>下一篇文章会归纳关于HTTP报文通过TCP/IP底层协议进行传输的性能问题。</p>
+
+    </div>
+
+ 
+<!--
+    <ul class="tag_box inline ">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/site/categories.html#技术分享-ref">
+    		技术分享 <span>10</span>
+    	</a></li>
+    
+  
+
+
+    </ul>
+    
+
+  
+    <ul class="tag_box inline ">
+      <li><i class="icon-tags"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/site/tags.html#http-ref">http <span>1</span></a></li>
+    
+  
+
+
+
+    </ul>
+    -->
+    
+    <div class="pagination clearfix">
+      <ul class = "pull-right">
+      
+        <li class="prev"><a class="fa fa-arrow-circle-left" href="/site/2014/05/10/template" title="Template"> 前一篇</a></li>
+      
+        <li><a class="fa fa-th" href="/site/archive.html"> 所有日志</a></li>
+      
+        <li class="next"><a  href="/site/2014/05/20/collect_color" title="收藏颜色">后一篇 <span class="fa fa-arrow-circle-right">  </span></a></li>
+      
+      </ul>
+    </div>
+    
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+</div>
+
+
+      </div>
+      
+      <footer class="card clearfix">
+        <span style="font-size:30px;"class="fa fa-github pull-left"></span><a href="https://github.com/enml/blog/tree/jekyll-blog" style="display:inline-block;padding-right:80px;border-right:1px solid #bbb">fork me on GitHub</a>
+        <p class="pull-right">&copy; 2011 陈佳伟
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+        
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
+

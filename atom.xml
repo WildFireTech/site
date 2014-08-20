@@ -4,7 +4,7 @@
  <title>寂寞先生</title>
  <link href="http://enml.github.io/blog/" rel="self"/>
  <link href="http://enml.github.io/blog"/>
- <updated>2014-08-19T11:15:40+08:00</updated>
+ <updated>2014-08-20T19:54:32+08:00</updated>
  <id>http://enml.github.io/blog</id>
  <author>
    <name>陈佳伟</name>
@@ -84,6 +84,90 @@
    <content type="html">&lt;h1&gt;canvas总结之method&lt;/h1&gt;
 
 &lt;hr /&gt;
+
+&lt;h2&gt;canvas介绍&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;canvas&lt;/code&gt;还没出现之前，开发人员通常使用 SVG，VML 等技术进行 Web 绘图操作，但这些基于XML的绘图语言声明式的绘图方式并不能满足复杂绘图操作在性能上的需求，特别是需要像素级别绘图能力的游戏。canvas提供了一系列用于绘图的API,我们可以使用JavaScript脚本语言在canvas中进行一系列基于命令的图形绘制操作。我们的绘图和动画终于可以摆脱第三方插件了，虽然前端的标准问题始终是个大坑。&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;&amp;lt;canvas id=&quot;canvas&quot;&amp;gt;&amp;lt;/canvas&amp;gt;&lt;/code&gt;  这就是canvas，它就是一个html标签，它除了提供一块画布和一系列的API让你可以在javascript中使用之外，看上去什么都没有。但是一块画布和一系列API就等于给了你一张纸和一套画图工具，你可以在上面发挥你的想象，至于画什么以及画的好不好那就是开发者功底的事了。接下来主要是对canvas的API进行分类和总结。&lt;/p&gt;
+
+&lt;h2&gt;canvas的API&lt;/h2&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Paths
+ 跟路径有关的method主要有：&lt;/li&gt;
+&lt;li&gt;stroke()：画边框&lt;/li&gt;
+&lt;li&gt;fill()：填充&lt;/li&gt;
+&lt;li&gt;beginPath()：表示路径的开始&lt;/li&gt;
+&lt;li&gt;closePath()：路径结束&lt;/li&gt;
+&lt;li&gt;moveTo()：确定起点&lt;/li&gt;
+&lt;li&gt;lineTo()：画直线&lt;/li&gt;
+&lt;li&gt;arc()：画弧线，当然也能画圆&lt;/li&gt;
+&lt;li&gt;rect()：画矩形&lt;/li&gt;
+&lt;li&gt;bezierCurveTo()：贝塞尔曲线&lt;/li&gt;
+&lt;li&gt;quadraticCurverTo()：二次方程曲线&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;p&gt;我们通过下面的代码来看看实际效果。
+&lt;code&gt;
+    var canvas = document.getElementById(&quot;canvas&quot;),
+        context = canvas.getContext(&quot;2d&quot;);
+    context.beginPath();
+    context.moveTo(20,20);
+    context.lineTo(200,240);
+    context.stroke();
+    context.closePath();
+&lt;/code&gt;
+这是最简单的画线条方法，用moveTo()确定起点，再用lineTo()画线。有了线段我们可以干嘛？最直观的我们可以画几何图形，比如说三角形，矩形。当我们逻辑能力再强点，想象力再丰富点的时候，线段可以画出令人惊叹的画面。比如说下面的树，就是使用最简单的线段通过递归不断叠加画出来，因为通过random()函数对角度进行随机计算，因此你每一次刷新树的形状都会变化。&lt;/p&gt;
+
+&lt;p&gt;2.style
+    我们画出几何图形后，一切都是黑白的。这个时候需要的就是style相关的属性：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;fillStyle：填充颜色&lt;/li&gt;
+&lt;li&gt;strokeStyle：边框颜色&lt;/li&gt;
+&lt;li&gt;shadowColor：阴影颜色&lt;/li&gt;
+&lt;li&gt;shadowBlur：阴影虚化范围&lt;/li&gt;
+&lt;li&gt;shadowOffsetX：阴影x轴偏移量&lt;/li&gt;
+&lt;li&gt;shadowOffsetY：阴影y轴偏移量&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;pre&gt;&lt;code class=&quot;`&quot;&gt;context.shadowBlur=10; 
+context.shadowOffsetX=20; 
+context.shadowColor=&quot;black&quot;; 
+context.fillStyle=&quot;red&quot;; 
+context.fillRect(20,20,100,80);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;上面代码为矩形添加了黑色的阴影，阴影在x轴正方向偏移20px，阴影的虚化范围是10px。这几个canvas的style属性可以为图像添加漂亮的视觉效果，你的图像不再是水墨画，而是多彩多姿的水彩画。&lt;/p&gt;
+
+&lt;p&gt;3.transition&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;scale()：按比例放大缩小&lt;/li&gt;
+&lt;li&gt;rotate()：旋转&lt;/li&gt;
+&lt;li&gt;translate()：平移，会在原来的基础上平移&lt;/li&gt;
+&lt;li&gt;transform()：变形&lt;/li&gt;
+&lt;li&gt;setTransform()：重置原来的变形执行新的变形&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;通过transition的相关方法，我们可以把简单的几何图形旋转变形，因此我们不必为了要画另一个只需改变角度的新图形而从头开始，因为这样重复了大量的代码，不但耗时耗力，而且对于代码维护和性能优化都是一个隐患。这些method也可以使动画变得更简单。&lt;/p&gt;
+
+&lt;p&gt;4.pixel manipulation&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;createImageData()&lt;/li&gt;
+&lt;li&gt;getImageData()&lt;/li&gt;
+&lt;li&gt;putImageData()&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;这三个方法是从像素层次对图像进行操作，看上去很简单，但事实上功能很强大。我们可以获取图像的每一个像素，然后对像素进行操作，比如改变像素的rgb值，从而使整张图片得到完全不同的视觉效果，比如说对像素rgb值进行取反操作已实现整张图像反转滤镜效果。&lt;/p&gt;
+
+&lt;p&gt;总结，今天介绍了canvas的主要绘图方法，这些方法基础功能很简单，但能实现极其惊艳的效果，具体就看自己能否把它用活。&lt;/p&gt;
 </content>
  </entry>
  
@@ -106,6 +190,96 @@
 
 
 &lt;p&gt;本来是在寻找一个可以保存自己喜欢的颜色的工具，一开始想着记录在onenote，但是只能记录数值，不够直观。如果把图片粘贴过去会很繁琐并且不够雅观。后来把颜色直接合并在一张图上，但记录时每次都需要进行图片修改，繁琐也依然不美观。中午午睡后百度了一下是否有相关的在线工具，一无所获。突然想着要不自己搞一个吧！在脑海里构建了一下基本框架后觉得可行，便开始编写代码。花了三个小时总算实现了。&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>HTTP协议的简析</title>
+   <link href="http://enml.github.io/blog/2014/05/20/HTTP"/>
+   <updated>2014-05-20T00:00:00+08:00</updated>
+   <id>http://enml.github.io/blog/2014/05/20/HTTP</id>
+   <content type="html">&lt;h1&gt;HTTP协议的简析&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;HTTP协议是一种可靠的数据传输协议，位于应用层，在TCP协议的上层。我们现在使用的web服务几乎都是建立在HTTP协议之上，HTTP是互联网通信的公共语言。&lt;/p&gt;
+
+&lt;p&gt;从宏观角度来看，HTTP连接是一个很简单的过程，客户端发起请求，服务端相应响应的数据，断开连接。这就是一个完整的连接过程，我们每天上网都在经历这个过程，当你访问一个url时，浏览器会把这个url进行解析，通过dns获取域名对应的IP地址，然后向这个IP地址发送一个HTTP请求，告诉服务器我需要什么数据，服务器处理这个HTTP请求后调用对应的资源，给客户端一个HTTP响应，这个响应中就包含了我们请求的资源。&lt;/p&gt;
+
+&lt;p&gt;上图是一个完整的HTTP连接过程。一般情况下请求中会包含3部分：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;start line(上图中的GET /something/some.gif HTTP/1.1)&lt;/li&gt;
+&lt;li&gt;request header（键值对，比如Accept:text.*,用来告诉服务器我要接受的数据的格式是text）&lt;/li&gt;
+&lt;li&gt;request body（get方法一般body为空，post方法会把提交给服务器的数据写在request body中）.&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;同样服务器的respose中也会包含这三部分，但是内容不同。这里就不讲了。我们来讲数据的传输。&lt;/p&gt;
+
+&lt;p&gt;HTTP是在应用层把我们的请求以及服务器的响应转化为&lt;code&gt;messages&lt;/code&gt;(报文)发送给传输层的TCP协议进行传输，也就是说，HTTP事实上并不关心数据的传输过程，数据传输依赖的是极为可靠的TCP协议。说到TCP，我们就不得不说&lt;code&gt;三次握手&lt;/code&gt;。TCP为了确保连接的可靠性，建立连接时必须遵循严格的三次握手确认才能连接成功。下图是示意图：&lt;/p&gt;
+
+&lt;p&gt;我尽可能用通俗的语言来讲解这个过程：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;第一次握手：client把自己的身份证（SYN）发给server，告诉server说我要跟你连接。&lt;/li&gt;
+&lt;li&gt;第二次握手：server知道client想跟他连接后，就在收到的client的身份证上盖个章（ACK=SYN+1），然后把server自己的身份证(新的SYN)+盖了章的身份证一起发回给client，告诉他我同意你的连接请求。&lt;/li&gt;
+&lt;li&gt;第三次握手：client看到自己的身份证已经盖了章，就相信这个请求确实是来自server并且server同意连接，所以client也在server的身份证上盖个章（新ACK=新SYN+1）发回给server。&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;server收到自己的盖了章的身份证后就跟client建立连接，发送数据。现在的TCP栈都运行客户端在第三次握手时直接把&lt;code&gt;messages&lt;/code&gt;发送给服务器。为什么要三次握手，而不是两次呢？据我目前的理解，三次握手是已最低的代价来保证数据传输的可靠性。我们假设只有两次握手即可建立连接发送数据，那么如果在第二次握手的过程中确认包丢失，client端收不到server的确认包，那么client会认为他们之间还不能建立连接，而server并不知道确认包丢失了，以为我已经确认了我们就可以建立连接，所以此时server就会跟client进行通信，但client肯定会拒收，server就一直重发数据，造成了一个死结。而很明显，三次握手就不会出现这种不可靠的情况，四次握手就更可靠了，但浪费资源。&lt;/p&gt;
+
+&lt;p&gt;说完TCP建立连接的过程，我们再回过头来看一看HTTP报文是怎么传输的。下图所示&lt;/p&gt;
+
+&lt;p&gt;这是报文传输的过程，浏览器解析用户请求==&gt;生成HTTP请求报文==&gt;TCP三次握手跟服务器建立连接==&gt;传送报文给服务器==&gt;服务器处理报文请求，生成HTTP响应报文==&gt;传送报文给客户端==&gt;断开连接。&lt;/p&gt;
+
+&lt;p&gt;我们对HTTP请求已经数据传输的过程有了大概的了解之后，我们再来谈谈一些HTTP报文的细节，关于状态码、请求方法。&lt;/p&gt;
+
+&lt;h3&gt;状态码&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;100-199 ：信息提示&lt;/li&gt;
+&lt;li&gt;200-299：成功&lt;/li&gt;
+&lt;li&gt;300-399：重定向&lt;/li&gt;
+&lt;li&gt;400-499：客户端错误&lt;/li&gt;
+&lt;li&gt;500-599：服务器错误&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;其中我们挑出几个常用的具有代表性的说一下。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;100 continue&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;这是一个比较让人疑惑的状态码。它向服务器发送一个携带了值为100 continue的expect请求，服务器收到后响应一个100 continue状态码或者错误码。这看上去很多余，但事实上，的确有那么点多余，但是它有一个作用就是在发送实体之前先确认服务器是否接受这个实体，避免发送了一个服务器无法处理或使用的实体。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;200 ok&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;这个最常见，你每一个成功的请求都会收到200 ok的状态码，告诉浏览器请求成功。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;304 no modified&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;可以在请求里添加If-Modefied-Since:xxx的首部，服务器对请求资源进行检验后若确定在该时间内资源未被改动，则可以返回304 no modefied进行资源重定向，让浏览器直接使用本地副本。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;404 not found&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;当服务器无法找到你所请求的资源，可能资源已不存在，可能客户端的请求有错误，这时候会返回404 not found，这个几乎每个上网的用户都会遇到。&lt;/p&gt;
+
+&lt;p&gt;上面是比较常见的状态码的含义。在HTTP报文里面，状态码是一种很重要的信息，为客户端提供了一种理解事务处理结果的便捷方式。&lt;/p&gt;
+
+&lt;p&gt;下一篇文章会归纳关于HTTP报文通过TCP/IP底层协议进行传输的性能问题。&lt;/p&gt;
 </content>
  </entry>
  

@@ -13,6 +13,7 @@ http://enml.github.io/blog/2014/05/24/canvas-Pixel-Manipulation
 http://enml.github.io/blog/2014/05/23/canvas_countdown
 http://enml.github.io/blog/2014/05/21/canvas-method
 http://enml.github.io/blog/2014/05/20/collect_color
+http://enml.github.io/blog/2014/05/20/HTTP
 http://enml.github.io/blog/2014/05/10/template
 http://enml.github.io/blog/2014/05/03/view_render
 http://enml.github.io/blog/2014/04/27/install-jekyll
