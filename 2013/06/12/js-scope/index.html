@@ -1,0 +1,456 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>深入javascript——作用域和闭包</title>
+    
+    <meta name="author" content="陈佳伟">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/site/assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css" rel="stylesheet">
+    <link href="/site/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="/site/assets/themes/twitter/css/prettify.css" rel="stylesheet" type="text/css">
+    <script src="/site/assets/themes/twitter/js/prettify.js"></script>
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+
+    <!-- atom & rss feed -->
+    <link href="/site/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/site/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+    
+<!--    font-awesome-->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  </head>
+
+  <body onload="prettyPrint()">
+    <div class="navbar">
+      <div class="navbar-inner">
+       <div class="nav-narrow">
+          <a class="brand" href="/site"><span class="fa fa-mortar-board (alias)">寂寞先生</span></a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/site/archive.html">文章</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/site/categories.html">分类</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/site/pages.html">页面</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/site/tags.html">标签</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-narrow">
+
+      <div class="content">
+        
+<!--
+<div class="page-header">
+  <h1>深入javascript——作用域和闭包 <small>Supporting tagline</small></h1>
+</div>
+-->
+ 
+
+<div class="row-fluid post-full">
+  <div class="span12 ">
+    <div class="content card">
+        <div class="date_label">
+          <div class="day_month">
+          06/12
+          </div>
+          <div class="year">
+          2013
+          </div>
+        </div>
+      <h1>深入javascript——作用域和闭包</h1>
+
+<hr />
+
+<p>深入javascript——作用域和闭包</p>
+
+<p>作用域和作用域链是javascript中非常重要的特性，对于他们的理解直接关系到对于整个javascript体系的理解，而闭包又是对作用域的延伸，也是在实际开发中经常使用的一个特性，实际上，不仅仅是javascript，在很多语言中都提供了闭包的特性。
+作用域</p>
+
+<p>作用域是一个变量和函数的作用范围，javascript中函数内声明的所有变量在函数体内始终是可见的，在javascript中有全局作用域和局部作用域，但是没有块级作用域，局部变量的优先级高于全局变量，通过几个示例来了解下javascript中作用域的那些“潜规则”（这些也是在前端面试中经常问到的问题）。
+1. 变量声明提前
+示例1：</p>
+
+<pre><code>var scope="global";
+function scopeTest(){
+    console.log(scope);
+    var scope="local"  
+}
+</code></pre>
+
+<p>scopeTest(); //undefined
+此处的输出是undefined，并没有报错，这是因为在前面我们提到的函数内的声明在函数体内始终可见，上面的函数等效于：</p>
+
+<pre><code>var scope="global";
+function scopeTest(){
+    var scope;
+    console.log(scope);
+    scope="local"  
+}
+scopeTest(); //local
+</code></pre>
+
+<p>注意，如果忘记var，那么变量就被声明为全局变量了。
+2. 没有块级作用域
+和其他我们常用的语言不同，在Javascript中没有块级作用域：</p>
+
+<pre><code>function scopeTest() {
+    var scope = {};
+    if (scope instanceof Object) {
+        var j = 1;
+        for (var i = 0; i &lt; 10; i++) {
+            //console.log(i);
+        }
+        console.log(i); //输出10
+    }
+    console.log(j);//输出1
+
+}
+</code></pre>
+
+<p>在javascript中变量的作用范围是函数级的，即在函数中所有的变量在整个函数中都有定义，这也带来了一些我们稍不注意就会碰到的“潜规则”：</p>
+
+<pre><code>var scope = "hello";
+function scopeTest() {
+    console.log(scope);//①
+    var scope = "no";
+    console.log(scope);//②
+}
+</code></pre>
+
+<p>在①处输出的值竟然是undefined，简直丧心病狂啊，我们已经定义了全局变量的值啊，这地方不应该为hello吗？其实，上面的代码等效于：</p>
+
+<pre><code>var scope = "hello";
+function scopeTest() {
+    var scope;
+    console.log(scope);//①
+    scope = "no";
+    console.log(scope);//②
+}
+</code></pre>
+
+<p>声明提前、全局变量优先级低于局部变量，根据这两条规则就不难理解为什么输出undefined了。</p>
+
+<h3>作用域链</h3>
+
+<p>在javascript中，每个函数都有自己的执行上下文环境，当代码在这个环境中执行时，会创建变量对象的作用域链，作用域链是一个对象列表或对象链，它保证了变量对象的有序访问。
+作用域链的前端是当前代码执行环境的变量对象，常被称之为“活跃对象”，变量的查找会从第一个链的对象开始，如果对象中包含变量属性，那么就停止查找，如果没有就会继续向上级作用域链查找，直到找到全局对象中：</p>
+
+<p>作用域链的逐级查找，也会影响到程序的性能，变量作用域链越长对性能影响越大，这也是我们尽量避免使用全局变量的一个主要原因。</p>
+
+<h3>闭包</h3>
+
+<p>基础概念
+作用域是理解闭包的一个前提，闭包是指在当前作用域内总是能访问外部作用域中的变量。</p>
+
+<pre><code>function createClosure(){
+    var name = "jack";
+    return {
+        setStr:function(){
+            name = "rose";
+        },
+        getStr:function(){
+            return name + ":hello";
+        }
+    }
+}
+var builder = new createClosure();
+builder.setStr();
+console.log(builder.getStr()); //rose:hello
+</code></pre>
+
+<p>上面的示例在函数中返回了两个闭包，这两个闭包都维持着对外部作用域的引用，因此不管在哪调用总是能够访问外部函数中的变量。在一个函数内部定义的函数，会将外部函数的活跃对象添加到自己的作用域链中，因此上面实例中通过内部函数能够访问外部函数的属性，这也是javascript模拟私有变量的一种方式。
+请输入图片描述
+注意：由于闭包会额外的附带函数的作用域（内部匿名函数携带外部函数的作用域），因此，闭包会比其它函数多占用些内存空间，过度的使用可能会导致内存占用的增加。</p>
+
+<p>闭包中的变量
+在使用闭包时，由于作用域链机制的影响，闭包只能取得内部函数的最后一个值，这引起的一个副作用就是如果内部函数在一个循环中，那么变量的值始终为最后一个值。</p>
+
+<pre><code>    function timeManage() {
+        for (var i = 0; i &lt; 5; i++) {
+            setTimeout(function() {
+                console.log(i);
+            },1000)
+        };
+    }
+    ```
+
+上面的程序并没有按照我们预期的输入1-5的数字，而是5次全部输出了5。再来看一个示例：
+</code></pre>
+
+<p>function createClosure(){
+    var result = [];
+    for (var i = 0; i &lt; 5; i++) {
+        result[i] = function(){
+            return i;
+        }
+    }
+    return result;
+}
+```</p>
+
+<p>调用createClosure()<a href="">0</a>返回的是5，createClosure()<a href="">4</a>返回值仍然是5。通过以上两个例子可以看出闭包在带有循环的内部函数使用时存在的问题：因为每个函数的作用域链中都保存着对外部函数（timeManage、createClosure）的活跃对象，因此，他们都引用着同一变量i，当外部函数返回值，此时的i值为5，因为内部的每个函数i的值为5。
+那么如何解决这个问题呢？我们可以通过匿名包裹器（匿名自执行函数表达式）来强制返回预期的结果：</p>
+
+<pre><code>function timeManage() {
+    for (var i = 0; i &lt; 5; i++) {
+        (function(num) {
+            setTimeout(function() {
+                console.log(num);
+            }, 1000);
+        })(i);
+    }
+}
+</code></pre>
+
+<p>或者在闭包匿名函数中再返回一个匿名函数赋值：</p>
+
+<pre><code>function timeManage() {
+    for (var i = 0; i &lt; 10; i++) {
+        setTimeout((function(e) {
+            return function() {
+                console.log(e);
+            }
+        })(i), 1000)
+    }
+}
+//timeManager();输出1,2,3,4，5
+function createClosure() {
+    var result = [];
+    for (var i = 0; i &lt; 5; i++) {
+        result[i] = function(num) {
+            return function() {
+                console.log(num);
+            }
+        }(i);
+    }
+    return result;
+}
+</code></pre>
+
+<p>//createClosure()<a href="">1</a>输出1；createClosure()<a href="">2</a>输出2
+无论是匿名包裹器还是通过嵌套匿名函数的方式，原理上都是由于函数是按值传递，因此会将变量i的值复制给实参num，在匿名函数的内部又创建了一个用于返回num的匿名函数，这样每个函数都有了一个num的副本，互不影响了。</p>
+
+<p>闭包中的this
+在闭包中使用this时要特别注意，稍微不慎可能会引起问题。通常我们理解this对象是运行时基于函数绑定的，全局函数中this对象就是window对象，而当函数作为对象中的一个方法调用时，this等于这个对象（TODO 关于this做一次整理）。由于匿名函数的作用域是全局性的，因此闭包的this通常指向全局对象window：
+<code>
+var scope = "global";
+var object = {
+    scope:"local",
+    getScope:function(){
+        return function(){
+            return this.scope;
+        }
+    }
+}
+</code></p>
+
+<p>调用object.getScope()()返回值为global而不是我们预期的local，前面我们说过闭包中内部匿名函数会携带外部函数的作用域，那为什么没有取得外部函数的this呢？每个函数在被调用时，都会自动创建this和arguments，内部匿名函数在查找时，搜索到活跃对象中存在我们想要的变量，因此停止向外部函数中的查找，也就永远不可能直接访问外部函数中的变量了。总之，在闭包中函数作为某个对象的方法调用时，要特别注意，该方法内部匿名函数的this指向的是全局变量。
+幸运的是我们可以很简单的解决这个问题，只需要把外部函数作用域的this存放到一个闭包能访问的变量里面即可：</p>
+
+<pre><code>var scope = "global";
+var object = {
+    scope:"local",
+    getScope:function(){
+        var that = this;
+        return function(){
+            return that.scope;
+        }
+    }
+}
+</code></pre>
+
+<p>object.getScope()()返回值为local。</p>
+
+<p>内存与性能
+由于闭包中包含与函数运行期上下文相同的作用域链引用，因此，会产生一定的负面作用，当函数中活跃对象和运行期上下文销毁时，由于必要仍存在对活跃对象的引用，导致活跃对象无法销毁，这意味着闭包比普通函数占用更多的内存空间，在IE浏览器下还可能会导致内存泄漏的问题，如下：</p>
+
+<pre><code> function bindEvent(){
+    var target = document.getElementById("elem");
+    target.onclick = function(){
+        console.log(target.name);
+    }
+ }
+</code></pre>
+
+<p>上面例子中匿名函数对外部对象target产生一个引用，只要是匿名函数存在，这个引用就不会消失，外部函数的target对象也不会被销毁，这就产生了一个循环引用。解决方案是通过创建target.name副本减少对外部变量的循环引用以及手动重置对象：</p>
+
+<pre><code>  function bindEvent(){
+    var target = document.getElementById("elem");
+    var name = target.name;
+    target.onclick = function(){
+        console.log(name);
+    }
+    target = null;
+ }
+</code></pre>
+
+<p>闭包中如果存在对外部变量的访问，无疑增加了标识符的查找路径，在一定的情况下，这也会造成性能方面的损失。解决此类问题的办法我们前面也曾提到过：尽量将外部变量存入到局部变量中，减少作用域链的查找长度。</p>
+
+<p>总结：闭包不是javascript独有的特性，但是在javascript中有其独特的表现形式，使用闭包我们可以在javascript中定义一些私有变量，甚至模仿出块级作用域，但闭包在使用过程中，存在的问题我们也需要了解，这样才能避免不必要问题的出现。</p>
+
+    </div>
+
+ 
+<!--
+    <ul class="tag_box inline ">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/site/categories.html#技术分享-ref">
+    		技术分享 <span>11</span>
+    	</a></li>
+    
+  
+
+
+    </ul>
+    
+
+  
+    <ul class="tag_box inline ">
+      <li><i class="icon-tags"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/site/tags.html#javascript-ref">javascript <span>6</span></a></li>
+     
+    	<li><a href="/site/tags.html#算法-ref">算法 <span>2</span></a></li>
+    
+  
+
+
+
+    </ul>
+    -->
+    
+    <div class="pagination clearfix">
+      <ul class = "pull-right">
+      
+        <li class="prev"><a class="fa fa-arrow-circle-left" href="/site/2011/01/12/prime" title="js-算出某值以内的质数"> 前一篇</a></li>
+      
+        <li><a class="fa fa-th" href="/site/archive.html"> 所有日志</a></li>
+      
+        <li class="next"><a  href="/site/2014/04/21/future" title="后智能手机时代">后一篇 <span class="fa fa-arrow-circle-right">  </span></a></li>
+      
+      </ul>
+    </div>
+    
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+</div>
+
+
+      </div>
+      
+      <footer class="card clearfix">
+        <span style="font-size:30px;"class="fa fa-github pull-left"></span><a href="https://github.com/enml/blog/tree/jekyll-blog" style="display:inline-block;padding-right:80px;border-right:1px solid #bbb">fork me on GitHub</a>
+        <p class="pull-right">&copy; 2011 陈佳伟
+          with help from <a href="http://jekyllbootstrap.com" target="_blank" title="The Definitive Jekyll Blogging Framework">Jekyll Bootstrap</a>
+          and <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+        
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
+

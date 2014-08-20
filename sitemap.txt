@@ -22,4 +22,5 @@ http://enml.github.io/blog/2014/04/24/directory
 http://enml.github.io/blog/2014/04/23/finish-jekyll
 http://enml.github.io/blog/2014/04/23/chinese-messy-code
 http://enml.github.io/blog/2014/04/21/future
+http://enml.github.io/blog/2013/06/12/js-scope
 http://enml.github.io/blog/2011/01/12/prime

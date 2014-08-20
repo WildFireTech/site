@@ -153,7 +153,7 @@
 
 
                         <p>我们通过下面的代码来看看实际效果。</p>
-                        <pre>
+                       <pre class="prettyprint linenums">
     var canvas = document.getElementById("canvas"),
         context = canvas.getContext("2d");
     context.beginPath();
@@ -183,12 +183,12 @@
                         </ul>
 
 
-                        <pre><code class="`">context.shadowBlur=10; 
+                       <pre class="prettyprint linenums">context.shadowBlur=10; 
 context.shadowOffsetX=20; 
 context.shadowColor="black"; 
 context.fillStyle="red"; 
 context.fillRect(20,20,100,80);
-</code></pre>
+</pre>
 
                         <p>上面代码为矩形添加了黑色的阴影，阴影在x轴正方向偏移20px，阴影的虚化范围是10px。这几个canvas的style属性可以为图像添加漂亮的视觉效果，你的图像不再是水墨画，而是多彩多姿的水彩画。</p>
 
