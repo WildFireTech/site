@@ -162,12 +162,13 @@
     context.stroke();
     context.closePath();
 </pre>
-                        <p>这是最简单的画线条方法，用moveTo()确定起点，再用lineTo()画线。有了线段我们可以干嘛？最直观的我们可以画几何图形，比如说三角形，矩形。当我们逻辑能力再强点，想象力再丰富点的时候，线段可以画出令人惊叹的画面。比如说下面的树，就是使用最简单的线段通过递归不断叠加画出来，因为通过random()函数对角度进行随机计算，因此你每一次刷新树的形状都会变化。
+                        <p>这是最简单的画线条方法，用moveTo()确定起点，再用lineTo()画线。有了线段我们可以干嘛？最直观的我们可以画几何图形，比如说三角形，矩形。当我们逻辑能力再强点，想象力再丰富点的时候，线段可以画出令人惊叹的画面。比如说下面的树，就是使用最简单的线段通过递归不断叠加画出来。
                         </p>
                         <canvas id="canvasOfTree"></canvas>
+<p>因为通过random()函数对角度进行随机计算，因此你每一次刷新树的形状都会变化。</p>
 
-
-
+<br>
+                    
 
                         <p>2.style 我们画出几何图形后，一切都是黑白的。这个时候需要的就是style相关的属性：
                         </p>
@@ -215,25 +216,9 @@ context.fillRect(20,20,100,80);
 
                         <p>这三个方法是从像素层次对图像进行操作，看上去很简单，但事实上功能很强大。我们可以获取图像的每一个像素，然后对像素进行操作，比如改变像素的rgb值，从而使整张图片得到完全不同的视觉效果，比如说对像素rgb值进行取反操作已实现整张图像反转滤镜效果。</p>
                         <img src="/site/image/2010.jpg" id="scream">
-                        <canvas id="myCanvas"></canvas>
+                        <img src="/site/image/reverse.png">
                         <script>
-                            document.getElementById("scream").onload = function () {
-                                var c = document.getElementById("myCanvas");
-                                var ctx = c.getContext("2d");
-                                c.width = document.getElementsByClassName("card")[0].offsetWidth - 80;
-                                c.height = 500;
-                                var img = document.getElementById("scream");
-                                ctx.drawImage(img, 0, 0);
-                                var imgData = ctx.getImageData(0, 0, c.width, c.height);
-                                // invert colors
-                                for (var i = 0; i < imgData.data.length; i += 4) {
-                                    imgData.data[i] = 255 - imgData.data[i];
-                                    imgData.data[i + 1] = 255 - imgData.data[i + 1];
-                                    imgData.data[i + 2] = 255 - imgData.data[i + 2];
-                                    imgData.data[i + 3] = 255;
-                                }
-                                ctx.putImageData(imgData, 0, 0);
-                            };
+
                             var canvasOfTree = document.getElementById("canvasOfTree"),
                                 contextOfTree = canvasOfTree.getContext("2d");
                             canvasOfTree.width = document.getElementsByClassName("card")[0].offsetWidth - 80;
