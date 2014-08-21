@@ -5,8 +5,8 @@
         <description>寂寞先生 - 陈佳伟</description>
         <link>http://enml.github.io/blog</link>
         <link>http://enml.github.io/blog</link>
-        <lastBuildDate>2014-08-21T09:22:21+08:00</lastBuildDate>
-        <pubDate>2014-08-21T09:22:21+08:00</pubDate>
+        <lastBuildDate>2014-08-21T09:36:47+08:00</lastBuildDate>
+        <pubDate>2014-08-21T09:36:47+08:00</pubDate>
         <ttl>1800</ttl>
 
 
@@ -843,8 +843,8 @@ Point(x=3.0, y=5.0)
         </item>
 
         <item>
-                <title>javascript——作用域</title>
-                <description>&lt;h1&gt;javascript——作用域&lt;/h1&gt;
+                <title>javascript——闭包</title>
+                <description>&lt;h1&gt;javascript——闭包&lt;/h1&gt;
 
 &lt;hr /&gt;
 
@@ -1088,12 +1088,10 @@ var object = {
         </item>
 
         <item>
-                <title>深入javascript——作用域和闭包</title>
-                <description>&lt;h1&gt;深入javascript——作用域和闭包&lt;/h1&gt;
+                <title>javascript——作用域</title>
+                <description>&lt;h1&gt;javascript——作用域&lt;/h1&gt;
 
 &lt;hr /&gt;
-
-&lt;p&gt;深入javascript——作用域和闭包&lt;/p&gt;
 
 &lt;p&gt;作用域和作用域链是javascript中非常重要的特性，对于他们的理解直接关系到对于整个javascript体系的理解，而闭包又是对作用域的延伸，也是在实际开发中经常使用的一个特性，实际上，不仅仅是javascript，在很多语言中都提供了闭包的特性。
 作用域&lt;/p&gt;
