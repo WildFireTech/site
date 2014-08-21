@@ -37,7 +37,7 @@
 
 </head>
 
-<body onload="prettyPrint()">
+<body >
     <div class="navbar">
         <div class="navbar-inner">
             <div class="nav-narrow">
@@ -269,7 +269,7 @@
 
 </body>
 <script>
-    window.onload = canvasDrawClock();
+    window.onload = function(){canvasDrawClock();prettyPrint();}
     document.getElementById("startCountdown").addEventListener("click", canvasDrawClock);
 
     function canvasDrawClock() {

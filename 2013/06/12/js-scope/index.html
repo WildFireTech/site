@@ -138,7 +138,7 @@
 <p>作用域是一个变量和函数的作用范围，javascript中函数内声明的所有变量在函数体内始终是可见的，在javascript中有全局作用域和局部作用域，但是没有块级作用域，局部变量的优先级高于全局变量。</p>
 <h3>1. Hoisting</h3>
 
-<pre> var me="global";
+<pre class="prettyprint linenums"> var me="global";
 function scopeTest(){
     console.log(me);
     var me="local"  
@@ -148,7 +148,7 @@ scopeTest(); //undefined
 <p>
 此处的输出是undefined，上面的函数等效于：</p>
 
-<pre> var me="global";
+<pre class="prettyprint linenums"> var me="global";
 function scopeTest(){
     var me;
     console.log(me);
@@ -157,7 +157,7 @@ function scopeTest(){
 scopeTest(); //local
  </pre>
 <p>注意，如果忘记var，那么变量就被声明为全局变量了。上面的例子还比较直观，下面这个初学者很容易忽略</p>
-<pre>
+<pre class="prettyprint linenums">
     var num1 = 10;
     function test(){
         if(num1==10){
@@ -174,7 +174,7 @@ scopeTest(); //local
 <h3>2. 没有块级作用域</h3><p>
 我们知道，在很多常见的语言里面，有一个很重要的概念就是<code>block scope</code>，但在Javascript中没有块级作用域</p>
 
-<pre> function scopeTest() {
+<pre class="prettyprint linenums"> function scopeTest() {
     var scope = {};
     if (scope instanceof Object) {
         var j = 1;
@@ -190,7 +190,7 @@ scopeTest(); //local
 
 <p>在if这个代码块里的变量j可以在代码块外面访问到，for代码块里的i同样能在for外访问到，说明对于javascript来说，不存在所谓的<code>block scope</code>。javascript只有<code>function scope</code>。下面代码说明了<code>function scope</code>的存在</p>
 
-<pre> var scope = "hello";
+<pre class="prettyprint linenums"> var scope = "hello";
 function scopeTest() {
     console.log(scope);//undefined
     var scope = "no";
@@ -200,7 +200,7 @@ function scopeTest() {
 
 <p>这里等价于：</p>
 
-<pre> var scope = "hello";
+<pre class="prettyprint linenums"> var scope = "hello";
 function scopeTest() {
     var scope;
     console.log(scope);//undefined
