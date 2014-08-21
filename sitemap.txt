@@ -8,6 +8,7 @@ http://enml.github.io/blog/rss.xml
 http://enml.github.io/blog/sitemap.txt
 http://enml.github.io/blog/tags.html
 
+http://enml.github.io/blog/2014/06/20/js-prototype
 http://enml.github.io/blog/2014/06/14/js-closesure
 http://enml.github.io/blog/2014/06/12/js-scope
 http://enml.github.io/blog/2014/05/24/canvas-image

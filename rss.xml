@@ -5,10 +5,159 @@
         <description>寂寞先生 - 陈佳伟</description>
         <link>http://enml.github.io/blog</link>
         <link>http://enml.github.io/blog</link>
-        <lastBuildDate>2014-08-21T10:51:33+08:00</lastBuildDate>
-        <pubDate>2014-08-21T10:51:33+08:00</pubDate>
+        <lastBuildDate>2014-08-21T17:20:05+08:00</lastBuildDate>
+        <pubDate>2014-08-21T17:20:05+08:00</pubDate>
         <ttl>1800</ttl>
 
+
+        <item>
+                <title>javascript——构造函数与原型</title>
+                <description>&lt;h1&gt;javascript——构造函数与原型&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;首先，这篇文章要讲的重点是原型。但要讲原型就必须讲构造函数，将构造函数就必须讲对象。首先来看看对象。&lt;/p&gt;
+
+&lt;h3&gt;新建一个对象的方法：&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;new Object:&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;pre&gt;&lt;code&gt;var newObj = new Object;
+newObj.name = &quot;keti&quot;;
+newObj.color = &quot;red&quot;;
+newObj.changeColor = function(color){
+    newObj.color = color;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这种方法看上去很蠢，所以使用literal直接创建一个对象要优雅得多：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;literal（直接量）：&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;pre&gt;&lt;code&gt;var newObj = {
+    name: &quot;keti&quot;;
+    color: &quot;red&quot;;
+    changeColor: function(color){
+        newObj.color = color;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;使用literal来常见对象似乎很不错，比较直观，两个卷括号括起来就是个对象嘛，多清晰明了。但是如果你要创建一系列结构类似的对象，难道要这样一个个写吗？作为程序员我们的遵循的理念就是尽可能减少重复，也就是著名的DRY(Don&#39;t Repeat Youself)。所以我们是无法容忍这么愚蠢的事情发生的，因此就有了构造函数，跟类有点相似，但我们这里不讨论类。构造函数就是建立一个模板，不绑定数据，只提供架构，你只需把相关数据填充到模板里就可以生成一个新的对象了：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;构造函数：&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;pre&gt;&lt;code&gt;function NewObj(name,color){
+    this.name = name;
+    this.color = color;
+    this.changeColor = function(c){
+        this.color = c;
+    }
+}
+var newObj1 = new NewObj(&quot;keti&quot;,&quot;red&quot;);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;上面代码中，&lt;code&gt;new&lt;/code&gt;是一个构造器，&lt;code&gt;NewObj&lt;/code&gt;是我们创建好的模板，填入数据，赋给变量newObj1，ok，新的对象就这样生成了。&lt;/p&gt;
+
+&lt;p&gt;说完构造函数，就不得不说原型了。&lt;/p&gt;
+
+&lt;h3&gt;原型&lt;/h3&gt;
+
+&lt;p&gt;原型是javascript里一个相当复杂的属性，那么我们先想想为什么要用原型呢？重新看看上面构造函数的例子，看上去很完美，但是假如我们现在想添加一个新的method，那怎么办？直接添加到构造函数里面？没错，这样是可以，但假如这个方法我们经常需要变动，比如说&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function NewObj(name,num){
+    this.name = name;
+    this.num = num;
+    this.changNum = function(c){
+        this.num = c;
+    }
+}
+var newObj1 = new NewObj(&quot;kemi&quot;,10);
+newObj1.changNum(100);
+newObj1.num; //很明显是100
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;我现在想修改changNum()这个函数：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function NewObj(name,num){
+    this.name = name;
+    this.num = num;
+    this.changNum = function(c){
+        this.num = c*2;
+    }
+}
+newObj1.changNum(100);
+newObj1.num; //依然是100，也就是说这个对象并不受我们修改的模板影响到
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;我们修改了构造函数里的属性和方法，就必须重新创建实例才能应用到新的修改。而原型出现了，它将改变这种情况，我们用原型来创建一个method：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function NewObj(name,num){
+    this.name = name;
+    this.num = num;
+}
+NewObj.prototype.changNum = function(c){
+        this.num = c;
+        }
+var newObj1 = new NewObj(&quot;kemi&quot;,10);
+newObj1.changNum(100);
+newObj1.num; //很明显是100
+NewObj.prototype.changNum = function(c){
+        this.num = c*2;
+        }//我们重新修改一下这个方法
+newObj1.changNum(100);
+newObj1.num; //变成200了。
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;它生效了。因为构造函数创建实例的过程是直接给实例赋值，而不是引用，因此已经生成的实例是无法再从构造函数里获得更新的，而原型是引用，我们看图：&lt;/p&gt;
+
+&lt;h3&gt;原型链&lt;/h3&gt;
+
+&lt;p&gt;我们通过上图可以看到所有的实例都是引用了同一个prototype，它们共享了prototype里的所有变量和方法。事实上，javascript中，所有的对象都有一个原型对象（prototype），原型对象中有一个constructor属性指向包含prototype属性的函数，当访问一个对象的属性（包括方法）时，首先查找这个对象自身有没有该属性，如果没有就查找它的原型（也就是&lt;strong&gt;proto&lt;/strong&gt;指向的prototype对象），如果还没有就查找原型的原型（prototype也有它自己的&lt;strong&gt;proto&lt;/strong&gt;，prototype对象），依此类推一直找到 Object 为止。&lt;/p&gt;
+
+&lt;p&gt;这个属性查找机制事实上就是我们常说的&lt;code&gt;原型链&lt;/code&gt;。下面这张神一样的图就是原型链：&lt;/p&gt;
+
+&lt;h3&gt;construct&lt;/h3&gt;
+
+&lt;p&gt;正常情况下构造函数的prototype的constructor是构造函数本身，如下图：&lt;/p&gt;
+
+&lt;p&gt;但是，我们看代码：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var name = &quot;Globle&quot;;
+
+function NewObj(name, num) {
+    this.name = name;
+    this.num = num;
+}
+NewObj.prototype.changNum = function (c) {
+    this.num = c;
+}
+var a = new NewObj(&quot;fad&quot;, 100)
+console.log(a.constructor);//NewObj
+
+NewObj.prototype = {
+    age: this.name + &quot;enm&quot;
+};
+var b = new NewObj();
+b.age; //&quot;Globle&quot;
+console.log(b.constructor); //Object
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;很明显，当我们直接覆写prototype时，&lt;code&gt;b.constructor&lt;/code&gt;指向的是 Object，而不再是原来的NewObj。这一点需格外小心，当然，有一个很简单的解决办法，就是通过显式指定 &lt;code&gt;constructor: NewObj&lt;/code&gt;即可。&lt;/p&gt;
+</description>
+                <link>http://enml.github.io/blog/2014/06/20/js-prototype</link>
+                <guid>http://enml.github.io/blog/2014/06/20/js-prototype</guid>
+                <pubDate>2014-06-20T00:00:00+08:00</pubDate>
+        </item>
 
         <item>
                 <title>javascript——闭包</title>

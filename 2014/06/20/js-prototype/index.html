@@ -1,0 +1,364 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>javascript——构造函数与原型</title>
+    
+    <meta name="author" content="陈佳伟">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/site/assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css" rel="stylesheet">
+    <link href="/site/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="/site/assets/themes/twitter/css/prettify.css" rel="stylesheet" type="text/css">
+    <script src="/site/assets/themes/twitter/js/prettify.js"></script>
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+
+    <!-- atom & rss feed -->
+    <link href="/site/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/site/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+    
+<!--    font-awesome-->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  </head>
+
+  <body onload="prettyPrint()">
+    <div class="navbar">
+      <div class="navbar-inner">
+       <div class="nav-narrow">
+          <a class="brand" href="/site"><span class="fa fa-mortar-board (alias)">寂寞先生</span></a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/site/archive.html">文章</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/site/categories.html">分类</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/site/pages.html">页面</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/site/tags.html">标签</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-narrow">
+
+      <div class="content">
+        
+<!--
+<div class="page-header">
+  <h1>javascript——构造函数与原型 <small>Supporting tagline</small></h1>
+</div>
+-->
+ 
+
+<div class="row-fluid post-full">
+  <div class="span12 ">
+    <div class="content card">
+        <div class="date_label">
+          <div class="day_month">
+          06/20
+          </div>
+          <div class="year">
+          2014
+          </div>
+        </div>
+      <h1>javascript——构造函数与原型</h1>
+
+<hr />
+
+<p>首先，这篇文章要讲的重点是原型。但要讲原型就必须讲构造函数，将构造函数就必须讲对象。首先来看看对象。</p>
+
+<h3>新建一个对象的方法：</h3>
+
+<ul>
+<li>new Object:</li>
+</ul>
+
+
+<pre><code>var newObj = new Object;
+newObj.name = "keti";
+newObj.color = "red";
+newObj.changeColor = function(color){
+    newObj.color = color;
+}
+</code></pre>
+
+<p>这种方法看上去很蠢，所以使用literal直接创建一个对象要优雅得多：</p>
+
+<ul>
+<li>literal（直接量）：</li>
+</ul>
+
+
+<pre><code>var newObj = {
+    name: "keti";
+    color: "red";
+    changeColor: function(color){
+        newObj.color = color;
+    }
+}
+</code></pre>
+
+<p>使用literal来常见对象似乎很不错，比较直观，两个卷括号括起来就是个对象嘛，多清晰明了。但是如果你要创建一系列结构类似的对象，难道要这样一个个写吗？作为程序员我们的遵循的理念就是尽可能减少重复，也就是著名的DRY(Don't Repeat Youself)。所以我们是无法容忍这么愚蠢的事情发生的，因此就有了构造函数，跟类有点相似，但我们这里不讨论类。构造函数就是建立一个模板，不绑定数据，只提供架构，你只需把相关数据填充到模板里就可以生成一个新的对象了：</p>
+
+<ul>
+<li>构造函数：</li>
+</ul>
+
+
+<pre><code>function NewObj(name,color){
+    this.name = name;
+    this.color = color;
+    this.changeColor = function(c){
+        this.color = c;
+    }
+}
+var newObj1 = new NewObj("keti","red");
+</code></pre>
+
+<p>上面代码中，<code>new</code>是一个构造器，<code>NewObj</code>是我们创建好的模板，填入数据，赋给变量newObj1，ok，新的对象就这样生成了。</p>
+
+<p>说完构造函数，就不得不说原型了。</p>
+
+<h3>原型</h3>
+
+<p>原型是javascript里一个相当复杂的属性，那么我们先想想为什么要用原型呢？重新看看上面构造函数的例子，看上去很完美，但是假如我们现在想添加一个新的method，那怎么办？直接添加到构造函数里面？没错，这样是可以，但假如这个方法我们经常需要变动，比如说</p>
+
+<pre><code>function NewObj(name,num){
+    this.name = name;
+    this.num = num;
+    this.changNum = function(c){
+        this.num = c;
+    }
+}
+var newObj1 = new NewObj("kemi",10);
+newObj1.changNum(100);
+newObj1.num; //很明显是100
+</code></pre>
+
+<p>我现在想修改changNum()这个函数：</p>
+
+<pre><code>function NewObj(name,num){
+    this.name = name;
+    this.num = num;
+    this.changNum = function(c){
+        this.num = c*2;
+    }
+}
+newObj1.changNum(100);
+newObj1.num; //依然是100，也就是说这个对象并不受我们修改的模板影响到
+</code></pre>
+
+<p>我们修改了构造函数里的属性和方法，就必须重新创建实例才能应用到新的修改。而原型出现了，它将改变这种情况，我们用原型来创建一个method：</p>
+
+<pre><code>function NewObj(name,num){
+    this.name = name;
+    this.num = num;
+}
+NewObj.prototype.changNum = function(c){
+        this.num = c;
+        }
+var newObj1 = new NewObj("kemi",10);
+newObj1.changNum(100);
+newObj1.num; //很明显是100
+NewObj.prototype.changNum = function(c){
+        this.num = c*2;
+        }//我们重新修改一下这个方法
+newObj1.changNum(100);
+newObj1.num; //变成200了。
+</code></pre>
+
+<p>它生效了。因为构造函数创建实例的过程是直接给实例赋值，而不是引用，因此已经生成的实例是无法再从构造函数里获得更新的，而原型是引用，我们看图：</p>
+
+<h3>原型链</h3>
+
+<p>我们通过上图可以看到所有的实例都是引用了同一个prototype，它们共享了prototype里的所有变量和方法。事实上，javascript中，所有的对象都有一个原型对象（prototype），原型对象中有一个constructor属性指向包含prototype属性的函数，当访问一个对象的属性（包括方法）时，首先查找这个对象自身有没有该属性，如果没有就查找它的原型（也就是<strong>proto</strong>指向的prototype对象），如果还没有就查找原型的原型（prototype也有它自己的<strong>proto</strong>，prototype对象），依此类推一直找到 Object 为止。</p>
+
+<p>这个属性查找机制事实上就是我们常说的<code>原型链</code>。下面这张神一样的图就是原型链：</p>
+
+<h3>construct</h3>
+
+<p>正常情况下构造函数的prototype的constructor是构造函数本身，如下图：</p>
+
+<p>但是，我们看代码：</p>
+
+<pre><code>var name = "Globle";
+
+function NewObj(name, num) {
+    this.name = name;
+    this.num = num;
+}
+NewObj.prototype.changNum = function (c) {
+    this.num = c;
+}
+var a = new NewObj("fad", 100)
+console.log(a.constructor);//NewObj
+
+NewObj.prototype = {
+    age: this.name + "enm"
+};
+var b = new NewObj();
+b.age; //"Globle"
+console.log(b.constructor); //Object
+</code></pre>
+
+<p>很明显，当我们直接覆写prototype时，<code>b.constructor</code>指向的是 Object，而不再是原来的NewObj。这一点需格外小心，当然，有一个很简单的解决办法，就是通过显式指定 <code>constructor: NewObj</code>即可。</p>
+
+    </div>
+
+ 
+<!--
+    <ul class="tag_box inline ">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/site/categories.html#技术分享-ref">
+    		技术分享 <span>13</span>
+    	</a></li>
+    
+  
+
+
+    </ul>
+    
+
+  
+    <ul class="tag_box inline ">
+      <li><i class="icon-tags"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/site/tags.html#javascript-ref">javascript <span>8</span></a></li>
+    
+  
+
+
+
+    </ul>
+    -->
+    
+    <div class="pagination clearfix">
+      <ul class = "pull-right">
+      
+        <li class="prev"><a class="fa fa-arrow-circle-left" href="/site/2014/06/14/js-closesure" title="javascript——闭包"> 前一篇</a></li>
+      
+        <li><a class="fa fa-th" href="/site/archive.html"> 所有日志</a></li>
+      
+        <li class="next disabled"><a >后一篇 <span class="fa fa-arrow-circle-right">  </span></a>
+      
+      </ul>
+    </div>
+    
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+</div>
+
+
+      </div>
+      
+      <footer class="card clearfix">
+        <span style="font-size:30px;"class="fa fa-github pull-left"></span><a href="https://github.com/enml/blog/tree/jekyll-blog" style="display:inline-block;padding-right:80px;border-right:1px solid #bbb">fork me on GitHub</a>
+        <p class="pull-right">&copy; 2011 陈佳伟
+          with help from <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+        
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
+
