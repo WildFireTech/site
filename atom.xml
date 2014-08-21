@@ -4,7 +4,7 @@
  <title>寂寞先生</title>
  <link href="http://enml.github.io/blog/" rel="self"/>
  <link href="http://enml.github.io/blog"/>
- <updated>2014-08-21T09:36:47+08:00</updated>
+ <updated>2014-08-21T09:42:08+08:00</updated>
  <id>http://enml.github.io/blog</id>
  <author>
    <name>陈佳伟</name>
@@ -1326,11 +1326,11 @@ var object = {
  </entry>
  
  <entry>
-   <title>js-算出某值以内的质数</title>
+   <title>javascript 算出某值以内的质数</title>
    <link href="http://enml.github.io/blog/2011/01/12/prime"/>
    <updated>2011-01-12T00:00:00+08:00</updated>
    <id>http://enml.github.io/blog/2011/01/12/prime</id>
-   <content type="html">&lt;h1&gt;js 算出某值以内的质数&lt;/h1&gt;
+   <content type="html">&lt;h1&gt;javascript 算出某值以内的质数&lt;/h1&gt;
 
 &lt;hr /&gt;
 

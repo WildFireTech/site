@@ -5,8 +5,8 @@
         <description>寂寞先生 - 陈佳伟</description>
         <link>http://enml.github.io/blog</link>
         <link>http://enml.github.io/blog</link>
-        <lastBuildDate>2014-08-21T09:36:47+08:00</lastBuildDate>
-        <pubDate>2014-08-21T09:36:47+08:00</pubDate>
+        <lastBuildDate>2014-08-21T09:42:08+08:00</lastBuildDate>
+        <pubDate>2014-08-21T09:42:08+08:00</pubDate>
         <ttl>1800</ttl>
 
 
@@ -1324,8 +1324,8 @@ var object = {
         </item>
 
         <item>
-                <title>js-算出某值以内的质数</title>
-                <description>&lt;h1&gt;js 算出某值以内的质数&lt;/h1&gt;
+                <title>javascript 算出某值以内的质数</title>
+                <description>&lt;h1&gt;javascript 算出某值以内的质数&lt;/h1&gt;
 
 &lt;hr /&gt;
 
