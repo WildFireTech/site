@@ -37,7 +37,7 @@
 
 </head>
 
-<body onload="prettyPrint()">
+<body >
     <div class="navbar">
         <div class="navbar-inner">
             <div class="nav-narrow">
@@ -224,6 +224,7 @@ context.fillRect(20,20,100,80);
                             canvasOfTree.width = document.getElementsByClassName("card")[0].offsetWidth - 80;
                             canvasOfTree.height = 400;
                             window.onload = function () {
+                                prettyPrint();
                                 drawTree(contextOfTree, canvasOfTree.width / 2, canvasOfTree.height - 50, 40, -Math.PI / 2, 13, 14);
                             }
                             var drawTree = function (ctx, startX, startY, length, angle, depth, branchWidth) {
