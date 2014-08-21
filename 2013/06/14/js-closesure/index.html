@@ -145,7 +145,7 @@
 
 
 
-<pre> 
+<pre class="prettyprint linenums"> 
    function closure(){
         var name = "enm";
         return {
@@ -175,7 +175,7 @@
 
 <p><br></p>
 
-<pre>   function timeManage() {
+<pre class="prettyprint linenums">   function timeManage() {
         for (var i = 0; i &lt; 5; i++) {
             setTimeout(function() {
                 console.log(i);
@@ -188,7 +188,7 @@
 
 <p>上面的程序并没有按照我们预期的输入1-5的数字，而是5次全部输出了5。再来看一个示例：</p>
 
-<pre>
+<pre class="prettyprint linenums">
     
 function createClosure(){
     var result = [];
@@ -209,7 +209,7 @@ function createClosure(){
 
 <p><br></p>
 
-<pre> function timeManage() {
+<pre class="prettyprint linenums"> function timeManage() {
     for (var i = 0; i &lt; 5; i++) {
         (function(num) {
             setTimeout(function() {
@@ -228,7 +228,7 @@ function createClosure(){
 
 
 
-<pre> function timeManage() {
+<pre class="prettyprint linenums"> function timeManage() {
     for (var i = 0; i &lt; 10; i++) {
         setTimeout((function(e) {
             return function() {
@@ -256,7 +256,7 @@ function createClosure() {
 <p>我再尝试另一种方法：</p>
 
 
-<pre>
+<pre class="prettyprint linenums">
       function timeManage() {
           function foo() {
                 console.log(i);
@@ -281,7 +281,7 @@ function createClosure() {
 <p>闭包中的this 在闭包中使用this时要特别注意，稍微不慎可能会引起问题。通常我们理解this对象是运行时基于函数绑定的，全局函数中this对象就是window对象，而当函数作为对象中的一个方法调用时，this等于这个对象（TODO 关于this做一次整理）。由于匿名函数的作用域是全局性的，因此闭包的this通常指向全局对象window：</p>
 
 
-<pre>
+<pre class="prettyprint linenums">
 var scope = "global";
 var object = {
     scope:"local",
@@ -302,7 +302,7 @@ var object = {
 
 
 
-<pre> var scope = "global";
+<pre class="prettyprint linenums"> var scope = "global";
 var object = {
     scope:"local",
     getScope:function(){
@@ -328,7 +328,7 @@ var object = {
 
 
 
-<pre>  function bindEvent(){
+<pre class="prettyprint linenums">  function bindEvent(){
     var target = document.getElementById("elem");
     target.onclick = function(){
         console.log(target.name);
@@ -344,7 +344,7 @@ var object = {
 
 
 
-<pre>   function bindEvent(){
+<pre class="prettyprint linenums">   function bindEvent(){
     var target = document.getElementById("elem");
     var name = target.name;
     target.onclick = function(){
