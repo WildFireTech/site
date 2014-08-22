@@ -1,0 +1,281 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>HTTP协议安全</title>
+    
+    <meta name="author" content="陈佳伟">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/site/assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css" rel="stylesheet">
+    <link href="/site/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="/site/assets/themes/twitter/css/prettify.css" rel="stylesheet" type="text/css">
+    <script src="/site/assets/themes/twitter/js/prettify.js"></script>
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+
+    <!-- atom & rss feed -->
+    <link href="/site/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/site/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+    
+<!--    font-awesome-->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  </head>
+
+  <body onload="prettyPrint()">
+    <div class="navbar">
+      <div class="navbar-inner">
+       <div class="nav-narrow">
+          <a class="brand" href="/site"><span class="fa fa-mortar-board (alias)">寂寞先生</span></a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/site/archive.html">文章</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/site/categories.html">分类</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/site/pages.html">页面</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/site/tags.html">标签</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-narrow">
+
+      <div class="content">
+        
+<!--
+<div class="page-header">
+  <h1>HTTP协议安全 <small>Supporting tagline</small></h1>
+</div>
+-->
+ 
+
+<div class="row-fluid post-full">
+  <div class="span12 ">
+    <div class="content card">
+        <div class="date_label">
+          <div class="day_month">
+          05/27
+          </div>
+          <div class="year">
+          2014
+          </div>
+        </div>
+      <h1>HTTP协议安全</h1>
+
+<hr />
+
+<p>我在前两篇文章里详细介绍了HTTP协议以及报文在TCP传输层传输的性能问题，但是，这是一个邪恶的世界，无论你协议设计的多巧妙性能优化的再好，如果没有把安全问题考虑进去，那么这个协议注定是不可靠的。所以今天我来总结一下HTTP的安全问题。</p>
+
+<p>信息安全的保护主要来自两个方面，端的安全（可以具体到客户端和服务器端）和链路的安全（也就是传输过程中的安全）。正常情况下我们必须先假设，端都是可信的。对于服务器端，你愿意使用这个公司提供的服务，你就相当于信任这个公司，所以我们认为服务器端是安全的。而客户端，你愿意使用这台电脑，也表明你认为这台电脑是比较安全的，中病毒木马什么的不在我们的讨论范围内。所以，我们今天讲的安全的焦点，主要是集中在通信的链路上，也就是数据传输过程的安全问题。而HTTP协议作为今天web服务的通用协议，它的安全问题变得十分严峻。</p>
+
+<p>HTTP协议是明文数据传输，这意味着只要我们拦截到了HTTP报文，我们就可以查看几乎所有正在传输的数据。攻击者最常用的攻击手法就是网络嗅探，试图从传输过程当中分析出敏感的数据，例如嗅探用户的登录过程，从而获取到用户的身份认证信息，甚至可以直接获得密码。即使无法获取登录信息，获得用户的手机号码、身份证号码、信用卡卡号等重要资料也会给用户带来隐私安全问题。
+我通过Fiddler2进行抓包，在浏览器上登陆一个论坛，然后发现登陆的用户名和密码直接以明文的形式POST到服务器，下面是截图：</p>
+
+<p>这是一个资讯论坛，我们也无法要求它能保障我们的信息安全，但是我们仍然可以感觉到一丝隐隐的不安，很多人的密码都是通用的，假如你论坛的密码明文被拦截到，那么攻击者拿这个明文遍历其他重要网站，比如说淘宝，qq之类的，有很大的可能会验证成功，那么你这些账号就全面沦陷。</p>
+
+<p>另外，HTTP是一种无状态的连接，在传输客户端请求和服务器响应时，唯一的时间完整性检验就是在报文头部包含了本次传输数据的长度，而对内容是否被篡改不做确认。因此攻击者可以轻易的发动中间人攻击，修改客户端和服务端传输的数据，甚至在传输数据中插入恶意代码，导致客户端被引导至恶意网站被植入木马。这并非什么难事，现在无线路由器的普及带来了很大的安全隐患，你访问了带有恶意javascript代码的网页有可能就把你路由器的DNS修改了，这样你的网络请求都必须经过攻击者设定好的DNS服务器，这样就实现了中间人攻击，攻击者可以冒用你的身份信息对服务端进行请求，比如转账，后果可想而知。这主要是由于HTTP缺乏对数据完整性检测的能力，因此客户端和服务端都觉察不到任何异常，以为双方是直接通信。下面是中间人攻击的示意图：</p>
+
+<p>除了上面提到的安全隐患，事实上还有CSRF, XSS 等关于cookies的安全问题。所以我们应该重视一下如何保障HTTP通信的安全。为保证HTTP安全，手段有很多，这篇介绍其中几种方式。首先是数字加密，有多种方式可以对报文进行编/解码，不仅防止被攻击者读取，还可以防止报文被篡改。随着密码学的发展，已不再是简单的通过密码（一套编码方案，编码器）将明文变成密文了，而使用密钥的密码会更灵活、更安全。</p>
+
+<ul>
+<li>对称密钥加密技术</li>
+</ul>
+
+
+<p>在对称密钥加密技术中，发送端和接收端要共享相同的密钥key才能进行通信，因此，保证密钥的机密状态时很重要的，在很多情况下，编/解码算法是众所周知的，密钥就是唯一保密的东西了，一般攻击者会通过暴力破解，也就是枚举攻击，密钥越长被破解的概率也就相对低一些。
+一般按照对称密钥技术，如果A、B、C和J对话，那么ABC都要建立自己和J的密钥，万一有N个节点，每个节点都要和其他所有N-1个节点对话，总会会产生N的二次方密钥，这从管理来说是行不通的。</p>
+
+<ul>
+<li>公开密钥加密技术</li>
+</ul>
+
+
+<p>公开密钥加密技术没有为每对主机使用单独的加密/解密密钥，而是使用两个非对称密钥：一个用来对主机报文编码，另一个用来对主机报文解码，编码密钥是众所周知的，只有解密密钥是保密的，这样只有接收端才能对发送给他的报文进行解码，也不存在管理上的问题。常用的公开密钥加密算法是RSA算法，如果能破解由他计算出来的私有密钥就可以入侵瑞士银行了。
+因为公开密钥加密算法的计算会比较慢，所以比较常见的做法是在两个节点通过便捷的公开密钥加密技术建立起安全通信，然后再利用那条通道产生并发送临时随机对称密钥，通过更快的对称加密技术对其余的数据进行加密。</p>
+
+<ul>
+<li>数字签名</li>
+</ul>
+
+
+<p>数字签名是为了验证报文是否被篡改过，就像我们写信签上自己的姓名，让接受者知道信是由本人写的，而不是入侵者。数字签名是附加在报文上的特殊加密校验码，签名可以证明是作者编写了这条报文，只有作者才会有最机密的私有密钥，因此，只有作者才能计算出这些校验和；另外就是防止报文篡改。
+数字签名通常是用非对称公开密钥技术产生的。因为只有作者才知道其私有密钥，所以可以将作者的私有密钥当做一种“指纹”使用。如下图：</p>
+
+<ul>
+<li>数字证书</li>
+</ul>
+
+
+<p>数字证书这个大家比较熟悉，12306经常会弹出来数字证书不可信等信息，这相当于因特网上的“ID卡”，其中包含了由某个受信任组织担保的用户或公司的相关信息，就像我们身份证，由国家机关颁发，那我们的身份证就可信了，如果你的身份证是有我颁发的，那鬼也不会信的。数字证书里面包含的所有信息都是由一个官方的“证书颁发机构”以数字方式签发的，基本的数字证书中通常包括：版本、序列号、签名算法ID、证书颁发者、有效期、对象名称、对象的公开密钥信息、发布者唯一的ID、对象唯一的ID、扩展、证书的办法机构签名。</p>
+
+<ul>
+<li>HTTPS</li>
+</ul>
+
+
+<p>HTTPS是最常见的HTTP安全版本，所有主要的商业浏览器和服务器上都提供HTTPS。HTTPS就是HTTP报文发送给TCP之前，先将其发送给了一个安全层（安全层通过SSL及其现在替代协议TLS实现），对其进行加密，SSL是一个二进制协议，与HTTP不同，其流量是承载在443端口（http是80）上的。HTTPS通过在TCP层与HTTP层之间增加了一个SSL（Secure Socket Later）来加强安全性，数据传输过程中，加密解密均由SSL进行，与上层的HTTP无关，对HTTP来说是透明的。HTTPS增强的安全性表现在其双向的身份认证确保身份都是真实可靠的，其数据传输的机密性提高，数据完整性检验更严格，数据报被重放攻击的可能性降低。</p>
+
+<p>原理过程</p>
+
+<p>当客户端使用https 访问web serever 时，它会对客户端出示一个证书；到客户端要检测证书，如果可行浏览器就会随机产生Key值，然后再利用证书上的公钥来加密key值，然后再把加密的key 值传送到WWW服务器，服务器利用自己的私钥打开：</p>
+
+    </div>
+
+ 
+<!--
+    <ul class="tag_box inline ">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/site/categories.html#技术分享-ref">
+    		技术分享 <span>15</span>
+    	</a></li>
+    
+  
+
+
+    </ul>
+    
+
+  
+    <ul class="tag_box inline ">
+      <li><i class="icon-tags"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/site/tags.html#http-ref">http <span>2</span></a></li>
+    
+  
+
+
+
+    </ul>
+    -->
+    
+    <div class="pagination clearfix">
+      <ul class = "pull-right">
+      
+        <li class="prev"><a class="fa fa-arrow-circle-left" href="/site/2014/05/24/canvas-image" title="canvas总结之图像处理"> 前一篇</a></li>
+      
+        <li><a class="fa fa-th" href="/site/archive.html"> 所有日志</a></li>
+      
+        <li class="next"><a  href="/site/2014/06/12/js-scope" title="javascript——作用域">后一篇 <span class="fa fa-arrow-circle-right">  </span></a></li>
+      
+      </ul>
+    </div>
+    
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+</div>
+
+
+      </div>
+      
+      <footer class="card clearfix">
+        <span style="font-size:30px;"class="fa fa-github pull-left"></span><a href="https://github.com/enml/blog/tree/jekyll-blog" style="display:inline-block;padding-right:80px;border-right:1px solid #bbb">fork me on GitHub</a>
+        <p class="pull-right">&copy; 2011 陈佳伟
+          with help from <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+        
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
+

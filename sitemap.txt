@@ -11,9 +11,11 @@ http://enml.github.io/blog/tags.html
 http://enml.github.io/blog/2014/06/20/js-prototype
 http://enml.github.io/blog/2014/06/14/js-closesure
 http://enml.github.io/blog/2014/06/12/js-scope
+http://enml.github.io/blog/2014/05/27/HTTP-secure
 http://enml.github.io/blog/2014/05/24/canvas-image
 http://enml.github.io/blog/2014/05/24/canvas-Pixel-Manipulation
 http://enml.github.io/blog/2014/05/23/canvas_countdown
+http://enml.github.io/blog/2014/05/22/HTTP-performance
 http://enml.github.io/blog/2014/05/21/canvas-method
 http://enml.github.io/blog/2014/05/20/collect_color
 http://enml.github.io/blog/2014/05/20/HTTP
@@ -25,4 +27,5 @@ http://enml.github.io/blog/2014/04/24/directory
 http://enml.github.io/blog/2014/04/23/finish-jekyll
 http://enml.github.io/blog/2014/04/23/chinese-messy-code
 http://enml.github.io/blog/2014/04/21/future
+http://enml.github.io/blog/2013/08/11/javascript-array
 http://enml.github.io/blog/2011/01/12/prime
