@@ -4,7 +4,7 @@
  <title>寂寞先生</title>
  <link href="http://enml.github.io/blog/" rel="self"/>
  <link href="http://enml.github.io/blog"/>
- <updated>2014-08-25T18:25:42+08:00</updated>
+ <updated>2014-08-25T21:51:14+08:00</updated>
  <id>http://enml.github.io/blog</id>
  <author>
    <name>陈佳伟</name>
@@ -1715,6 +1715,536 @@ Point(x=3.0, y=5.0)
  </entry>
  
  <entry>
+   <title>javascript：内存泄漏</title>
+   <link href="http://enml.github.io/blog/2013/09/26/js-leak"/>
+   <updated>2013-09-26T00:00:00+08:00</updated>
+   <id>http://enml.github.io/blog/2013/09/26/js-leak</id>
+   <content type="html">&lt;h1&gt;javascript：内存泄漏&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;一、静态分配( Static Allocation ):静态变量和全局变量的分配形式.如果把房间看做一个程序,我们可以把静态分配的内存当成是房间里的耐用家具.通常,它们无需释放和回收,因为没人会天天把大衣柜当作垃圾扔到窗外.&lt;/p&gt;
+
+&lt;p&gt;二、自动分配( Automatic Allocation ):在栈中为局部变量分配内存的方法.栈中的内存可以随着代码块退出时的出栈操作被自动释放.这类似于到房间中办事的人,事情一旦完成,就会自己离开,而他们所占用的空间,也随着这些人的离开而自动释放了.&lt;/p&gt;
+
+&lt;p&gt;三、动态分配( Dynamic Allocation ):在堆中动态分配内存空间以存储数据的方式.也就是程序运行时用malloc或new申请的内存,我们需要自己用free或delete释放.动态内存的生存期由程序员自己决定.一旦忘记释放,势必造成内存泄露.这种情况下,堆中的内存块好像我们日常使用的餐巾纸,用过了就得扔到垃圾箱里,否则屋内就会满地狼藉.因此,懒人们做梦都想有一台家用机器人跟在身边打扫卫生.在软件开发中,如果你懒得释放内存,那么你也需要一台类似的机器人——这其实就是一个由特定算法实现的垃圾收集器.而正是垃圾收集机制本身的一些缺陷,导致了javascript内存泄露.
+JavaScript 是一种垃圾收集式语言，这就是说，内存是根据对象的创建分配给该对象的，并会在没有对该对象的引用时由浏览器收回。JavaScript 的垃圾收集机制本身并没有问题，但浏览器在为 DOM 对象分配和恢复内存的方式上却有些出入。&lt;/p&gt;
+
+&lt;h3&gt;1. 循环引用&lt;/h3&gt;
+
+&lt;p&gt;IE浏览器的COM组件产生的对象实例和网页脚本引擎产生的对象实例相互引用，就会造成内存泄漏。这也是Web页面中我们遇到的最常见和主要的泄漏方式；&lt;/p&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;p&gt;&lt;html&gt;
+&lt;body&gt;&lt;/p&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    document.write(&quot;Circular references between JavaScript and DOM!&quot;);
+    var obj;
+    window.onload = function(){
+    obj=document.getElementById(&quot;DivElement&quot;);
+    document.getElementById(&quot;DivElement&quot;).expandoProperty=obj;
+    obj.bigString=new Array(1000).join(new Array(2000).join(&quot;XXXXX&quot;));
+    };
+&lt;/script&gt;
+
+
+&lt;div id=&quot;DivElement&quot;&gt;Div Element&lt;/div&gt;
+
+
+&lt;p&gt;&lt;/body&gt;
+&lt;/html&gt;
+```&lt;/p&gt;
+
+&lt;h3&gt;2. 调用外部函数&lt;/h3&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;p&gt;&lt;html&gt;
+&lt;head&gt;&lt;/p&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+    document.write(&quot;Circular references between JavaScript and DOM!&quot;);
+    function myFunction(element)
+    {
+        this.elementReference = element;
+        // This code forms a circular reference here
+        //by DOM--&gt;JS--&gt;DOM
+        element.expandoProperty = this;
+    }
+    function Leak() {
+        //This code will leak
+        new myFunction(document.getElementById(&quot;myDiv&quot;));
+    }
+&lt;/script&gt;
+
+
+&lt;p&gt;&lt;/head&gt;
+&lt;body onload=&quot;Leak()&quot;&gt;&lt;/p&gt;
+
+&lt;div id=&quot;myDiv&quot;&gt;&lt;/div&gt;
+
+
+&lt;p&gt;&lt;/body&gt;
+&lt;/html&gt;
+```&lt;/p&gt;
+
+&lt;h3&gt;3. 闭包&lt;/h3&gt;
+
+&lt;p&gt;由于闭包函数会使程序员在不知不觉中创建出循环引用，所以它对资源泄漏常常有着不可推卸的责任。而在闭包函数自己被释放前，我们很难判断父函数的参数以及它的局部变量是否能被释放。实际上闭包函数的使用已经很普通，以致人们频繁的遇到这类问题时我们却束手无策。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+function parentFunction(paramA) {
+        var a = paramA;
+        function childFunction(){
+        return a + 2;
+        }
+        return childFunction();
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;如何解决Javascript内存泄露&lt;/h2&gt;
+
+&lt;h3&gt;1. 破解循环引用&lt;/h3&gt;
+
+&lt;p&gt;```
+&lt;html&gt;
+&lt;body&gt;&lt;/p&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+document.write(&quot;Avoiding memory leak via closure by breaking the circular
+reference&quot;);
+    window.onload=function outerFunction(){
+    var obj = document.getElementById(&quot;element&quot;);
+    obj.onclick=function innerFunction()
+    {
+        alert(&quot;Hi! I have avoided the leak&quot;);
+        // Some logic here
+    };
+    obj.bigString=new Array(1000).join(new Array(2000).join(&quot;XXXXX&quot;));
+    obj = null; //This breaks the circular reference
+    };
+&lt;/script&gt;
+
+
+&lt;p&gt;&lt;button id=&quot;element&quot;&gt;&quot;Click Here&quot;&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+```&lt;/p&gt;
+
+&lt;h3&gt;2. 添加另一个闭包&lt;/h3&gt;
+
+&lt;p&gt;```
+&lt;html&gt;
+&lt;body&gt;&lt;/p&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+document.write(&quot;Avoiding a memory leak by adding another closure&quot;);
+window.onload=function outerFunction(){
+var anotherObj = function innerFunction()
+         {
+            // Some logic here
+            alert(&quot;Hi! I have avoided the leak&quot;);
+         };
+     (function anotherInnerFunction(){
+        var obj =  document.getElementById(&quot;element&quot;);
+        obj.onclick=anotherObj })();
+        };
+&lt;/script&gt;
+
+
+&lt;p&gt;&lt;button id=&quot;element&quot;&gt;&quot;Click Here&quot;&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+```&lt;/p&gt;
+
+&lt;h3&gt;3. 避免闭包&lt;/h3&gt;
+
+&lt;p&gt;```
+&lt;html&gt;
+&lt;head&gt;&lt;/p&gt;
+
+&lt;script type=&quot;text/javascript&quot;&gt;
+document.write(&quot;Avoid leaks by avoiding closures!&quot;);
+window.onload=function()
+{
+    var obj = document.getElementById(&quot;element&quot;);
+    obj.onclick = doesNotLeak;
+}
+function doesNotLeak()
+{
+    //Your Logic here
+    alert(&quot;Hi! I have avoided the leak&quot;);
+}
+
+&lt;/script&gt;
+
+
+&lt;p&gt;&lt;/head&gt;
+&lt;body&gt;
+&lt;button id=&quot;element&quot;&gt;&quot;Click Here&quot;&lt;/button&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+```&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>javascript的调用方法</title>
+   <link href="http://enml.github.io/blog/2013/09/21/js-start"/>
+   <updated>2013-09-21T00:00:00+08:00</updated>
+   <id>http://enml.github.io/blog/2013/09/21/js-start</id>
+   <content type="html">&lt;h1&gt;javascript的调用方法&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;h2&gt;script标签&lt;/h2&gt;
+
+&lt;p&gt;最基本，最常用的脚本引入方式。例如：&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;&amp;lt;script src=&quot;http://code.jquery.com/jquery-1.11.0.min.js&quot;&amp;gt;&amp;lt;/script&amp;gt;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;尽管在HTML4和XHTML里面，要求开发者使用type属性来制定脚本的类型。但是主流浏览器都默认认为脚本类型是text/javascript。&lt;/p&gt;
+
+&lt;p&gt;在HTML5的规范内1，script标签的type属性是完全可选的。&lt;/p&gt;
+
+&lt;h2&gt;eval函数&lt;/h2&gt;
+
+&lt;p&gt;eval is evil
+eval有访问本地scope的权利&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var a = 1;
+eval(&quot;a=2&quot;);
+a === 2; // ==&amp;gt; true
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;Function构造函数&lt;/h2&gt;
+
+&lt;ul&gt;
+&lt;li&gt;function是“first-class citizen”；自然有相应的构造函数&lt;/li&gt;
+&lt;li&gt;new Function(arg1, arg2, ..., fnStr)&lt;/li&gt;
+&lt;li&gt;Function3构造函数本质是创建一个函数对象；其创建的函数执行也并不能访问其所在创建环境的闭包，只能访问本地作用域（local scope）和全局作用域（global scope）&lt;/li&gt;
+&lt;li&gt;Function()和new Function()效果一样&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;pre&gt;&lt;code&gt;(function() {
+  var a = 1;
+  var func = new Function(&quot;a=2&quot;);
+  func();
+  a === 2; // ==&amp;gt; false
+}());
+a === 2; // ==&amp;gt; true
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;setTimeout和setInterval&lt;/h2&gt;
+
+&lt;p&gt;setTimeout(&quot;alert(&#39;haha&#39;)&quot;, 0);
+这个和eval有异曲同工之妙，对作用域的访问也是类似的。&lt;/p&gt;
+
+&lt;p&gt;以上除了script标签的方法之外，其他方法都在strict模式下不可用。&lt;/p&gt;
+
+&lt;h2&gt;HTML內联事件回调&lt;/h2&gt;
+
+&lt;p&gt;&lt;code&gt;&amp;lt;a href=&#39;#hello&#39; onclick=&quot;alert(this.href)&quot;&amp;gt;Say hello&amp;lt;/a&amp;gt;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;这样如同在click事件的Target Phase运行了一个回调。this指向目标元素本身。&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>javascript的加载规则</title>
+   <link href="http://enml.github.io/blog/2013/09/16/js-onload"/>
+   <updated>2013-09-16T00:00:00+08:00</updated>
+   <id>http://enml.github.io/blog/2013/09/16/js-onload</id>
+   <content type="html">&lt;h1&gt;javascript的加载规则&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;以下代码，最终会产生三个alert依次为“A”、“B”、“C”。&lt;/p&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;!-- HTML Code --&gt;
+
+
+&lt;script&gt;alert(&quot;A&quot;);&lt;/script&gt;
+
+
+&lt;script&gt;alert(&quot;B&quot;);&lt;/script&gt;
+
+
+&lt;script&gt;alert(&quot;C&quot;);&lt;/script&gt;
+
+
+&lt;pre&gt;&lt;code&gt;
+我们再考虑有网络请求的情况2：
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;!-- HTML code --&gt;
+
+
+&lt;script  src=&quot;https://snipt.net/raw/7b08744009c450e07c0bfc1d606fc72e/&quot;&gt;&lt;/script&gt;
+
+
+&lt;script  src=&quot;https://snipt.net/raw/a2e8c05c1f6fc0e47d259aa899304e89/&quot;&gt;&lt;/script&gt;
+
+
+&lt;script  src=&quot;https://snipt.net/raw/4fab3017d3d46cbfc4bbd88aab006650/&quot;&gt;&lt;/script&gt;
+
+
+&lt;pre&gt;&lt;code&gt;
+三个文件都需要先下载再运行，且第二个文件的尺寸远大于另外两个文件。但结果依然是弹出三个alert，内容分别是”A”、”B”、”C”。
+javascript脚本一般情况有三种嵌入页面的方式：
+
+* 把它放在head标签内。在下载script引入的外部脚本时，浏览器处于阻塞状态，网络不好或者script文件过大时，页面处于空白停顿状态，体验是并不够好。
+* 把它放入页面底部。这是大家公认的提高前端页面性能和体验的方法，但还是存在一定的问题，放在页面底部的脚本是要等到页面文档流下载完毕才去下载、执行，页面中的交互会存在一个延迟的时间去实现。虽然页面显示时间变短了，但交互却被延后了。体验也不够好。
+* 按需执行。在head标签内引入部分公共脚本，在每一个需要交互的HTML元素之后插入script立即执行，需要特定条件才执行的脚本放到页面最底部。这也不是一个完美的解决方案，一则页面内穿插过多的script标签引起维护不便，二来底部脚本还未加载完时用户便触发了某个条件该怎么办？虽有方法实现，但体验仍不够好。
+
+为了解决以上问题，我们要想办法实现脚本的异步执行。
+
+### 动态创建`&amp;lt;script&amp;gt;`标签
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;script&gt; 
+var oScript= document.createElement(&quot;script&quot;); 
+oScript.type = &quot;text/javascript&quot;; 
+oScript.src=&quot;test.js&quot;; 
+document.body.appendChild( oScript); 
+&lt;/script&gt;
+
+
+&lt;p&gt;
+```&lt;/p&gt;
+
+&lt;p&gt;通过动态创建script标签，让脚本延迟执行。&lt;/p&gt;
+
+&lt;h3&gt;async属性&lt;/h3&gt;
+
+&lt;p&gt;async表示该script标签并不阻塞，也不同步执行。浏览器只需要在脚本下载完毕后再执行即可——不必阻塞页面渲染等待该脚本的下载和执行。
+如下代码，会得到三个alert，但是alert的内容分别是”A”,”C”,”B”。表明脚本二并没有阻塞脚本三的执行。原理跟方法1近似。&lt;/p&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;!-- HTML code --&gt;
+
+
+&lt;script  src=&quot;https://snipt.net/raw/7b08744009c450e07c0bfc1d606fc72e/&quot;&gt;&lt;/script&gt;
+
+
+&lt;script  src=&quot;https://snipt.net/raw/a2e8c05c1f6fc0e47d259aa899304e89/&quot; async=true&gt;&lt;/script&gt;
+
+
+&lt;script  src=&quot;https://snipt.net/raw/4fab3017d3d46cbfc4bbd88aab006650/&quot;&gt;&lt;/script&gt;
+
+
+&lt;pre&gt;&lt;code&gt;
+### defer属性
+
+带有defer属性的脚本，同样会推迟脚本的执行，并且不会阻止文档解析。就如同这个脚本，放置到了文档的末尾（&amp;lt;/body&amp;gt;之前）。
+
+如下代码的宏观现象和加了async属性的例子是一样的，都会得到”A”、”C”、”B”的三个alert。但是其原理是不一样的。
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;!-- HTML code --&gt;
+
+
+&lt;script  src=&quot;https://snipt.net/raw/7b08744009c450e07c0bfc1d606fc72e/&quot;&gt;&lt;/script&gt;
+
+
+&lt;script  src=&quot;https://snipt.net/raw/a2e8c05c1f6fc0e47d259aa899304e89/&quot; defer=true&gt;&lt;/script&gt;
+
+
+&lt;script  src=&quot;https://snipt.net/raw/4fab3017d3d46cbfc4bbd88aab006650/&quot;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;p&gt;defer属性是会确保脚本在文档解析完毕后执行的——即使这个脚本在文档解析过程中就已经下载完毕变成可执行的状态，浏览器也会推迟这个脚本的执行，直到文档解析完毕。&lt;/p&gt;
+
+&lt;p&gt;同时，带有defer的脚本彼此之间，能保证其执行顺序。
+通过将script标签放置到文档末尾这种简单的做法达到defer属性一样的效果。&lt;/p&gt;
+
+&lt;p&gt;defer属性早在IE4就被支持，但是这个defer属性和现代浏览器的行为是有区别的。只有IE10以上，才开始按照标准执行defer属性。&lt;/p&gt;
+
+&lt;h3&gt;defer 和 async 的影响&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;仅有async属性，脚本会异步执行&lt;/li&gt;
+&lt;li&gt;仅有defer属性，脚本会在文档解析完毕后执行&lt;/li&gt;
+&lt;li&gt;两个属性都没有，脚本会被同步下载并执行，期间会柱塞文档解析&lt;/li&gt;
+&lt;/ul&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
+   <title>javascript——对象</title>
+   <link href="http://enml.github.io/blog/2013/09/08/js-object"/>
+   <updated>2013-09-08T00:00:00+08:00</updated>
+   <id>http://enml.github.io/blog/2013/09/08/js-object</id>
+   <content type="html">&lt;h1&gt;javascript——对象&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;h2&gt;创建对象&lt;/h2&gt;
+
+&lt;h3&gt;对象直接量&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;var o = {
+foo : &quot;bar&quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;构造函数&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;var o = new Object();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;原型继承&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;var p = Object.create(o);
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;类继承&lt;/h2&gt;
+
+&lt;p&gt;Javascript对象拥有自有属性和继承属性。&lt;/p&gt;
+
+&lt;p&gt;在查询对象o的属性x时，先查找o中的属性x，如果没找到，则查找o的原型对象中的x属性，直到查找到x或者一个原型是null的对象为止&lt;/p&gt;
+
+&lt;p&gt;在给对象o的x属性赋值时，如果o中已经有一个自有属性x，则改变x的值，若o中不存在属性x，则为o创建一个x属性并赋值&lt;/p&gt;
+
+&lt;p&gt;也就是说，只有在查询时原型链才会起作用。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var O = {
+x : 1
+};
+
+function P() {
+this.y = 2;
+}
+
+P.prototype = O;
+
+var t = new P();
+console.log(t);
+console.log(&#39;x&#39; in t);//true
+console.log(t.hasOwnProperty(&#39;x&#39;));//false
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;可以使用in 或者 hasOwnProperty 来判断对象中是否存在属性。&lt;/p&gt;
+
+&lt;h2&gt;对象属性&lt;/h2&gt;
+
+&lt;h3&gt;遍历对象属性&lt;/h3&gt;
+
+&lt;p&gt;可以使用 for..in 来遍历对象的属性&lt;/p&gt;
+
+&lt;p&gt;使用for..in时会遍历到原型链上的属性。遍历顺序是以广度优先遍历&lt;/p&gt;
+
+&lt;p&gt;所以使用hasOwnProperty便可以判断是否是对象自有的属性。&lt;/p&gt;
+
+&lt;h3&gt;对象属性的特性&lt;/h3&gt;
+
+&lt;p&gt;使用Object.getOwnPropertyDescriptor()获取对象特定属性的描述符&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;可写性(writable) 表示对象属性是否可写&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;例如&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var o = {
+    foo : &#39;bar&#39;
+}
+
+Object.defineProperty(o, &quot;foo&quot;, { writable : false });
+
+o.foo = &#39;world&#39;;
+console.log(o.foo);//仍然输出bar
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;可枚举性(enumerable) 表示对象属性是否可枚举&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;例如
+Array中的length等属性的 enumerable是false，所以，&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;for (p in Array) {
+    console.log(p);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;什么也不输出&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;可配置性(configurable) 表示可否修改属性的可配置性和可枚举性&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;可以用Object.defineProperties来定义这些配置属性。&lt;/p&gt;
+
+&lt;p&gt;Object.defineProperty(o, &quot;foo&quot;, { writable : false });
+Get 表示获取对象属性的方法
+Set 表示设置对象属性的方法&lt;/p&gt;
+
+&lt;p&gt;示例&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var book = {
+    _year: 2004,
+    edition: 1
+};
+Object.defineProperty(book, &quot;year&quot;, {
+    get: function () {
+        console.log(&#39;get year&#39;);
+        return this._year;
+    },
+    set: function (newValue) {
+        console.log(&#39;set year&#39;);
+        if (newValue &amp;gt; 2004) {
+            this._year = newValue;
+            this.edition += newValue - 2004;
+        }
+    }
+});
+book.year = 2005;//控制台输出‘set year’
+console.log(book.year);//控制台输出‘get year’和year的值
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;对象方法&lt;/h2&gt;
+
+&lt;p&gt;toString 将对象转换成字符串，默认的转换会是[object Object]之类的东西，所以需要转成json格式的话可以用JSON.stringify&lt;/p&gt;
+
+&lt;p&gt;valueOf 需要将对象转换成其他类型的时候要用到。同样的，默认转换没什么值得说的。&lt;/p&gt;
+
+&lt;p&gt;可执行对象&lt;/p&gt;
+
+&lt;p&gt;通过如下方法可以创建一个可执行对象&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function bar(o) {
+    var f = function() { return &quot;Hello World!&quot;; }
+    o.__proto__ = f.__proto__;
+    f.__proto__ = o;
+    return f;
+}
+
+var o = { x: 5 };
+var foo = bar(o);
+
+console.log(foo());
+console.log(foo.x);
+console.log(typeof foo);//function
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;既可以当作对象来使用（有原型链），也可以当作函数来直接调用&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
    <title>javascript——数组</title>
    <link href="http://enml.github.io/blog/2013/08/11/javascript-array"/>
    <updated>2013-08-11T00:00:00+08:00</updated>
@@ -2077,6 +2607,54 @@ console.log(add1(2));
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;curry创建了一个新函数，在新函数的闭包中保存了原先传递的参数。&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>javascript：innerHTML</title>
+   <link href="http://enml.github.io/blog/2013/07/01/js-innerHtml"/>
+   <updated>2013-07-01T00:00:00+08:00</updated>
+   <id>http://enml.github.io/blog/2013/07/01/js-innerHtml</id>
+   <content type="html">&lt;h1&gt;javascript：innerHTML&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;div id=&quot;test&quot;&gt;
+   &lt;span style=&quot;color:red&quot;&gt;hello&lt;/span&gt; world!
+&lt;/div&gt;
+
+
+&lt;p&gt;&lt;a href=&quot;javascript:alert(test.innerHTML)&quot;&gt;innerHTML内容&lt;/a&gt;
+&lt;a href=&quot;javascript:alert(test.innerText)&quot;&gt;inerText内容&lt;/a&gt;
+&lt;a href=&quot;javascript:alert(test.outerHTML)&quot;&gt;outerHTML内容&lt;/a&gt;
+```&lt;/p&gt;
+
+&lt;p&gt;以上代码很好的说明了&lt;code&gt;innerHTML&lt;/code&gt;、&lt;code&gt;innerText&lt;/code&gt;、&lt;code&gt;outerHTML&lt;/code&gt;的功能。
+* &lt;code&gt;test.innerHTML&lt;/code&gt;:&lt;/p&gt;
+
+&lt;p&gt;　　也就是从对象的起始位置到终止位置的全部内容,包括Html标签。&lt;/p&gt;
+
+&lt;p&gt;　　上例中的test.innerHTML的值也就是“&lt;code&gt;&amp;lt;span style=&quot;color:red&quot;&amp;gt;hello&amp;lt;/span&amp;gt; world!&lt;/code&gt;”。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;test.innerText&lt;/code&gt;:&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;　　从起始位置到终止位置的内容, 但它去除Html标签&lt;/p&gt;
+
+&lt;p&gt;　　上例中的test.innerText的值也就是“&lt;code&gt;hello world!&lt;/code&gt;”, 其中span标签去除了。&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;test.outerHTML&lt;/code&gt;:&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;　　除了包含innerHTML的全部内容外, 还包含对象标签本身。&lt;/p&gt;
+
+&lt;p&gt;　　上例中的test.outerHTML的值也就是&lt;code&gt;&amp;lt;div id=&quot;test&quot;&amp;gt;&amp;lt;span style=&quot;color:red&quot;&amp;gt;hello&amp;lt;/span&amp;gt; world!&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/p&gt;
 </content>
  </entry>
  

@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>javascript：innerHTML</title>
+    
+    <meta name="author" content="陈佳伟">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/site/assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css" rel="stylesheet">
+    <link href="/site/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="/site/assets/themes/twitter/css/prettify.css" rel="stylesheet" type="text/css">
+    <script src="/site/assets/themes/twitter/js/prettify.js"></script>
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+
+    <!-- atom & rss feed -->
+    <link href="/site/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/site/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+    
+<!--    font-awesome-->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  </head>
+
+  <body onload="prettyPrint()">
+    <div class="navbar">
+      <div class="navbar-inner">
+       <div class="nav-narrow">
+          <a class="brand" href="/site"><span class="fa fa-mortar-board (alias)">寂寞先生</span></a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/site/archive.html">文章</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/site/categories.html">分类</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/site/pages.html">页面</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/site/tags.html">标签</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-narrow">
+
+      <div class="content">
+        
+<!--
+<div class="page-header">
+  <h1>javascript：innerHTML <small>Supporting tagline</small></h1>
+</div>
+-->
+ 
+
+<div class="row-fluid post-full">
+  <div class="span12 ">
+    <div class="content card">
+        <div class="date_label">
+          <div class="day_month">
+          07/01
+          </div>
+          <div class="year">
+          2013
+          </div>
+        </div>
+      <h1>javascript：innerHTML</h1>
+
+<hr />
+
+<p>```</p>
+
+<div id="test">
+   <span style="color:red">hello</span> world!
+</div>
+
+
+<p><a href="javascript:alert(test.innerHTML)">innerHTML内容</a>
+<a href="javascript:alert(test.innerText)">inerText内容</a>
+<a href="javascript:alert(test.outerHTML)">outerHTML内容</a>
+```</p>
+
+<p>以上代码很好的说明了<code>innerHTML</code>、<code>innerText</code>、<code>outerHTML</code>的功能。
+* <code>test.innerHTML</code>:</p>
+
+<p>　　也就是从对象的起始位置到终止位置的全部内容,包括Html标签。</p>
+
+<p>　　上例中的test.innerHTML的值也就是“<code>&lt;span style="color:red"&gt;hello&lt;/span&gt; world!</code>”。</p>
+
+<ul>
+<li><code>test.innerText</code>:</li>
+</ul>
+
+
+<p>　　从起始位置到终止位置的内容, 但它去除Html标签</p>
+
+<p>　　上例中的test.innerText的值也就是“<code>hello world!</code>”, 其中span标签去除了。</p>
+
+<ul>
+<li><code>test.outerHTML</code>:</li>
+</ul>
+
+
+<p>　　除了包含innerHTML的全部内容外, 还包含对象标签本身。</p>
+
+<p>　　上例中的test.outerHTML的值也就是<code>&lt;div id="test"&gt;&lt;span style="color:red"&gt;hello&lt;/span&gt; world!&lt;/div&gt;</code></p>
+
+    </div>
+
+ 
+<!--
+    <ul class="tag_box inline ">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/site/categories.html#技术分享-ref">
+    		技术分享 <span>21</span>
+    	</a></li>
+    
+  
+
+
+    </ul>
+    
+
+  
+    <ul class="tag_box inline ">
+      <li><i class="icon-tags"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/site/tags.html#javascript-ref">javascript <span>15</span></a></li>
+    
+  
+
+
+
+    </ul>
+    -->
+    
+    <div class="pagination clearfix">
+      <ul class = "pull-right">
+      
+        <li class="prev"><a class="fa fa-arrow-circle-left" href="/site/2011/01/12/prime" title="javascript 算出某值以内的质数"> 前一篇</a></li>
+      
+        <li><a class="fa fa-th" href="/site/archive.html"> 所有日志</a></li>
+      
+        <li class="next"><a  href="/site/2013/08/03/javascript-function" title="javascript——函数">后一篇 <span class="fa fa-arrow-circle-right">  </span></a></li>
+      
+      </ul>
+    </div>
+    
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+</div>
+
+
+      </div>
+      
+      <footer class="card clearfix">
+        <span style="font-size:30px;"class="fa fa-github pull-left"></span><a href="https://github.com/enml/blog/tree/jekyll-blog" style="display:inline-block;padding-right:80px;border-right:1px solid #bbb">fork me on GitHub</a>
+        <p class="pull-right">&copy; 2011 陈佳伟
+          with help from <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+        
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
+

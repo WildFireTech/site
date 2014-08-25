@@ -1,0 +1,341 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>javascript的加载规则</title>
+    
+    <meta name="author" content="陈佳伟">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/site/assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css" rel="stylesheet">
+    <link href="/site/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="/site/assets/themes/twitter/css/prettify.css" rel="stylesheet" type="text/css">
+    <script src="/site/assets/themes/twitter/js/prettify.js"></script>
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+
+    <!-- atom & rss feed -->
+    <link href="/site/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/site/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+    
+<!--    font-awesome-->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  </head>
+
+  <body onload="prettyPrint()">
+    <div class="navbar">
+      <div class="navbar-inner">
+       <div class="nav-narrow">
+          <a class="brand" href="/site"><span class="fa fa-mortar-board (alias)">寂寞先生</span></a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/site/archive.html">文章</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/site/categories.html">分类</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/site/pages.html">页面</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/site/tags.html">标签</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-narrow">
+
+      <div class="content">
+        
+<!--
+<div class="page-header">
+  <h1>javascript的加载规则 <small>Supporting tagline</small></h1>
+</div>
+-->
+ 
+
+<div class="row-fluid post-full">
+  <div class="span12 ">
+    <div class="content card">
+        <div class="date_label">
+          <div class="day_month">
+          09/16
+          </div>
+          <div class="year">
+          2013
+          </div>
+        </div>
+      <h1>javascript的加载规则</h1>
+
+<hr />
+
+<p>以下代码，最终会产生三个alert依次为“A”、“B”、“C”。</p>
+
+<p>```</p>
+
+<!-- HTML Code -->
+
+
+<script>alert("A");</script>
+
+
+<script>alert("B");</script>
+
+
+<script>alert("C");</script>
+
+
+<pre><code>
+我们再考虑有网络请求的情况2：
+</code></pre>
+
+<!-- HTML code -->
+
+
+<script  src="https://snipt.net/raw/7b08744009c450e07c0bfc1d606fc72e/"></script>
+
+
+<script  src="https://snipt.net/raw/a2e8c05c1f6fc0e47d259aa899304e89/"></script>
+
+
+<script  src="https://snipt.net/raw/4fab3017d3d46cbfc4bbd88aab006650/"></script>
+
+
+<pre><code>
+三个文件都需要先下载再运行，且第二个文件的尺寸远大于另外两个文件。但结果依然是弹出三个alert，内容分别是”A”、”B”、”C”。
+javascript脚本一般情况有三种嵌入页面的方式：
+
+* 把它放在head标签内。在下载script引入的外部脚本时，浏览器处于阻塞状态，网络不好或者script文件过大时，页面处于空白停顿状态，体验是并不够好。
+* 把它放入页面底部。这是大家公认的提高前端页面性能和体验的方法，但还是存在一定的问题，放在页面底部的脚本是要等到页面文档流下载完毕才去下载、执行，页面中的交互会存在一个延迟的时间去实现。虽然页面显示时间变短了，但交互却被延后了。体验也不够好。
+* 按需执行。在head标签内引入部分公共脚本，在每一个需要交互的HTML元素之后插入script立即执行，需要特定条件才执行的脚本放到页面最底部。这也不是一个完美的解决方案，一则页面内穿插过多的script标签引起维护不便，二来底部脚本还未加载完时用户便触发了某个条件该怎么办？虽有方法实现，但体验仍不够好。
+
+为了解决以上问题，我们要想办法实现脚本的异步执行。
+
+### 动态创建`&lt;script&gt;`标签
+</code></pre>
+
+<script> 
+var oScript= document.createElement("script"); 
+oScript.type = "text/javascript"; 
+oScript.src="test.js"; 
+document.body.appendChild( oScript); 
+</script>
+
+
+<p>
+```</p>
+
+<p>通过动态创建script标签，让脚本延迟执行。</p>
+
+<h3>async属性</h3>
+
+<p>async表示该script标签并不阻塞，也不同步执行。浏览器只需要在脚本下载完毕后再执行即可——不必阻塞页面渲染等待该脚本的下载和执行。
+如下代码，会得到三个alert，但是alert的内容分别是”A”,”C”,”B”。表明脚本二并没有阻塞脚本三的执行。原理跟方法1近似。</p>
+
+<p>```</p>
+
+<!-- HTML code -->
+
+
+<script  src="https://snipt.net/raw/7b08744009c450e07c0bfc1d606fc72e/"></script>
+
+
+<script  src="https://snipt.net/raw/a2e8c05c1f6fc0e47d259aa899304e89/" async=true></script>
+
+
+<script  src="https://snipt.net/raw/4fab3017d3d46cbfc4bbd88aab006650/"></script>
+
+
+<pre><code>
+### defer属性
+
+带有defer属性的脚本，同样会推迟脚本的执行，并且不会阻止文档解析。就如同这个脚本，放置到了文档的末尾（&lt;/body&gt;之前）。
+
+如下代码的宏观现象和加了async属性的例子是一样的，都会得到”A”、”C”、”B”的三个alert。但是其原理是不一样的。
+</code></pre>
+
+<!-- HTML code -->
+
+
+<script  src="https://snipt.net/raw/7b08744009c450e07c0bfc1d606fc72e/"></script>
+
+
+<script  src="https://snipt.net/raw/a2e8c05c1f6fc0e47d259aa899304e89/" defer=true></script>
+
+
+<script  src="https://snipt.net/raw/4fab3017d3d46cbfc4bbd88aab006650/"></script>
+
+
+<p>```</p>
+
+<p>defer属性是会确保脚本在文档解析完毕后执行的——即使这个脚本在文档解析过程中就已经下载完毕变成可执行的状态，浏览器也会推迟这个脚本的执行，直到文档解析完毕。</p>
+
+<p>同时，带有defer的脚本彼此之间，能保证其执行顺序。
+通过将script标签放置到文档末尾这种简单的做法达到defer属性一样的效果。</p>
+
+<p>defer属性早在IE4就被支持，但是这个defer属性和现代浏览器的行为是有区别的。只有IE10以上，才开始按照标准执行defer属性。</p>
+
+<h3>defer 和 async 的影响</h3>
+
+<ul>
+<li>仅有async属性，脚本会异步执行</li>
+<li>仅有defer属性，脚本会在文档解析完毕后执行</li>
+<li>两个属性都没有，脚本会被同步下载并执行，期间会柱塞文档解析</li>
+</ul>
+
+
+    </div>
+
+ 
+<!--
+    <ul class="tag_box inline ">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/site/categories.html#技术分享-ref">
+    		技术分享 <span>19</span>
+    	</a></li>
+    
+  
+
+
+    </ul>
+    
+
+  
+    <ul class="tag_box inline ">
+      <li><i class="icon-tags"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/site/tags.html#javascript-ref">javascript <span>13</span></a></li>
+    
+  
+
+
+
+    </ul>
+    -->
+    
+    <div class="pagination clearfix">
+      <ul class = "pull-right">
+      
+        <li class="prev"><a class="fa fa-arrow-circle-left" href="/site/2013/08/11/javascript-array" title="javascript——数组"> 前一篇</a></li>
+      
+        <li><a class="fa fa-th" href="/site/archive.html"> 所有日志</a></li>
+      
+        <li class="next"><a  href="/site/2013/09/21/js-start" title="javascript的调用方法">后一篇 <span class="fa fa-arrow-circle-right">  </span></a></li>
+      
+      </ul>
+    </div>
+    
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+</div>
+
+
+      </div>
+      
+      <footer class="card clearfix">
+        <span style="font-size:30px;"class="fa fa-github pull-left"></span><a href="https://github.com/enml/blog/tree/jekyll-blog" style="display:inline-block;padding-right:80px;border-right:1px solid #bbb">fork me on GitHub</a>
+        <p class="pull-right">&copy; 2011 陈佳伟
+          with help from <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+        
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
+
