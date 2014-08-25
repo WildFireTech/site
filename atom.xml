@@ -4,7 +4,7 @@
  <title>寂寞先生</title>
  <link href="http://enml.github.io/blog/" rel="self"/>
  <link href="http://enml.github.io/blog"/>
- <updated>2014-08-22T22:00:46+08:00</updated>
+ <updated>2014-08-25T17:08:23+08:00</updated>
  <id>http://enml.github.io/blog</id>
  <author>
    <name>陈佳伟</name>
@@ -13,11 +13,176 @@
 
  
  <entry>
-   <title>javascript——构造函数与原型</title>
+   <title>javascript——自身属性与原型属性</title>
+   <link href="http://enml.github.io/blog/2014/06/21/js-prototype-chaim"/>
+   <updated>2014-06-21T00:00:00+08:00</updated>
+   <id>http://enml.github.io/blog/2014/06/21/js-prototype-chaim</id>
+   <content type="html">&lt;h1&gt;javascript——自身属性与原型属性&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;h2&gt;最基本的构造函数与实例的关系：&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;var Sub = function () {
+    this.name = &quot;Super&quot;;
+    this.bra = [1, 2, 3];
+}
+var sub1 = new Sub();
+var sub2 = new Sub();
+sub1.name = &quot;new&quot;;
+alert(sub1.name);//&quot;new&quot;
+alert(sub2.name);//&quot;Super&quot;,说明了name不会被sub1影响
+sub1.bra.push(4);
+alert(sub1.bra);//[1,2,3,4]
+alert(sub2.bra);//[1,2,3]，说明引用类型array仍然不会被sub1影响
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;可以看出构造函数自身的属性（无论直接类型还是引用类型），都是赋值一份copy给它的所有instance，因此每一个instance 的修改互相不影响。我们继续看：&lt;/p&gt;
+
+&lt;h2&gt;自身属性和prototype属性的区别：&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;var Super = function () {
+    this.name = &quot;Super&quot;;
+    this.bra = [1, 2, 3];
+}
+Super.prototype.newBra = [1,1,1,1];
+
+//创建Super的instance：①super1；②我们可以把Sub.prototype看成是Super的instance。
+var super1 = new Super();
+var Sub = function () {};
+Sub.prototype = new Super();//到这里我们可以看成 Sub.prototype和super1都是Super的instance
+
+var sub1 = new Sub();
+var sub2 = new Sub();
+
+//修改Super的`自身属性`
+Sub.prototype.bra.push(4);//不影响兄弟(super1)，但会影响自身的instance（sub1,sub2）
+alert(sub1.bra);//[1,2,3,4]
+alert(sub2.bra);//[1,2,3,4]
+alert(super1.bra);//[1,2,3] 构造函数`自身属性`是直接赋值给它的所有instance，也就是说Super本身的属性（name,bra，不管是直接类型还是引用类型）都是分别复制一份给super1和Sub.prototype，因此修改了Sub.prototype的属性（bra）并不会影响到super1。反之亦然。
+
+//修改Super的`prototype属性`
+Sub.prototype.newBra.push(2,2,2,2);
+sub1.newBra;//[1,1,1,1,2,2,2,2]
+super1.newBra;//[1,1,1,1,2,2,2,2];构造函数的prototype里的属性只是提供一个指针给所有的instance，因此修改了Sub.prototype的属性（newBra：引用类型）会影响到super1。修改Sub.prototype相当于是直接修改Super.prototype属性，因为它们通过原型链引用着同一个属性。
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;我们在来理清关于构造函数&lt;code&gt;自身属性&lt;/code&gt;和&lt;code&gt;prototype属性&lt;/code&gt;与instance之间的关系，先看图：&lt;/p&gt;
+
+&lt;p&gt;我们来总结一下：&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Sub.prototype 和 super1 都是通过 new Super()产生的，我们把它们两个叫做兄弟；同理sub1和sub2也是兄弟&lt;/li&gt;
+&lt;li&gt;&lt;ul&gt;
+&lt;li&gt;自身属性(图中a,B)：无论是直接类型还是引用类型，兄弟间互不影响，各自拥有一份父函数的copy。修改只是在自身作用域里修改。比如说③和⑤都是①的实例，都拥有①中所有属性的copy，修改③的属性相当于在③中修改，不会影响其他人。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+
+&lt;pre&gt;&lt;code&gt;var Super = function () {
+    this.name = &quot;Super&quot;;
+    this.bra = [1, 2, 3];
+}
+Super.prototype.newBra = [1,1,1,1];
+
+//创建Super的instance：①super1；②我们可以把Sub.prototype看成是Super的instance。
+var super1 = new Super();
+var Sub = function () {};
+Sub.prototype = new Super();//到这里我们可以看成 Sub.prototype和super1都是Super的instance
+
+var sub1 = new Sub();
+var sub2 = new Sub();
+
+//修改Super的`自身属性`
+Sub.prototype.bra.push(4);//不影响兄弟(super1)，但会影响自身的instance（sub1,sub2）
+alert(sub1.bra);//[1,2,3,4]
+alert(sub2.bra);//[1,2,3,4]
+alert(super1.bra);//[1,2,3] 构造函数`自身属性`是直接赋值给它的所有instance，也就是说Super本身的属性（name,bra，不管是直接类型还是引用类型）都是分别复制一份给super1和Sub.prototype，因此修改了Sub.prototype的属性（bra）并不会影响到super1。反之亦然。
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;* prototype属性(图中XXXXX)：* 修改：比如说通过⑥去修改①的prototype的属性——sub1.newBra.push(2,2,2,2)，那么因为原型属性是引用而非复制，因此sub1.newBra.push(2,2,2,2) ==&amp;gt; Sub.prototype.newBra.push(2,2,2,2) ==&amp;gt; Super.prototype.newBra.push(2,2,2,2)，也就是sub1会沿着原型链一直查找到最终的Super.prototype，在Super.prototype里去修改newBra属性，因此原型链上所有引用了改属性的实例都会被影响。
+
+```
+var Super = function () {
+this.name = &quot;Super&quot;;
+this.bra = [1, 2, 3];
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;}
+Super.prototype.newBra = [1,1,1,1];&lt;/p&gt;
+
+&lt;p&gt;//创建Super的instance：①super1；②我们可以把Sub.prototype看成是Super的instance。
+var super1 = new Super();
+var Sub = function () {};
+Sub.prototype = new Super();//到这里我们可以看成 Sub.prototype和super1都是Super的instance&lt;/p&gt;
+
+&lt;p&gt;var sub1 = new Sub();
+var sub2 = new Sub();&lt;/p&gt;
+
+&lt;p&gt;//修改Super的&lt;code&gt;prototype属性&lt;/code&gt;
+Sub.prototype.newBra.push(2,2,2,2);
+sub1.newBra;//[1,1,1,1,2,2,2,2]
+super1.newBra;//[1,1,1,1,2,2,2,2];构造函数的prototype里的属性只是提供一个指针给所有的instance，因此修改了Sub.prototype的属性（newBra：引用类型）会影响到super1。修改Sub.prototype相当于是直接修改Super.prototype属性，因为它们通过原型链引用着同一个属性。
+    ```&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;* 覆写：假如我们不是修改属性，而是直接覆写属性，那么情况也会不一样：* instance方法重载：
+
+```
+var Super = function () {
+    this.name = &quot;Super&quot;;
+    this.bra = [1, 2, 3];
+}
+Super.prototype.newBra = [1,1,1,1];
+
+//创建Super的instance：①super1；②我们可以把Sub.prototype看成是Super的instance。
+var super1 = new Super();
+var Sub = function () {};
+Sub.prototype = new Super();//到这里我们可以看成 Sub.prototype和super1都是Super的instance
+
+var sub1 = new Sub();
+var sub2 = new Sub();
+
+sub1.newBra = [2,2,2,2];
+sub1.newBra;//[2,2,2,2]
+sub2.newBra;//[2,2,2,2]
+super1.newBra;//[1,1,1,1] super1不受影响，实例覆写方法只会在sub2.__proto__的作用域里添加此方法，而不会修改到Super.prototype的方法
+```
+
+由于是覆写而不是修改，因此不会沿着原型链查找，而是在当前的作用域里添加该属性，而原来原型链上的那个属性依然还在，不受影响。这就实现了方法的重载。
+
+* 完全覆写：假如是在Super.prototype里对newBra进行覆写，那么所有引用该属性的实例都将被影响。
+
+```
+var Super = function () {
+    this.name = &quot;Super&quot;;
+    this.bra = [1, 2, 3];
+}
+Super.prototype.newBra = [1,1,1,1];
+
+//创建Super的instance：①super1；②我们可以把Sub.prototype看成是Super的instance。
+var super1 = new Super();
+var Sub = function () {};
+Sub.prototype = new Super();//到这里我们可以看成 Sub.prototype和super1都是Super的instance
+
+var sub1 = new Sub();
+var sub2 = new Sub();
+
+Super.prototype.newBra = [2,2,2,2];
+sub1.newBra;//[2,2,2,2]
+sub2.newBra;//[2,2,2,2]
+super1.newBra;//[2,2,2,2]
+```
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>javascript——构造函数与原型简介</title>
    <link href="http://enml.github.io/blog/2014/06/20/js-prototype"/>
    <updated>2014-06-20T00:00:00+08:00</updated>
    <id>http://enml.github.io/blog/2014/06/20/js-prototype</id>
-   <content type="html">&lt;h1&gt;javascript——构造函数与原型&lt;/h1&gt;
+   <content type="html">&lt;h1&gt;javascript——构造函数与原型简介&lt;/h1&gt;
 
 &lt;hr /&gt;
 
@@ -1550,11 +1715,11 @@ Point(x=3.0, y=5.0)
  </entry>
  
  <entry>
-   <title>javascript——构造函数与原型</title>
+   <title>javascript——数组</title>
    <link href="http://enml.github.io/blog/2013/08/11/javascript-array"/>
    <updated>2013-08-11T00:00:00+08:00</updated>
    <id>http://enml.github.io/blog/2013/08/11/javascript-array</id>
-   <content type="html">&lt;h1&gt;javascript——构造函数与原型&lt;/h1&gt;
+   <content type="html">&lt;h1&gt;javascript——数组&lt;/h1&gt;
 
 &lt;hr /&gt;
 

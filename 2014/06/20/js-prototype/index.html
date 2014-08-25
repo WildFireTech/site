@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>javascript——构造函数与原型</title>
+    <title>javascript——构造函数与原型简介</title>
     
     <meta name="author" content="陈佳伟">
 
@@ -127,13 +127,13 @@
           2014
           </div>
         </div>
-      <h1>javascript——构造函数与原型</h1>
+      <h1>javascript——构造函数与原型简介</h1>
 
 <hr />
 
 <p>首先，这篇文章要讲的重点是原型。但要讲原型就必须讲构造函数，将构造函数就必须讲对象。首先来看看对象。</p>
 
-<h3>新建一个对象的方法：</h3>
+<br><h3>新建一个对象的方法：</h3>
 
 <ul>
 <li>new Object:</li>
@@ -185,7 +185,7 @@ var newObj1 = new NewObj("keti","red");
 
 <p>说完构造函数，就不得不说原型了。</p>
 
-<h3>原型</h3>
+<br><h3>原型</h3>
 
 <p>原型是javascript里一个相当复杂的属性，那么我们先想想为什么要用原型呢？重新看看上面构造函数的例子，看上去很完美，但是假如我们现在想添加一个新的method，那怎么办？直接添加到构造函数里面？没错，这样是可以，但假如这个方法我们经常需要变动，比如说</p>
 
@@ -235,20 +235,59 @@ newObj1.num; //变成200了。
 
 <p>它生效了。因为构造函数创建实例的过程是直接给实例赋值，而不是引用，因此已经生成的实例是无法再从构造函数里获得更新的，而原型是引用，我们看图：</p>
 <img src="/site/image/prototype1.png" ><br>
-<h3>原型链</h3>
+<br><h3>原型链</h3>
 
 <p>我们通过上图可以看到所有的实例都是引用了同一个prototype，它们共享了prototype里的所有变量和方法。事实上，javascript中，所有的对象都有一个原型对象（prototype），原型对象中有一个constructor属性指向包含prototype属性的函数，当访问一个对象的属性（包括方法）时，首先查找这个对象自身有没有该属性，如果没有就查找它的原型（也就是<strong>proto</strong>指向的prototype对象），如果还没有就查找原型的原型（prototype也有它自己的<strong>proto</strong>，prototype对象），依此类推一直找到 Object 为止。</p>
 
 <p>这个属性查找机制事实上就是我们常说的<code>原型链</code>。下面这张神一样的图就是原型链：</p>
 <img src="/site/image/shen.png"><br>
-<h3>construct</h3>
+<p>一般情况下，构造函数的实例的__proto__是该构造函数的prototype，而构造函数的prototype的__proto__是Object.prototype，Object.prototype的__proto__为null。也就是说Object.prototype是原型链的末端。</p><p>我们再来看一下构造函数本身的__proto__: </p><br>
+ <pre class="prettyprint linenums">
+     var Foo = function(){};
+     Foo instanceof Function; //true
+     Object instanceof Function; //true
+     Function instanceof Object; //true
+     
+     Foo.__proto__ == Function.prototype; //true
+     Object.__proto__ == Function.prototype; //true
+     Array.__proto__ == Function.prototype; //true
+     Function.prototype.__proto__ == Object.prototype; //true
+     Function.__proto__ == Function.prototype; //true
+ </pre> <br>
+ 也就是说，构造函数、Array、Number、Object的__proto__ 都是Function.prototype，而更为神奇的是Function自身的__proto__也指向了Function.prototype。我画了个图说明他们之间的关系：
+ <img src="/site/image/prototype.jpg"><br>
+
+ <h3>方法继承与重载</h3><br>
+ <p>
+ 我们继续看上面的图，当我们创建了一个新的构造函数NewFoo，并把该构造函数的prototype指向new Foo()，此时，NewFoo的实例newfoo的__proto__就是new Foo()，也就是继承了Foo的方法。事实上，把NewFoo.prototype指向new Foo()看上去有点多此一举，因为我们要继承Foo的方法的话可以直接指向Foo.prototype就行了。但这就和我们接下来要说的<code>方法重载</code>有关系了。我们先看代码：</p>
+<pre class="prettyprint linenums">
+var Foo = function(){};
+Foo.prototype.sayHello = function(){
+    alert("hello, 我是第一个。")
+}
+var foo1 = new Foo();
+foo1.sayHello(); //"hello，我是第一个。"
+
+var NewFoo = function(){};
+NewFoo.prototype = new Foo();
+var newfoo1 = new NewFoo();
+newfoo1.sayHello(); //"hello，我是第一个。"
+
+//方法重载
+NewFoo.prototype.sayHello = function(){
+    alert("hello，我是修改后的。");
+}
+newfoo1.sayHello(); //"hello，我是修改后的。"
+foo1.sayHello(); //"hello，我是第一个。"
+</pre>
+<p>代码已经说明的很清楚了，相信大家看到这里都有了个清晰的概念了。我们上面所说的看上去多此一举的做法，其实就是为了实现方法的重载，这样我们在继承了Foo.prototype的方法后，可以修改NewFoo.prototype的方法但却不影响Foo.prototype原来的方法。</p>
+<br><h3>construct</h3>
 
 <p>正常情况下构造函数的prototype的constructor是构造函数本身，如下图：</p>
 <img src="/site/image/Camera360_20140821.jpg"><br>
 <p>但是，我们看代码：</p>
 
- <pre class="prettyprint linenums">var name = "Globle";
-
+ <pre class="prettyprint linenums">
 function NewObj(name, num) {
     this.name = name;
     this.num = num;
@@ -260,14 +299,14 @@ var a = new NewObj("fad", 100)
 console.log(a.constructor);//NewObj
 
 NewObj.prototype = {
-    age: this.name + "enm"
+    newName: this.name 
 };
 var b = new NewObj();
-b.age; //"Globle"
 console.log(b.constructor); //Object
 </pre>
 
 <p>很明显，当我们直接覆写prototype时，<code>b.constructor</code>指向的是 Object，而不再是原来的NewObj。这一点需格外小心，当然，有一个很简单的解决办法，就是通过显式指定 <code>constructor: NewObj</code>即可。</p>
+    <p>下一篇，我们重点分析继承的问题</p>
 
     </div>
 
