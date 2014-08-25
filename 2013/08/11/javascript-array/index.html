@@ -1,10 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="utf-8">
-    <title>javascript 自身属性与原型属性</title>
-
+    <title>javascript——数组</title>
+    
     <meta name="author" content="陈佳伟">
 
     <!-- Enable responsive viewport -->
@@ -21,7 +21,7 @@
     <link href="/site/assets/themes/twitter/css/prettify.css" rel="stylesheet" type="text/css">
     <script src="/site/assets/themes/twitter/js/prettify.js"></script>
     <!-- Le fav and touch icons -->
-    <!-- Update these with your own images
+  <!-- Update these with your own images
     <link rel="shortcut icon" href="images/favicon.ico">
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
     <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
@@ -31,268 +31,206 @@
     <!-- atom & rss feed -->
     <link href="/site/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
     <link href="/site/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+    
+<!--    font-awesome-->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  </head>
 
-    <!--    font-awesome-->
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-
-</head>
-
-<body onload="prettyPrint()">
+  <body onload="prettyPrint()">
     <div class="navbar">
-        <div class="navbar-inner">
-            <div class="nav-narrow">
-                <a class="brand" href="/site"><span class="fa fa-mortar-board (alias)">寂寞先生</span></a>
-                <ul class="nav">
+      <div class="navbar-inner">
+       <div class="nav-narrow">
+          <a class="brand" href="/site"><span class="fa fa-mortar-board (alias)">寂寞先生</span></a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/site/archive.html">文章</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/site/categories.html">分类</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/site/pages.html">页面</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/site/tags.html">标签</a></li>
+      	
+      
+    
+  
 
 
 
-
-
-
-
-
-
-                    <li><a href="/site/archive.html">文章</a>
-                    </li>
-
-
-
-
-
-
-
-
-
-
-                    <li><a href="/site/categories.html">分类</a>
-                    </li>
-
-
-
-
-
-
-
-
-
-
-                    <li><a href="/site/pages.html">页面</a>
-                    </li>
-
-
-
-
-
-
-
-
-
-
-                    <li><a href="/site/tags.html">标签</a>
-                    </li>
-
-
-
-
-
-
-
-                </ul>
-            </div>
+          </ul>
         </div>
+      </div>
     </div>
 
     <div class="container-narrow">
 
-        <div class="content">
-
-            <!--
+      <div class="content">
+        
+<!--
 <div class="page-header">
-  <h1>javascript——自身属性与原型属性 <small>Supporting tagline</small></h1>
+  <h1>javascript——构造函数与原型 <small>Supporting tagline</small></h1>
 </div>
 -->
+ 
 
+<div class="row-fluid post-full">
+  <div class="span12 ">
+    <div class="content card">
+        <div class="date_label">
+          <div class="day_month">
+          08/11
+          </div>
+          <div class="year">
+          2013
+          </div>
+        </div>
+      <h1>javascript——数组</h1>
 
-            <div class="row-fluid post-full">
-                <div class="span12 ">
-                    <div class="content card">
-                        <div class="date_label">
-                            <div class="day_month">
-                                06/21
-                            </div>
-                            <div class="year">
-                                2014
-                            </div>
-                        </div>
-                        <h1>javascript自身属性与原型属性</h1>
+<hr />
 
-                        <hr />
+<h3>创建数组</h3>
 
-                        <h2>最基本的构造函数与实例的关系：</h2>
+<p>数组字面量 ：</p>
 
-                        <pre class="prettyprint linenums">var Sub = function () {
-    this.name = "Super";
-    this.bra = [1, 2, 3];
-}
-var sub1 = new Sub();
-var sub2 = new Sub();
-sub1.name = "new";
-alert(sub1.name);//"new"
-alert(sub2.name);//"Super",说明了name不会被sub1影响
-sub1.bra.push(4);
-alert(sub1.bra);//[1,2,3,4]
-alert(sub2.bra);//[1,2,3]，说明引用类型array仍然不会被sub1影响
+<pre class="prettyprint linenums">var a = [1, 2, 3];
 </pre>
 
-                        <p>可以看出构造函数自身的属性（无论直接类型还是引用类型），都是赋值一份copy给它的所有instance，因此每一个instance 的修改互相不影响。我们继续看：</p>
+<p>使用构造函数 :</p>
 
-                        <h2>自身属性和prototype属性的区别：</h2>
-
-                        <pre class="prettyprint linenums">var Super = function () {
-    this.name = "Super";
-    this.bra = [1, 2, 3];
-}
-Super.prototype.newBra = [1,1,1,1];
-
-//创建Super的instance：①super1；②我们可以把Sub.prototype看成是Super的instance。
-var super1 = new Super();
-var Sub = function () {};
-Sub.prototype = new Super();//到这里我们可以看成 Sub.prototype和super1都是Super的instance
-
-var sub1 = new Sub();
-var sub2 = new Sub();
-
-//修改Super的`自身属性`
-Sub.prototype.bra.push(4);//不影响兄弟(super1)，但会影响自身的instance（sub1,sub2）
-alert(sub1.bra);//[1,2,3,4]
-alert(sub2.bra);//[1,2,3,4]
-alert(super1.bra);//[1,2,3] 构造函数`自身属性`是直接赋值给它的所有instance，也就是说Super本身的属性（name,bra，不管是直接类型还是引用类型）都是分别复制一份给super1和Sub.prototype，因此修改了Sub.prototype的属性（bra）并不会影响到super1。反之亦然。
-
-//修改Super的`prototype属性`
-Sub.prototype.newBra.push(2,2,2,2);
-sub1.newBra;//[1,1,1,1,2,2,2,2]
-super1.newBra;//[1,1,1,1,2,2,2,2];构造函数的prototype里的属性只是提供一个指针给所有的instance，因此修改了Sub.prototype的属性（newBra：引用类型）会影响到super1。修改Sub.prototype相当于是直接修改Super.prototype属性，因为它们通过原型链引用着同一个属性。
+<pre class="prettyprint linenums">var a = new Array();
 </pre>
 
-                        <p>我们在来理清关于构造函数<code>自身属性</code>和<code>prototype属性</code>与instance之间的关系，先看图：</p>
-                        <img src="/site/image/yuanxinglian.png">
-                        <br>
-                        <p>我们来总结一下：</p>
+<p>数组本质上是object(type of [ ] == 'object');</p>
 
-                        <ol>
-                            <li>Sub.prototype 和 super1 都是通过 new Super()产生的，我们把它们两个叫做兄弟；同理sub1和sub2也是兄弟</li>
-                            <li>
-                                <ul>
-                                    <li>自身属性(图中a,B)：无论是直接类型还是引用类型，兄弟间互不影响，各自拥有一份父函数的copy。修改只是在自身作用域里修改。比如说③和⑤都是①的实例，都拥有①中所有属性的copy，修改③的属性相当于在③中修改，不会影响其他人。</li>
-                                    <pre class="prettyprint linenums">var Super = function () {
-    this.name = "Super";
-    this.bra = [1, 2, 3];
-}
-Super.prototype.newBra = [1,1,1,1];
+<p>所以要判断是不是数组，需要通过判断constructor。</p>
 
-//创建Super的instance：①super1；②我们可以把Sub.prototype看成是Super的instance。
-var super1 = new Super();
-var Sub = function () {};
-Sub.prototype = new Super();//到这里我们可以看成 Sub.prototype和super1都是Super的instance
+<pre class="prettyprint linenums">[].constructor//Array
+</pre>
+<br>
+<h3>数组长度</h3>
 
-var sub1 = new Sub();
-var sub2 = new Sub();
+<p>使用<code>length</code>属性获取元素的个数。
+数组的<code>length</code>属性是可写的。当<code>length</code>属性小于元素个数时，数组中索引值大于<code>length</code>属性的元素会被删掉。</p>
+<br>
+<h3>数组元素的添加和删除</h3>
 
-//修改Super的`自身属性`
-Sub.prototype.bra.push(4);//不影响兄弟(super1)，但会影响自身的instance（sub1,sub2）
-alert(sub1.bra);//[1,2,3,4]
-alert(sub2.bra);//[1,2,3,4]
-alert(super1.bra);//[1,2,3] 构造函数`自身属性`是直接赋值给它的所有instance，也就是说Super本身的属性（name,bra，不管是直接类型还是引用类型）都是分别复制一份给super1和Sub.prototype，因此修改了Sub.prototype的属性（bra）并不会影响到super1。反之亦然。
+<ul>
+<li><code>push</code> ：从数组尾部添加</li>
+<li><code>unshift</code> ：从数组头部添加</li>
+<li><code>pop</code> ：从尾部弹出</li>
+<li><code>shift</code> ：从头部弹出</li>
+</ul>
+
+<br>
+<h3>数组方法</h3>
+<img src="/site/image/array.png"><br>
+<ul>
+<li><code>join</code> 将数组中所有元素转换成字符串并连接在一起</li>
+<li><code>reverse</code> 将数组中成员颠倒排序</li>
+<li><code>sort</code> 将数组元素排序，可以指定一个排序函数</li>
+<li><code>contact</code> 将数组连接起来</li>
+<li><code>slice</code> 返回指定数组的一个片段或子数组</li>
+<li><code>splice</code> 从数组中插入或删除元素</li>
+</ul>
+
+
+<pre class="prettyprint linenums">var a = [1, 2, 3, 4];
+var b = a.splice(1,2);//a = 1,4,b = 2,3
+</pre>
+<br>
+<h3>ECMAScript 5中的数组新方法</h3>
+
+<ul>
+<li><code>forEach</code> 从头到尾遍历数组，为每个元素调用制定的函数</li>
+<li><code>map</code> 把数组的每个元素传给指定的函数，并返回一个数组。</li>
+</ul>
+
+
+<pre class="prettyprint linenums">var a = [1, 2, 3];
+var b = a.map(function(x) {
+                        return x*x;
+                    }); 
+b = [1,4,9]
 </pre>
 
-                                    <li>prototype属性(图中XXXXX)：
-                                        <ul>
-                                            <li>修改：比如说通过⑥去修改①的prototype的属性——sub1.newBra.push(2,2,2,2)，那么因为原型属性是引用而非复制，因此sub1.newBra.push(2,2,2,2) ==&gt; Sub.prototype.newBra.push(2,2,2,2) ==&gt; Super.prototype.newBra.push(2,2,2,2)，也就是sub1会沿着原型链一直查找到最终的Super.prototype，在Super.prototype里去修改newBra属性，因此原型链上所有引用了改属性的实例都会被影响。
+<ul>
+<li><code>filter</code> 把数组的每个元素传给指定的函数，通过函数返回的布尔值决定是否在返回数组中添加该元素</li>
+</ul>
 
-                                                <pre class="prettyprint linenums">
-var Super = function () {
-this.name = "Super";
-this.bra = [1, 2, 3];
-}
-Super.prototype.newBra = [1,1,1,1];//创建Super的instance：①super1；②我们可以把Sub.prototype看成是Super的instance。
-var super1 = new Super();
-var Sub = function () {};
-Sub.prototype = new Super();//到这里我们可以看成 Sub.prototype和super1都是Super的instance
 
-var sub1 = new Sub();
-var sub2 = new Sub();
-//修改Super的<code>prototype属性</code>
-Sub.prototype.newBra.push(2,2,2,2);
-sub1.newBra;//[1,1,1,1,2,2,2,2]
-super1.newBra;//[1,1,1,1,2,2,2,2];构造函数的prototype里的属性只是提供一个指针给所有的instance，因此修改了Sub.prototype的属性（newBra：引用类型）会影响到super1。修改Sub.prototype相当于是直接修改Super.prototype属性，因为它们通过原型链引用着同一个属性。
-</pre>
-                                            </li>
-
-                                            <li>覆写：假如我们不是修改属性，而是直接覆写属性，那么情况也会不一样：
-                                                <ul>
-                                                    <li>instance方法重载：
-
-                                                        <pre class="prettyprint linenums">
-var Super = function () {
-    this.name = "Super";
-    this.bra = [1, 2, 3];
-}
-Super.prototype.newBra = [1,1,1,1];
-
-//创建Super的instance：①super1；②我们可以把Sub.prototype看成是Super的instance。
-var super1 = new Super();
-var Sub = function () {};
-Sub.prototype = new Super();//到这里我们可以看成 Sub.prototype和super1都是Super的instance
-
-var sub1 = new Sub();
-var sub2 = new Sub();
-
-sub1.newBra = [2,2,2,2];
-sub1.newBra;//[2,2,2,2]
-sub2.newBra;//[2,2,2,2]
-super1.newBra;//[1,1,1,1] super1不受影响，实例覆写方法只会在sub2.__proto__的作用域里添加此方法，而不会修改到Super.prototype的方法
+<pre class="prettyprint linenums">var a = [1, 2, 3];
+var b = a.filter(function(x){
+                        return x % 2 !== 0;
+                        });
+b = [1, 3]
 </pre>
 
-                                                        <p>由于是覆写而不是修改，因此不会沿着原型链查找，而是在当前的作用域里添加该属性，而原来原型链上的那个属性依然还在，不受影响。这就实现了方法的重载。</p>
-                                                    </li>
+<ul>
+<li><p><code>every</code> 把数组的每个元素传给指定的函数，如果全部调用返回true则every函数返回true</p></li>
+<li><p><code>some</code> 把数组的每个元素传给指定的函数，如果有调用返回true则every函数返回true</p></li>
+<li><code>reduce</code> 用指定的函数对数组进行组合，生成单个值</li>
+</ul>
 
-                                                    <li>完全覆写：假如是在Super.prototype里对newBra进行覆写，那么所有引用该属性的实例都将被影响。
 
-                                                        <pre class="prettyprint linenums">
-var Super = function () {
-    this.name = "Super";
-    this.bra = [1, 2, 3];
-}
-Super.prototype.newBra = [1,1,1,1];
-
-//创建Super的instance：①super1；②我们可以把Sub.prototype看成是Super的instance。
-var super1 = new Super();
-var Sub = function () {};
-Sub.prototype = new Super();//到这里我们可以看成 Sub.prototype和super1都是Super的instance
-
-var sub1 = new Sub();
-var sub2 = new Sub();
-
-Super.prototype.newBra = [2,2,2,2];
-sub1.newBra;//[2,2,2,2]
-sub2.newBra;//[2,2,2,2]
-super1.newBra;//[2,2,2,2]
+<pre class="prettyprint linenums">var a = [1, 2, 3];
+var b = a.reduce(function(x, y){
+                            return x + y;
+                        }, 0); 
+b = 6;
 </pre>
-                                                    </li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ol>
+
+<ul>
+<li><code>indexOf/lastIndexOf</code> 在整个数组中搜索指定的元素</li>
+</ul>
 
 
+    </div>
 
-                    </div>
-
-
-                    <!--
+ 
+<!--
     <ul class="tag_box inline ">
       <li><i class="icon-folder-open"></i></li>
       
@@ -302,7 +240,7 @@ super1.newBra;//[2,2,2,2]
   
      
     	<li><a href="/site/categories.html#技术分享-ref">
-    		技术分享 <span>16</span>
+    		技术分享 <span>15</span>
     	</a></li>
     
   
@@ -320,7 +258,7 @@ super1.newBra;//[2,2,2,2]
 
   
      
-    	<li><a href="/site/tags.html#javascript-ref">javascript <span>10</span></a></li>
+    	<li><a href="/site/tags.html#javascript-ref">javascript <span>9</span></a></li>
     
   
 
@@ -328,62 +266,57 @@ super1.newBra;//[2,2,2,2]
 
     </ul>
     -->
-
-                    <div class="pagination clearfix">
-                        <ul class="pull-right">
-
-                            <li class="prev"><a class="fa fa-arrow-circle-left" href="/site/2014/06/20/js-prototype" title="javascript——构造函数与原型简介"> 前一篇</a>
-                            </li>
-
-                            <li><a class="fa fa-th" href="/site/archive.html"> 所有日志</a>
-                            </li>
-
-                            <li class="next disabled"><a>后一篇 <span class="fa fa-arrow-circle-right">  </span></a>
-
-                        </ul>
-                    </div>
-
-
+    
+    <div class="pagination clearfix">
+      <ul class = "pull-right">
+      
+        <li class="prev"><a class="fa fa-arrow-circle-left" href="/site/2011/01/12/prime" title="javascript 算出某值以内的质数"> 前一篇</a></li>
+      
+        <li><a class="fa fa-th" href="/site/archive.html"> 所有日志</a></li>
+      
+        <li class="next"><a  href="/site/2014/04/21/future" title="后智能手机时代">后一篇 <span class="fa fa-arrow-circle-right">  </span></a></li>
+      
+      </ul>
+    </div>
+    
+    
 
 
-                    <div id="disqus_thread"></div>
-                    <script type="text/javascript">
-                        var disqus_developer = 1;
-                        var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
-
-                        /* * * DON'T EDIT BELOW THIS LINE * * */
-                        (function () {
-                            var dsq = document.createElement('script');
-                            dsq.type = 'text/javascript';
-                            dsq.async = true;
-                            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-                            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-                        })();
-                    </script>
-                    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
-                    </noscript>
-                    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
 
 
 
 
-                </div>
-            </div>
+  </div>
+</div>
 
 
-        </div>
-
-        <footer class="card clearfix">
-            <span style="font-size:30px;" class="fa fa-github pull-left"></span><a href="https://github.com/enml/blog/tree/jekyll-blog" style="display:inline-block;padding-right:80px;border-right:1px solid #bbb">fork me on GitHub</a>
-            <p class="pull-right">&copy; 2011 陈佳伟 with help from <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
-            </p>
-
-        </footer>
+      </div>
+      
+      <footer class="card clearfix">
+        <span style="font-size:30px;"class="fa fa-github pull-left"></span><a href="https://github.com/enml/blog/tree/jekyll-blog" style="display:inline-block;padding-right:80px;border-right:1px solid #bbb">fork me on GitHub</a>
+        <p class="pull-right">&copy; 2011 陈佳伟
+          with help from <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+        
+      </footer>
 
     </div>
 
-
-</body>
-
+    
+  </body>
 </html>
 
