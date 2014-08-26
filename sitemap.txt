@@ -22,11 +22,7 @@ http://enml.github.io/blog/2014/05/20/collect_color
 http://enml.github.io/blog/2014/05/20/HTTP
 http://enml.github.io/blog/2014/05/10/template
 http://enml.github.io/blog/2014/05/03/view_render
-http://enml.github.io/blog/2014/04/27/install-jekyll
 http://enml.github.io/blog/2014/04/25/python-code
-http://enml.github.io/blog/2014/04/24/directory
-http://enml.github.io/blog/2014/04/23/finish-jekyll
-http://enml.github.io/blog/2014/04/23/chinese-messy-code
 http://enml.github.io/blog/2014/04/21/future
 http://enml.github.io/blog/2013/09/26/js-leak
 http://enml.github.io/blog/2013/09/21/js-start
@@ -35,4 +31,8 @@ http://enml.github.io/blog/2013/09/08/js-object
 http://enml.github.io/blog/2013/08/11/javascript-array
 http://enml.github.io/blog/2013/08/03/javascript-function
 http://enml.github.io/blog/2013/07/01/js-innerHtml
-http://enml.github.io/blog/2011/01/12/prime
+http://enml.github.io/blog/2013/01/12/prime
+http://enml.github.io/blog/2012/04/24/directory
+http://enml.github.io/blog/2012/04/23/chinese-messy-code
+http://enml.github.io/blog/2012/04/21/finish-jekyll
+http://enml.github.io/blog/2012/04/17/install-jekyll
