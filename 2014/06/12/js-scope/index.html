@@ -138,7 +138,8 @@
 <p>作用域是一个变量和函数的作用范围，javascript中函数内声明的所有变量在函数体内始终是可见的，在javascript中有全局作用域和局部作用域，但是没有块级作用域，局部变量的优先级高于全局变量。</p>
 <h3>1. Hoisting</h3>
 
-<pre class="prettyprint linenums"> var me="global";
+<pre class="prettyprint linenums"> 
+var me="global";
 function scopeTest(){
     console.log(me);
     var me="local"  
@@ -148,14 +149,16 @@ scopeTest(); //undefined
 <p>
 此处的输出是undefined，上面的函数等效于：</p>
 
-<pre class="prettyprint linenums"> var me="global";
+<pre class="prettyprint linenums">
+var me="global";
 function scopeTest(){
     var me;
     console.log(me);
     me="local"  
 }
-scopeTest(); //local
+scopeTest(); 
  </pre>
+
 <p>注意，如果忘记var，那么变量就被声明为全局变量了。上面的例子还比较直观，下面这个初学者很容易忽略</p>
 <pre class="prettyprint linenums">
     var num1 = 10;
@@ -171,24 +174,63 @@ scopeTest(); //local
     test(); //返回2
 </pre>
 <p>我一开始还没理解hoisting的时候，对这个例子百思不得其解。安装hoisting原则，var会将declaration进行hoist，但是definition并不会hoist。在<code>var num1 = 1</code>这句代码里面，其实包含了两个语句，第一个是declaration（也就是声明）：<code>var num1;</code>，第二个是definition（定义赋值）：<code>num1 = 1;</code>根据hoisting原则，声明会被hoist到当前作用域的顶端，但不会对定义hoist。因此在这个例子里面，函数test()的作用域里num1的值为undefined，不等于10，因此最后赋值为2.</p><br>
+
+<p>声明除了 <code>var</code>还有<code>function</code>，<code>function</code>的优先级高于<code>var</code>，因此这里又是一个容易犯错的地方：</p>
+<pre class="prettyprint linenums">
+alert(a);    //输出：function a(){ alert('我是函数') }
+
+function a(){ alert('我是函数') }
+var a = '我是变量';
+
+alert(a);   //输出：'我是变量'
+</pre>
+<p>根据hoisting原则，上面代码等同于：</p>
+<pre class="prettyprint linenums">
+function a(){};
+var a;
+
+alert(a);
+function a(){alert('我是函数')};
+a = '我是变量';
+
+alert(a);
+</pre>
+<code>function</code>和<code>var</code>都得到hoisting，但<code>function</code>比<code>var</code>优先级高，因此默认a为函数，第一个alert(a)弹出函数体。后来<code>a='我是变量'</code>改写了a，因此后一个alert(a)为'我是变量'。
+
 <h3>2. 没有块级作用域</h3><p>
 我们知道，在很多常见的语言里面，有一个很重要的概念就是<code>block scope</code>，但在Javascript中没有块级作用域</p>
 
-<pre class="prettyprint linenums"> function scopeTest() {
+<pre class="prettyprint linenums"> 
+function scopeTest() {
     var scope = {};
     if (scope instanceof Object) {
-        var j = 1;
+        var value1 = 1;
         for (var i = 0; i < 10; i++) {
-            //console.log(i);
+                value1 += i;
         }
-        console.log(i); //输出10
+        console.log(value1); //输出46
     }
-    console.log(j);//输出1
-
 }
  </pre>
 
-<p>在if这个代码块里的变量j可以在代码块外面访问到，for代码块里的i同样能在for外访问到，说明对于javascript来说，不存在所谓的<code>block scope</code>。javascript只有<code>function scope</code>。下面代码说明了<code>function scope</code>的存在</p>
+<p>在if这个代码块里的变量j可以在代码块外面访问到，for代码块里的i同样能在for外访问到，说明对于javascript来说，不存在所谓的<code>block scope</code>。 ps：其实我们可以通过构建闭包来模仿块级作用域
+</p>
+<pre class="prettyprint linenums"> 
+function scopeTest() {
+    var scope = {};
+    if (scope instanceof Object) {
+        var value1 = 1;
+        for (var i = 0; i < 10; i++) {
+            (function(value1){
+                value1 += i;
+            })(value1)
+        }
+        console.log(value1); //输出1.相当于for代码块拥有了自己的作用域，不影响外部的value1。
+    }
+}
+ </pre>
+
+<p>javascript只有<code>function scope</code>。下面代码说明了<code>function scope</code>的存在</p>
 
 <pre class="prettyprint linenums"> var scope = "hello";
 function scopeTest() {

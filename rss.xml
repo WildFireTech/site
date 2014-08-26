@@ -5,8 +5,8 @@
         <description>寂寞先生 - 陈佳伟</description>
         <link>http://enml.github.io/blog</link>
         <link>http://enml.github.io/blog</link>
-        <lastBuildDate>2014-08-26T09:02:11+08:00</lastBuildDate>
-        <pubDate>2014-08-26T09:02:11+08:00</pubDate>
+        <lastBuildDate>2014-08-26T14:39:46+08:00</lastBuildDate>
+        <pubDate>2014-08-26T14:39:46+08:00</pubDate>
         <ttl>1800</ttl>
 
 
@@ -1605,6 +1605,84 @@ Point(x=3.0, y=5.0)
                 <link>http://enml.github.io/blog/2014/04/21/future</link>
                 <guid>http://enml.github.io/blog/2014/04/21/future</guid>
                 <pubDate>2014-04-21T00:00:00+08:00</pubDate>
+        </item>
+
+        <item>
+                <title>javascript：判断变量类型</title>
+                <description>&lt;h1&gt;javascript：判断变量类型&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;javascript中的变量类型是松散类型的，因而一个变量可以声明数字、布尔值、字符串等，如何检测一个变量的数据类型呢？常用的方法有一下几种：&lt;/p&gt;
+
+&lt;h3&gt;typeof操作符判断&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;var obj = {key:&#39;value&#39;},
+    arr = [&quot;hello&quot;,&quot;javascript&quot;],
+    fn  = function(){},
+    str = &quot;hello js&quot;,
+    num = 55,
+    bool = true,
+    User = function(){},
+    user = new User();
+/*typeof测试*/
+console.log(typeof obj);    //obj
+console.log(typeof arr);    //obj
+console.log(typeof fn);     //function
+console.log(typeof str);    //string
+console.log(typeof num);    //number
+console.log(typeof bool);   //boolean
+console.log(typeof user);   //object
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;缺点：不能很好的区分Object类型。*&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;h3&gt;构造函数属性来判断&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;var obj = {key:&#39;value&#39;},
+    arr = [&quot;hello&quot;,&quot;javascript&quot;],
+    fn  = function(){},
+    str = &quot;hello js&quot;,
+    num = 55,
+    bool = true,
+    User = function(){},
+    user = new User();
+/*constructor测试*/
+console.log(obj.constructor == Object); //true
+console.log(arr.constructor == Array);  //true
+console.log(str.constructor == String); //true
+console.log(num.constructor == Number); //true
+console.log(bool.constructor == Boolean);//true
+console.log(user.constructor == User);  //true
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;toString函数来判断&lt;/h3&gt;
+
+&lt;pre&gt;&lt;code&gt;var obj = {key:&#39;value&#39;},
+arr = [&quot;hello&quot;,&quot;javascript&quot;],
+fn  = function(){},
+str = &quot;hello js&quot;,
+num = 55,
+bool = true,
+User = function(){},
+user = new User();
+console.log(Object.prototype.toString.apply(obj));  //[object Object]
+console.log(Object.prototype.toString.apply(arr));  //[object Array]
+console.log(Object.prototype.toString.apply(fn));   //[object Function]
+console.log(Object.prototype.toString.apply(str));  //[object String]
+console.log(Object.prototype.toString.apply(num));  //[object Number]
+console.log(Object.prototype.toString.apply(bool)); //[object Boolean]
+console.log(Object.prototype.toString.apply(user)); //[object Object]
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;code&gt;Object.prototype.toString.apply(obj)等效obj.toString()&lt;/code&gt;。从原型链来理解的话，obj的 toString 方法是继承自 Object.prototype的。&lt;/p&gt;
+</description>
+                <link>http://enml.github.io/blog/2013/10/17/javascript-typeof</link>
+                <guid>http://enml.github.io/blog/2013/10/17/javascript-typeof</guid>
+                <pubDate>2013-10-17T00:00:00+08:00</pubDate>
         </item>
 
         <item>
