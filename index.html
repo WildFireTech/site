@@ -37,7 +37,7 @@
 
 </head>
 
-<body onload="prettyPrint()">
+<body >
     <div class="navbar">
         <div class="navbar-inner">
             <div class="nav-narrow">
@@ -118,13 +118,37 @@
                     <div class="card">
                         <div class="date_label">
                             <div class="day_month">
+                                05/23
+                            </div>
+                            <div class="year">
+                                2014
+                            </div>
+                        </div>
+                        <h1>canvas 总结之动画</h1>
+
+                        <hr />
+                        <form class="inputTime" method="get" action="">
+                            <input type="text" id="endTime" placeholder="输入倒计时时间" class="input text" value="10">
+                            <input type="button" value="倒计时" id="startCountdown" class="big button">
+                            <input type="button" value="停止倒计时" id="pauseCountdown" class="big button">
+
+                        </form>
+                        <canvas id="canvasOfClock"></canvas>
+
+                        <div class="read_more">
+                            <a class="fa fa-link" href="/site/2014/05/23/canvas_countdown">  查看全文&hellip;</a>
+                        </div>
+
+                       <div class="card">
+                        <div class="date_label">
+                            <div class="day_month">
                                 06/21
                             </div>
                             <div class="year">
                                 2014
                             </div>
                         </div>
-                        <h1>javascript——自身属性与原型属性</h1>
+                        <h1>javascript：自身属性与原型属性</h1>
 
                         <hr />
 
@@ -164,7 +188,7 @@ alert(sub2.bra);//[1,2,3]，说明引用类型array仍然不会被sub1影响
                                 2014
                             </div>
                         </div>
-                        <h1>javascript——构造函数与原型简介</h1>
+                        <h1>javascript构造函数与原型简介</h1>
 
                         <hr />
 
@@ -324,30 +348,7 @@ newObj.changeColor = function(color){
                     </div>
 
 
-                    <div class="card">
-                        <div class="date_label">
-                            <div class="day_month">
-                                05/23
-                            </div>
-                            <div class="year">
-                                2014
-                            </div>
-                        </div>
-                        <h1>canvas 总结之动画</h1>
-
-                        <hr />
-                        <form class="inputTime" method="get" action="">
-                            <input type="text" id="endTime" placeholder="输入倒计时时间" class="input text" value="10">
-                            <input type="button" value="倒计时" id="startCountdown" class="big button">
-                            <input type="button" value="停止倒计时" id="pauseCountdown" class="big button">
-
-                        </form>
-                        <canvas id="canvasOfClock"></canvas>
-
-                        <div class="read_more">
-                            <a class="fa fa-link" href="/site/2014/05/23/canvas_countdown">  查看全文&hellip;</a>
-                        </div>
-
+                    
                     </div>
                     <div class="card">
                         <div class="date_label">
@@ -764,7 +765,7 @@ function prime(num){
     </div>
 
     <script>
-        window.onload = canvasDrawClock();
+        window.onload = function(){canvasDrawClock();prettyPrint();}
         document.getElementById("startCountdown").addEventListener("click", canvasDrawClock);
 
         function canvasDrawClock() {
