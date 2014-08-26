@@ -76,6 +76,7 @@ h1 {
     color: #fff;
     border-radius: 5px;
     text-decoration: none;
+   transition:background-color 0.7 ease-out;
 }
 .tag_box a span {
     vertical-align: super;
@@ -121,6 +122,10 @@ h1 {
     border: 1px solid #00acac;
     color: #fff;
     float: left;
+    transition:box-shadow 0.5s ease-out;
+}
+.big.button:hover{
+    box-shadow:0px 0px 10px #aaa
 }
 .inputTime {
     margin-bottom: 100px;
