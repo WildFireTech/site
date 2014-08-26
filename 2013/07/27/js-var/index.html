@@ -1,0 +1,360 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>javascript：预解析</title>
+    
+    <meta name="author" content="陈佳伟">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/site/assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css" rel="stylesheet">
+    <link href="/site/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="/site/assets/themes/twitter/css/prettify.css" rel="stylesheet" type="text/css">
+    <script src="/site/assets/themes/twitter/js/prettify.js"></script>
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+
+    <!-- atom & rss feed -->
+    <link href="/site/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/site/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+    
+<!--    font-awesome-->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  </head>
+
+  <body onload="prettyPrint()">
+    <div class="navbar">
+      <div class="navbar-inner">
+       <div class="nav-narrow">
+          <a class="brand" href="/site"><span class="fa fa-mortar-board (alias)">寂寞先生</span></a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/site/archive.html">文章</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/site/categories.html">分类</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/site/pages.html">页面</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/site/tags.html">标签</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-narrow">
+
+      <div class="content">
+        
+<!--
+<div class="page-header">
+  <h1>javascript：预解析 <small>Supporting tagline</small></h1>
+</div>
+-->
+ 
+
+<div class="row-fluid post-full">
+  <div class="span12 ">
+    <div class="content card">
+        <div class="date_label">
+          <div class="day_month">
+          07/27
+          </div>
+          <div class="year">
+          2013
+          </div>
+        </div>
+      <h1>javascript：预解析</h1>
+
+<hr />
+
+<pre><code>alert(a);//报错,不是undefined
+a = 0;
+</code></pre>
+
+<pre><code>alert(a);    //undefined
+var a = 0;  //"var a"得到hoisting
+alert(a);   //0
+</code></pre>
+
+<pre><code>alert(a);    //function a(){ alert('我是函数') }
+var a = '我是变量'; //hoisting
+function a(){ alert('我是函数') }   //hoisting,优先级高于var
+alert(a);  // 我是变量
+</code></pre>
+
+<pre><code>var d ;
+alert(d);//：function d(){}
+var d = 1;//这里重新赋值，因此第二个alert的d=1；
+function d(){};//函数声明会hoisting，并且优先级高于var，因此第一个alert的d=function d(){}
+alert(d);//：1
+</code></pre>
+
+<pre><code>var d=1 ;
+alert(d);//：1
+function d(){};//函数声明会hoisting，但是被d=1赋值语句覆盖掉，因此两个都为d=1；
+alert(d);//：1
+</code></pre>
+
+<pre><code>alert(a);    //function a(){ alert('我是函数') }
+a++;    //强制转换为number，NaN
+alert(a);    //NaN, ++可以改变初始值
+var a = '我是变量';
+function a(){ alert('我是函数') }
+alert(a) ;//我是变量
+</code></pre>
+
+<pre><code>alert(a);    //undefined
+var a = 0;
+alert(a);    //0
+function fn(){
+    alert(a);    //undefined;遇到函数，重新进行预解析
+    var a = 2; //hoisting
+    alert(a);    //2
+}
+fn()
+alert(a);    //0,fn里面的a与全局的a不是同一作用域的
+</code></pre>
+
+<pre><code>alert(a);    //undefined
+var a = 0;
+alert(a);    //0
+function fn(){
+    alert(a);    //0;因为没var, 所以这里的a会被看作是全局的,往上查找，找到a=0,所以是0，如果全局也没有就会报错
+    a = 2;  //没有var,此处为全局变量
+    alert(a);    //2
+}
+fn()
+alert(a);    //2,fn把这全局的a修改了
+</code></pre>
+
+<pre><code>function fn(a){
+   alert(a);    //undefined,JS会把传参当作var一样对待,相当于在fn内部定义了一个变量--&gt; var a;
+   a = 2;
+   alert(a);    //2,这里修改的不是全局的哦,改的是fn的局部变量哦
+}
+fn()
+alert(a);    //报错
+</code></pre>
+
+<pre><code>function fn(a){
+   alert(a);    //3; 因为形参被赋值为3，类似于var a = 3,但又有所不同，见下一个例子
+   a = 2;
+   alert(a);    //2,这里修改的不是全局的哦,改的是fn的局部变量哦
+}
+fn(3)
+alert(a);    //报错
+</code></pre>
+
+<pre><code>function fn(a){
+   alert(a);    //function a(){}。这里虽然传入参数a=3，但是还是被function声明覆盖掉了，这一点跟直接在最上面声明var a =3是不同的
+   a = 2;
+   function a(){};
+   alert(a);    //2,这里修改的不是全局的哦,改的是fn的局部变量哦
+}
+fn(3)
+alert(a);    //报错
+</code></pre>
+
+<pre><code>function fn(a){
+    var a = 3;
+    alert(a);    //3; 直接通过=赋值是不会被function声明覆盖的
+    a = 2;
+    function a(){};
+    alert(a);    //2,这里修改的不是全局的哦,改的是fn的局部变量哦
+}
+fn()
+alert(a);    //报错
+</code></pre>
+
+<p>优先级：在作用域最顶端声明 <code>var a = 3</code> > hoisting <code>function a(){}</code> > 作用域顶端声明<code>var a</code> = hoisting <code>var a = 3</code></p>
+
+<p>```</p>
+
+<script>
+alert(a);    //报错，因为脚本执行是按顺序的，这里先被执行，下文的声明还未执行，故报错
+</script>
+
+
+
+
+<script>
+alert(a);    //undefined
+var a = 0;
+alert(a);    //0
+</script>
+
+
+<pre><code></code></pre>
+
+<script>
+alert(a);    //undefined
+var a = 0;
+</script>
+
+
+
+
+<script>
+alert(a);    //上文已经定义了a，因此此处弹出0。这也说明了两个script标签中的代码是处在同一作用域中，但执行先后的问题导致了无法把下面为执行的代码中的声明hoisting。
+</script>
+
+
+<p>```</p>
+
+    </div>
+
+ 
+<!--
+    <ul class="tag_box inline ">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/site/categories.html#技术分享-ref">
+    		技术分享 <span>25</span>
+    	</a></li>
+    
+  
+
+
+    </ul>
+    
+
+  
+    <ul class="tag_box inline ">
+      <li><i class="icon-tags"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/site/tags.html#javascript-ref">javascript <span>19</span></a></li>
+    
+  
+
+
+
+    </ul>
+    -->
+    
+    <div class="pagination clearfix">
+      <ul class = "pull-right">
+      
+        <li class="prev"><a class="fa fa-arrow-circle-left" href="/site/2013/07/01/js-innerHtml" title="javascript：innerHTML"> 前一篇</a></li>
+      
+        <li><a class="fa fa-th" href="/site/archive.html"> 所有日志</a></li>
+      
+        <li class="next"><a  href="/site/2013/08/03/javascript-function" title="javascript——函数">后一篇 <span class="fa fa-arrow-circle-right">  </span></a></li>
+      
+      </ul>
+    </div>
+    
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+</div>
+
+
+      </div>
+      
+      <footer class="card clearfix">
+        <span style="font-size:30px;"class="fa fa-github pull-left"></span><a href="https://github.com/enml/blog/tree/jekyll-blog" style="display:inline-block;padding-right:80px;border-right:1px solid #bbb">fork me on GitHub</a>
+        <p class="pull-right">&copy; 2011 陈佳伟
+          with help from <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+        
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
+

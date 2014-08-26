@@ -4,7 +4,7 @@
  <title>寂寞先生</title>
  <link href="http://enml.github.io/blog/" rel="self"/>
  <link href="http://enml.github.io/blog"/>
- <updated>2014-08-26T14:39:46+08:00</updated>
+ <updated>2014-08-26T21:54:58+08:00</updated>
  <id>http://enml.github.io/blog</id>
  <author>
    <name>陈佳伟</name>
@@ -36,6 +36,9 @@ sub1.bra.push(4);
 alert(sub1.bra);//[1,2,3,4]
 alert(sub2.bra);//[1,2,3]，说明引用类型array仍然不会被sub1影响
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;!--break--&gt;
+
 
 &lt;p&gt;可以看出构造函数自身的属性（无论直接类型还是引用类型），都是赋值一份copy给它的所有instance，因此每一个instance 的修改互相不影响。我们继续看：&lt;/p&gt;
 
@@ -203,6 +206,9 @@ newObj.changeColor = function(color){
 }
 &lt;/code&gt;&lt;/pre&gt;
 
+&lt;!--break--&gt;
+
+
 &lt;p&gt;这种方法看上去很蠢，所以使用literal直接创建一个对象要优雅得多：&lt;/p&gt;
 
 &lt;ul&gt;
@@ -347,6 +353,7 @@ console.log(b.constructor); //Object
 &lt;p&gt;我们来看下面的例子：&lt;/p&gt;
 
 
+&lt;!--break--&gt;
 
 
 &lt;pre&gt; 
@@ -583,9 +590,16 @@ var object = {
 &lt;p&gt;作用域和作用域链是javascript中非常重要的特性，对于他们的理解直接关系到对于整个javascript体系的理解，而闭包又是对作用域的延伸，也是在实际开发中经常使用的一个特性，实际上，不仅仅是javascript，在很多语言中都提供了闭包的特性。
 作用域&lt;/p&gt;
 
-&lt;p&gt;作用域是一个变量和函数的作用范围，javascript中函数内声明的所有变量在函数体内始终是可见的，在javascript中有全局作用域和局部作用域，但是没有块级作用域，局部变量的优先级高于全局变量，通过几个示例来了解下javascript中作用域的那些“潜规则”（这些也是在前端面试中经常问到的问题）。
-1. 变量声明提前
-示例1：&lt;/p&gt;
+&lt;p&gt;作用域是一个变量和函数的作用范围，javascript中函数内声明的所有变量在函数体内始终是可见的，在javascript中有全局作用域和局部作用域，但是没有块级作用域，局部变量的优先级高于全局变量，通过几个示例来了解下javascript中作用域的那些“潜规则”（这些也是在前端面试中经常问到的问题）。&lt;/p&gt;
+
+&lt;!--break--&gt;
+
+
+&lt;ol&gt;
+&lt;li&gt;变量声明提前
+示例1：&lt;/li&gt;
+&lt;/ol&gt;
+
 
 &lt;pre&gt;&lt;code&gt;var scope=&quot;global&quot;;
 function scopeTest(){
@@ -819,6 +833,9 @@ var object = {
 &lt;p&gt;我在前两篇文章里详细介绍了HTTP协议以及报文在TCP传输层传输的性能问题，但是，这是一个邪恶的世界，无论你协议设计的多巧妙性能优化的再好，如果没有把安全问题考虑进去，那么这个协议注定是不可靠的。所以今天我来总结一下HTTP的安全问题。&lt;/p&gt;
 
 &lt;p&gt;信息安全的保护主要来自两个方面，端的安全（可以具体到客户端和服务器端）和链路的安全（也就是传输过程中的安全）。正常情况下我们必须先假设，端都是可信的。对于服务器端，你愿意使用这个公司提供的服务，你就相当于信任这个公司，所以我们认为服务器端是安全的。而客户端，你愿意使用这台电脑，也表明你认为这台电脑是比较安全的，中病毒木马什么的不在我们的讨论范围内。所以，我们今天讲的安全的焦点，主要是集中在通信的链路上，也就是数据传输过程的安全问题。而HTTP协议作为今天web服务的通用协议，它的安全问题变得十分严峻。&lt;/p&gt;
+
+&lt;!--break--&gt;
+
 
 &lt;p&gt;HTTP协议是明文数据传输，这意味着只要我们拦截到了HTTP报文，我们就可以查看几乎所有正在传输的数据。攻击者最常用的攻击手法就是网络嗅探，试图从传输过程当中分析出敏感的数据，例如嗅探用户的登录过程，从而获取到用户的身份认证信息，甚至可以直接获得密码。即使无法获取登录信息，获得用户的手机号码、身份证号码、信用卡卡号等重要资料也会给用户带来隐私安全问题。
 我通过Fiddler2进行抓包，在浏览器上登陆一个论坛，然后发现登陆的用户名和密码直接以明文的形式POST到服务器，下面是截图：&lt;/p&gt;
@@ -1080,6 +1097,9 @@ context.fillRect(20,20,100,80);
 &lt;p&gt;HTTP协议是一种可靠的数据传输协议，位于应用层，在TCP协议的上层。我们现在使用的web服务几乎都是建立在HTTP协议之上，HTTP是互联网通信的公共语言。&lt;/p&gt;
 
 &lt;p&gt;从宏观角度来看，HTTP连接是一个很简单的过程，客户端发起请求，服务端相应响应的数据，断开连接。这就是一个完整的连接过程，我们每天上网都在经历这个过程，当你访问一个url时，浏览器会把这个url进行解析，通过dns获取域名对应的IP地址，然后向这个IP地址发送一个HTTP请求，告诉服务器我需要什么数据，服务器处理这个HTTP请求后调用对应的资源，给客户端一个HTTP响应，这个响应中就包含了我们请求的资源。&lt;/p&gt;
+
+&lt;!--break--&gt;
+
 
 &lt;p&gt;上图是一个完整的HTTP连接过程。一般情况下请求中会包含3部分：&lt;/p&gt;
 
@@ -1622,6 +1642,9 @@ Point(x=3.0, y=5.0)
 
 &lt;h3&gt;typeof操作符判断&lt;/h3&gt;
 
+&lt;!--break--&gt;
+
+
 &lt;pre&gt;&lt;code&gt;var obj = {key:&#39;value&#39;},
     arr = [&quot;hello&quot;,&quot;javascript&quot;],
     fn  = function(){},
@@ -1700,7 +1723,7 @@ console.log(Object.prototype.toString.apply(user)); //[object Object]
 
 &lt;p&gt;二、自动分配( Automatic Allocation ):在栈中为局部变量分配内存的方法.栈中的内存可以随着代码块退出时的出栈操作被自动释放.这类似于到房间中办事的人,事情一旦完成,就会自己离开,而他们所占用的空间,也随着这些人的离开而自动释放了.&lt;/p&gt;
 
-&lt;p&gt;三、动态分配( Dynamic Allocation ):在堆中动态分配内存空间以存储数据的方式.也就是程序运行时用malloc或new申请的内存,我们需要自己用free或delete释放.动态内存的生存期由程序员自己决定.一旦忘记释放,势必造成内存泄露.这种情况下,堆中的内存块好像我们日常使用的餐巾纸,用过了就得扔到垃圾箱里,否则屋内就会满地狼藉.因此,懒人们做梦都想有一台家用机器人跟在身边打扫卫生.在软件开发中,如果你懒得释放内存,那么你也需要一台类似的机器人——这其实就是一个由特定算法实现的垃圾收集器.而正是垃圾收集机制本身的一些缺陷,导致了javascript内存泄露.
+&lt;p&gt;三、动态分配( Dynamic Allocation ):在堆中动态分配内存空间以存储数据的方式.也就是程序运行时用malloc或new申请的内存,我们需要自己用free或delete释放.动态内存的生存期由程序员自己决定.一旦忘记释放,势必造成内存泄露.这种情况下,堆中的内存块好像我们日常使用的餐巾纸,用过了&lt;!--break--&gt;就得扔到垃圾箱里,否则屋内就会满地狼藉.因此,懒人们做梦都想有一台家用机器人跟在身边打扫卫生.在软件开发中,如果你懒得释放内存,那么你也需要一台类似的机器人——这其实就是一个由特定算法实现的垃圾收集器.而正是垃圾收集机制本身的一些缺陷,导致了javascript内存泄露.
 JavaScript 是一种垃圾收集式语言，这就是说，内存是根据对象的创建分配给该对象的，并会在没有对该对象的引用时由浏览器收回。JavaScript 的垃圾收集机制本身并没有问题，但浏览器在为 DOM 对象分配和恢复内存的方式上却有些出入。&lt;/p&gt;
 
 &lt;h3&gt;1. 循环引用&lt;/h3&gt;
@@ -1887,6 +1910,9 @@ function doesNotLeak()
 &lt;p&gt;eval is evil
 eval有访问本地scope的权利&lt;/p&gt;
 
+&lt;!--break--&gt;
+
+
 &lt;pre&gt;&lt;code&gt;var a = 1;
 eval(&quot;a=2&quot;);
 a === 2; // ==&amp;gt; true
@@ -1928,9 +1954,9 @@ a === 2; // ==&amp;gt; true
  
  <entry>
    <title>javascript的加载规则</title>
-   <link href="http://enml.github.io/blog/2013/09/16/js-onload"/>
+   <link href="http://enml.github.io/blog/2013/09/16/js-onload+-+%E5%89%AF%E6%9C%AC"/>
    <updated>2013-09-16T00:00:00+08:00</updated>
-   <id>http://enml.github.io/blog/2013/09/16/js-onload</id>
+   <id>http://enml.github.io/blog/2013/09/16/js-onload - 副本</id>
    <content type="html">&lt;h1&gt;javascript的加载规则&lt;/h1&gt;
 
 &lt;hr /&gt;
@@ -2053,6 +2079,137 @@ document.body.appendChild( oScript);
  </entry>
  
  <entry>
+   <title>javascript的加载规则</title>
+   <link href="http://enml.github.io/blog/2013/09/16/js-onload"/>
+   <updated>2013-09-16T00:00:00+08:00</updated>
+   <id>http://enml.github.io/blog/2013/09/16/js-onload</id>
+   <content type="html">&lt;h1&gt;javascript的加载规则&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;以下代码，最终会产生三个alert依次为“A”、“B”、“C”。&lt;/p&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;!-- HTML Code --&gt;
+
+
+&lt;script&gt;alert(&quot;A&quot;);&lt;/script&gt;
+
+
+&lt;script&gt;alert(&quot;B&quot;);&lt;/script&gt;
+
+
+&lt;script&gt;alert(&quot;C&quot;);&lt;/script&gt;
+
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;p&gt;我们再考虑有网络请求的情况2：&lt;/p&gt;
+
+&lt;!--break--&gt;
+
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;!-- HTML code --&gt;
+
+
+&lt;script  src=&quot;https://snipt.net/raw/7b08744009c450e07c0bfc1d606fc72e/&quot;&gt;&lt;/script&gt;
+
+
+&lt;script  src=&quot;https://snipt.net/raw/a2e8c05c1f6fc0e47d259aa899304e89/&quot;&gt;&lt;/script&gt;
+
+
+&lt;script  src=&quot;https://snipt.net/raw/4fab3017d3d46cbfc4bbd88aab006650/&quot;&gt;&lt;/script&gt;
+
+
+&lt;pre&gt;&lt;code&gt;
+三个文件都需要先下载再运行，且第二个文件的尺寸远大于另外两个文件。但结果依然是弹出三个alert，内容分别是”A”、”B”、”C”。
+javascript脚本一般情况有三种嵌入页面的方式：
+
+* 把它放在head标签内。在下载script引入的外部脚本时，浏览器处于阻塞状态，网络不好或者script文件过大时，页面处于空白停顿状态，体验是并不够好。
+* 把它放入页面底部。这是大家公认的提高前端页面性能和体验的方法，但还是存在一定的问题，放在页面底部的脚本是要等到页面文档流下载完毕才去下载、执行，页面中的交互会存在一个延迟的时间去实现。虽然页面显示时间变短了，但交互却被延后了。体验也不够好。
+* 按需执行。在head标签内引入部分公共脚本，在每一个需要交互的HTML元素之后插入script立即执行，需要特定条件才执行的脚本放到页面最底部。这也不是一个完美的解决方案，一则页面内穿插过多的script标签引起维护不便，二来底部脚本还未加载完时用户便触发了某个条件该怎么办？虽有方法实现，但体验仍不够好。
+
+为了解决以上问题，我们要想办法实现脚本的异步执行。
+
+### 动态创建`&amp;lt;script&amp;gt;`标签
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;script&gt; 
+var oScript= document.createElement(&quot;script&quot;); 
+oScript.type = &quot;text/javascript&quot;; 
+oScript.src=&quot;test.js&quot;; 
+document.body.appendChild( oScript); 
+&lt;/script&gt;
+
+
+&lt;p&gt;
+```&lt;/p&gt;
+
+&lt;p&gt;通过动态创建script标签，让脚本延迟执行。&lt;/p&gt;
+
+&lt;h3&gt;async属性&lt;/h3&gt;
+
+&lt;p&gt;async表示该script标签并不阻塞，也不同步执行。浏览器只需要在脚本下载完毕后再执行即可——不必阻塞页面渲染等待该脚本的下载和执行。
+如下代码，会得到三个alert，但是alert的内容分别是”A”,”C”,”B”。表明脚本二并没有阻塞脚本三的执行。原理跟方法1近似。&lt;/p&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;!-- HTML code --&gt;
+
+
+&lt;script  src=&quot;https://snipt.net/raw/7b08744009c450e07c0bfc1d606fc72e/&quot;&gt;&lt;/script&gt;
+
+
+&lt;script  src=&quot;https://snipt.net/raw/a2e8c05c1f6fc0e47d259aa899304e89/&quot; async=true&gt;&lt;/script&gt;
+
+
+&lt;script  src=&quot;https://snipt.net/raw/4fab3017d3d46cbfc4bbd88aab006650/&quot;&gt;&lt;/script&gt;
+
+
+&lt;pre&gt;&lt;code&gt;
+### defer属性
+
+带有defer属性的脚本，同样会推迟脚本的执行，并且不会阻止文档解析。就如同这个脚本，放置到了文档的末尾（&amp;lt;/body&amp;gt;之前）。
+
+如下代码的宏观现象和加了async属性的例子是一样的，都会得到”A”、”C”、”B”的三个alert。但是其原理是不一样的。
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;!-- HTML code --&gt;
+
+
+&lt;script  src=&quot;https://snipt.net/raw/7b08744009c450e07c0bfc1d606fc72e/&quot;&gt;&lt;/script&gt;
+
+
+&lt;script  src=&quot;https://snipt.net/raw/a2e8c05c1f6fc0e47d259aa899304e89/&quot; defer=true&gt;&lt;/script&gt;
+
+
+&lt;script  src=&quot;https://snipt.net/raw/4fab3017d3d46cbfc4bbd88aab006650/&quot;&gt;&lt;/script&gt;
+
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;p&gt;defer属性是会确保脚本在文档解析完毕后执行的——即使这个脚本在文档解析过程中就已经下载完毕变成可执行的状态，浏览器也会推迟这个脚本的执行，直到文档解析完毕。&lt;/p&gt;
+
+&lt;p&gt;同时，带有defer的脚本彼此之间，能保证其执行顺序。
+通过将script标签放置到文档末尾这种简单的做法达到defer属性一样的效果。&lt;/p&gt;
+
+&lt;p&gt;defer属性早在IE4就被支持，但是这个defer属性和现代浏览器的行为是有区别的。只有IE10以上，才开始按照标准执行defer属性。&lt;/p&gt;
+
+&lt;h3&gt;defer 和 async 的影响&lt;/h3&gt;
+
+&lt;ul&gt;
+&lt;li&gt;仅有async属性，脚本会异步执行&lt;/li&gt;
+&lt;li&gt;仅有defer属性，脚本会在文档解析完毕后执行&lt;/li&gt;
+&lt;li&gt;两个属性都没有，脚本会被同步下载并执行，期间会柱塞文档解析&lt;/li&gt;
+&lt;/ul&gt;
+
+</content>
+ </entry>
+ 
+ <entry>
    <title>javascript——对象</title>
    <link href="http://enml.github.io/blog/2013/09/08/js-object"/>
    <updated>2013-09-08T00:00:00+08:00</updated>
@@ -2074,6 +2231,9 @@ foo : &quot;bar&quot;
 
 &lt;pre&gt;&lt;code&gt;var o = new Object();
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;!--break--&gt;
+
 
 &lt;h3&gt;原型继承&lt;/h3&gt;
 
@@ -2242,6 +2402,9 @@ console.log(typeof foo);//function
 
 &lt;p&gt;所以要判断是不是数组，需要通过判断constructor。&lt;/p&gt;
 
+&lt;!--break--&gt;
+
+
 &lt;pre&gt;&lt;code&gt;[].constructor//Array
 &lt;/code&gt;&lt;/pre&gt;
 
@@ -2347,6 +2510,9 @@ b = 6;
 var plus = function (x, y) {
 }
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;!--break--&gt;
+
 
 &lt;h2&gt;函数调用&lt;/h2&gt;
 
@@ -2584,6 +2750,154 @@ console.log(add1(2));
  </entry>
  
  <entry>
+   <title>javascript：预解析</title>
+   <link href="http://enml.github.io/blog/2013/07/27/js-var"/>
+   <updated>2013-07-27T00:00:00+08:00</updated>
+   <id>http://enml.github.io/blog/2013/07/27/js-var</id>
+   <content type="html">&lt;h1&gt;javascript：预解析&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;pre&gt;&lt;code&gt;alert(a);//报错,不是undefined
+a = 0;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;alert(a);    //undefined
+var a = 0;  //&quot;var a&quot;得到hoisting
+alert(a);   //0
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;!--break--&gt;
+
+
+&lt;pre&gt;&lt;code&gt;alert(a);    //function a(){ alert(&#39;我是函数&#39;) }
+var a = &#39;我是变量&#39;; //hoisting
+function a(){ alert(&#39;我是函数&#39;) }   //hoisting,优先级高于var
+alert(a);  // 我是变量
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;var d ;
+alert(d);//：function d(){}
+var d = 1;//这里重新赋值，因此第二个alert的d=1；
+function d(){};//函数声明会hoisting，并且优先级高于var，因此第一个alert的d=function d(){}
+alert(d);//：1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;var d=1 ;
+alert(d);//：1
+function d(){};//函数声明会hoisting，但是被d=1赋值语句覆盖掉，因此两个都为d=1；
+alert(d);//：1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;alert(a);    //function a(){ alert(&#39;我是函数&#39;) }
+a++;    //强制转换为number，NaN
+alert(a);    //NaN, ++可以改变初始值
+var a = &#39;我是变量&#39;;
+function a(){ alert(&#39;我是函数&#39;) }
+alert(a) ;//我是变量
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;alert(a);    //undefined
+var a = 0;
+alert(a);    //0
+function fn(){
+    alert(a);    //undefined;遇到函数，重新进行预解析
+    var a = 2; //hoisting
+    alert(a);    //2
+}
+fn()
+alert(a);    //0,fn里面的a与全局的a不是同一作用域的
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;alert(a);    //undefined
+var a = 0;
+alert(a);    //0
+function fn(){
+    alert(a);    //0;因为没var, 所以这里的a会被看作是全局的,往上查找，找到a=0,所以是0，如果全局也没有就会报错
+    a = 2;  //没有var,此处为全局变量
+    alert(a);    //2
+}
+fn()
+alert(a);    //2,fn把这全局的a修改了
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;function fn(a){
+   alert(a);    //undefined,JS会把传参当作var一样对待,相当于在fn内部定义了一个变量--&amp;gt; var a;
+   a = 2;
+   alert(a);    //2,这里修改的不是全局的哦,改的是fn的局部变量哦
+}
+fn()
+alert(a);    //报错
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;function fn(a){
+   alert(a);    //3; 因为形参被赋值为3，类似于var a = 3,但又有所不同，见下一个例子
+   a = 2;
+   alert(a);    //2,这里修改的不是全局的哦,改的是fn的局部变量哦
+}
+fn(3)
+alert(a);    //报错
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;function fn(a){
+   alert(a);    //function a(){}。这里虽然传入参数a=3，但是还是被function声明覆盖掉了，这一点跟直接在最上面声明var a =3是不同的
+   a = 2;
+   function a(){};
+   alert(a);    //2,这里修改的不是全局的哦,改的是fn的局部变量哦
+}
+fn(3)
+alert(a);    //报错
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;function fn(a){
+    var a = 3;
+    alert(a);    //3; 直接通过=赋值是不会被function声明覆盖的
+    a = 2;
+    function a(){};
+    alert(a);    //2,这里修改的不是全局的哦,改的是fn的局部变量哦
+}
+fn()
+alert(a);    //报错
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;优先级：在作用域最顶端声明 &lt;code&gt;var a = 3&lt;/code&gt; &gt; hoisting &lt;code&gt;function a(){}&lt;/code&gt; &gt; 作用域顶端声明&lt;code&gt;var a&lt;/code&gt; = hoisting &lt;code&gt;var a = 3&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;```&lt;/p&gt;
+
+&lt;script&gt;
+alert(a);    //报错，因为脚本执行是按顺序的，这里先被执行，下文的声明还未执行，故报错
+&lt;/script&gt;
+
+
+
+
+&lt;script&gt;
+alert(a);    //undefined
+var a = 0;
+alert(a);    //0
+&lt;/script&gt;
+
+
+&lt;pre&gt;&lt;code&gt;&lt;/code&gt;&lt;/pre&gt;
+
+&lt;script&gt;
+alert(a);    //undefined
+var a = 0;
+&lt;/script&gt;
+
+
+
+
+&lt;script&gt;
+alert(a);    //上文已经定义了a，因此此处弹出0。这也说明了两个script标签中的代码是处在同一作用域中，但执行先后的问题导致了无法把下面为执行的代码中的声明hoisting。
+&lt;/script&gt;
+
+
+&lt;p&gt;```&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
    <title>javascript：innerHTML</title>
    <link href="http://enml.github.io/blog/2013/07/01/js-innerHtml"/>
    <updated>2013-07-01T00:00:00+08:00</updated>
@@ -2610,6 +2924,9 @@ console.log(add1(2));
 &lt;p&gt;　　也就是从对象的起始位置到终止位置的全部内容,包括Html标签。&lt;/p&gt;
 
 &lt;p&gt;　　上例中的test.innerHTML的值也就是“&lt;code&gt;&amp;lt;span style=&quot;color:red&quot;&amp;gt;hello&amp;lt;/span&amp;gt; world!&lt;/code&gt;”。&lt;/p&gt;
+
+&lt;!--break--&gt;
+
 
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;test.innerText&lt;/code&gt;:&lt;/li&gt;

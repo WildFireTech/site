@@ -118,6 +118,173 @@
                     <div class="card">
                         <div class="date_label">
                             <div class="day_month">
+                                06/21
+                            </div>
+                            <div class="year">
+                                2014
+                            </div>
+                        </div>
+                        <h1>javascript——自身属性与原型属性</h1>
+
+                        <hr />
+
+                        <h2>最基本的构造函数与实例的关系：</h2>
+
+                        <pre class="prettyprint linenums">
+var Sub = function () {
+    this.name = "Super";
+    this.bra = [1, 2, 3];
+}
+var sub1 = new Sub();
+var sub2 = new Sub();
+sub1.name = "new";
+alert(sub1.name);//"new"
+alert(sub2.name);//"Super",说明了name不会被sub1影响
+sub1.bra.push(4);
+alert(sub1.bra);//[1,2,3,4]
+alert(sub2.bra);//[1,2,3]，说明引用类型array仍然不会被sub1影响
+</pre>
+
+
+                        <div class="read_more">
+                            <a class="fa fa-link" href="/site/2014/06/21/js-prototype-chaim">  查看全文&hellip;</a>
+                        </div>
+
+                    </div>
+
+
+
+
+                    <div class="card">
+                        <div class="date_label">
+                            <div class="day_month">
+                                06/20
+                            </div>
+                            <div class="year">
+                                2014
+                            </div>
+                        </div>
+                        <h1>javascript——构造函数与原型简介</h1>
+
+                        <hr />
+
+                        <p>首先，这篇文章要讲的重点是原型。但要讲原型就必须讲构造函数，将构造函数就必须讲对象。首先来看看对象。</p>
+
+                        <h3>新建一个对象的方法：</h3>
+
+                        <h3>new Object</h3>
+
+
+                        <pre class="prettyprint linenums">var newObj = new Object;
+newObj.name = "keti";
+newObj.color = "red";
+newObj.changeColor = function(color){
+    newObj.color = color;
+}
+</pre>
+
+
+                        <div class="read_more">
+                            <a class="fa fa-link" href="/site/2014/06/20/js-prototype">  查看全文&hellip;</a>
+                        </div>
+
+                    </div>
+
+
+
+
+                    <div class="card">
+                        <div class="date_label">
+                            <div class="day_month">
+                                06/14
+                            </div>
+                            <div class="year">
+                                2014
+                            </div>
+                        </div>
+                        <h1>javascript——闭包</h1>
+
+                        <hr />
+
+                        <h3>闭包</h3>
+
+
+                        <p>官方对闭包的解释是：一个拥有许多变量和绑定了这些变量的环境的表达式（通常是一个函数），因而这些变量也是该表达式的一部分。闭包的特点：
+                            <br>　　1.作为一个函数变量的一个引用，当函数返回时，其处于激活状态。
+                            <br>　　2.一个闭包就是当一个函数返回时，一个没有释放资源的栈区。
+                        </p>
+
+
+                        <p>我们来看下面的例子：</p>
+
+
+
+                        <div class="read_more">
+                            <a class="fa fa-link" href="/site/2014/06/14/js-closesure">  查看全文&hellip;</a>
+                        </div>
+
+                    </div>
+
+
+
+
+                    <div class="card">
+                        <div class="date_label">
+                            <div class="day_month">
+                                06/12
+                            </div>
+                            <div class="year">
+                                2014
+                            </div>
+                        </div>
+                        <h1>javascript——作用域</h1>
+
+                        <hr />
+
+                        <p>作用域和作用域链是javascript中非常重要的特性，对于他们的理解直接关系到对于整个javascript体系的理解，而闭包又是对作用域的延伸，也是在实际开发中经常使用的一个特性，实际上，不仅仅是javascript，在很多语言中都提供了闭包的特性。 作用域
+                        </p>
+
+                        <p>作用域是一个变量和函数的作用范围，javascript中函数内声明的所有变量在函数体内始终是可见的，在javascript中有全局作用域和局部作用域，但是没有块级作用域，局部变量的优先级高于全局变量，通过几个示例来了解下javascript中作用域的那些“潜规则”（这些也是在前端面试中经常问到的问题）。</p>
+
+
+                        <div class="read_more">
+                            <a class="fa fa-link" href="/site/2014/06/12/js-scope">  查看全文&hellip;</a>
+                        </div>
+
+                    </div>
+
+
+
+
+                    <div class="card">
+                        <div class="date_label">
+                            <div class="day_month">
+                                05/27
+                            </div>
+                            <div class="year">
+                                2014
+                            </div>
+                        </div>
+                        <h1>HTTP协议安全</h1>
+
+                        <hr />
+
+                        <p>我在前两篇文章里详细介绍了HTTP协议以及报文在TCP传输层传输的性能问题，但是，这是一个邪恶的世界，无论你协议设计的多巧妙性能优化的再好，如果没有把安全问题考虑进去，那么这个协议注定是不可靠的。所以今天我来总结一下HTTP的安全问题。</p>
+
+                        <p>信息安全的保护主要来自两个方面，端的安全（可以具体到客户端和服务器端）和链路的安全（也就是传输过程中的安全）。正常情况下我们必须先假设，端都是可信的。对于服务器端，你愿意使用这个公司提供的服务，你就相当于信任这个公司，所以我们认为服务器端是安全的。而客户端，你愿意使用这台电脑，也表明你认为这台电脑是比较安全的，中病毒木马什么的不在我们的讨论范围内。所以，我们今天讲的安全的焦点，主要是集中在通信的链路上，也就是数据传输过程的安全问题。而HTTP协议作为今天web服务的通用协议，它的安全问题变得十分严峻。</p>
+
+
+                        <div class="read_more">
+                            <a class="fa fa-link" href="/site/2014/05/27/HTTP-secure">  查看全文&hellip;</a>
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="card">
+                        <div class="date_label">
+                            <div class="day_month">
                                 05/24
                             </div>
                             <div class="year">
@@ -280,14 +447,14 @@
                         <p><strong>1.首先我们想到的是直接把数据硬编码到html代码里面，然后通过<code>HttpResponse</code>对象传递给浏览器进行渲染：</strong>
                         </p>
 
-                        <pre><code>from django.http import HttpResponse
+                        <pre class="prettyprint linenums">from django.http import HttpResponse
 import datetime
 
 def current_datetime(request):
     now = datetime.datetime.now()
     html = "&lt;html&gt;&lt;body&gt;It is now %s.&lt;/body&gt;&lt;/html&gt;" % now
     return HttpResponse(html)
-</code></pre>
+</pre>
 
 
                         <div class="read_more">
@@ -319,14 +486,14 @@ def current_datetime(request):
                             <code></code>
                         </p>
 
-                        <pre><code>def test1(request):
+                        <pre class="prettyprint linenums">def test1(request):
     return render(request,'test/raw.htm',{
                 'name':'Enm',
                 'age':22,
                 'company': 'Outdoor Equipment',
                 'ship_date': datetime.datetime.now(),
                 'ordered_warranty': False})
-</code></pre>
+</pre>
 
 
                         <div class="read_more">
@@ -386,7 +553,7 @@ def current_datetime(request):
 
                         <p>列表相邻元素压缩器</p>
 
-                        <pre><code>&gt;&gt;&gt; a = [1, 2, 3, 4, 5, 6]
+                        <pre class="prettyprint linenums">&gt;&gt;&gt; a = [1, 2, 3, 4, 5, 6]
 &gt;&gt;&gt; zip(*([iter(a)] * 2))
 [(1, 2), (3, 4), (5, 6)]
 &gt;&gt;&gt; group_adjacent = lambda a, k: zip(*([iter(a)] * k))
@@ -407,7 +574,7 @@ def current_datetime(request):
 [(1, 2), (3, 4), (5, 6)]
 &gt;&gt;&gt; group_adjacent(a, 1)
 [(1,), (2,), (3,), (4,), (5,), (6,)]
-</code></pre>
+</pre>
 
 
                         <div class="read_more">
@@ -490,13 +657,13 @@ def current_datetime(request):
 
                         <p>　jekyll对中文的支持不太好，导致经常出现乱码甚至无法运行<code>jekyll server</code>命令。解决post内容乱码问题可以通过修改convertible.rb文件的第27行：</p>
 
-                        <pre><code>self.content = File.read(File.join(base, name));
-</code></pre>
+                        <pre class="prettyprint linenums">self.content = File.read(File.join(base, name));
+</pre>
 
                         <p>为</p>
 
-                        <pre><code>self.content = File.read(File.join(base, name), :encoding =&gt; "utf-8");
-</code></pre>
+                        <pre class="prettyprint linenums">self.content = File.read(File.join(base, name), :encoding =&gt; "utf-8");
+</pre>
 
                         <p>　原因File.read()可能采用系统默认编码读取文件，中文系统为GBK，但markdown文件均为utf-8编码，所以导致无法正确展现中文。</p>
 
