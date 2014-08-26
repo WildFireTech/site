@@ -83,6 +83,7 @@ h1 {
 }
 .tag_box a:hover {
     background-color: #e5e5e5;
+    color:rgb(222, 106, 115);
 }
 .tag_box a.active {
     background: #57A957;
