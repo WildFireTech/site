@@ -256,7 +256,7 @@ super1.newBra;//[1,1,1,1] super1不受影响，实例覆写方法只会在sub2._
                                                         <p>由于是覆写而不是修改，因此不会沿着原型链查找，而是在当前的作用域里添加该属性，而原来原型链上的那个属性依然还在，不受影响。这就实现了方法的重载。</p>
                                                     </li>
 
-                                                    <li>完全覆写：假如是在Super.prototype里对newBra进行覆写，那么所有引用该属性的实例都将被影响。
+                                                    <li>父函数方法覆写：假如是在Super.prototype里对newBra进行覆写，那么所有引用该属性的实例都将被影响。
 
                                                         <pre class="prettyprint linenums">
 var Super = function () {
@@ -279,6 +279,26 @@ sub2.newBra;//[2,2,2,2]
 super1.newBra;//[2,2,2,2]
 </pre>
                                                     </li>
+                                                    <li>完全对prototype覆写：当我们使用<code>XXX.prototype = YYY;</code>对XXX.prototype进行完全覆写时，会彻底改变原型链。但是我们应该注意一点，覆写前的instance不会受影响，依然保持着对原有prototype的引用。
+                                                        <pre class="prettyprint linenums">
+var Super = function () {
+    this.name = "Super";
+    this.bra = [1, 2, 3];
+}
+Super.prototype.newBra = [1,1,1,1];
+
+var super1 = new Super(); 
+var Sub = function () {};
+var sub1 = new Sub();//完全覆写Sub.prototype前创建的instance
+Sub.prototype = new Super();//这里可以理解为对Sub的prototype进行完全覆写，因此会重新创建一个新的prototype指向Super.prototype
+var sub2 = new Sub();//完全覆写Sub.prototype后创建的instance
+//验证
+sub1.__proto__.constructor == Sub;//true。依然引用着原来的原型链
+sub2.__proto__.constructor == Super;//true。新的instance引用了新的原型链
+
+</pre>
+
+                                                    </li>
                                                 </ul>
                                             </li>
                                         </ul>
@@ -286,7 +306,6 @@ super1.newBra;//[2,2,2,2]
                                 </ul>
                             </li>
                         </ol>
-
 
 
                     </div>

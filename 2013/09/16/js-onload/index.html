@@ -133,9 +133,7 @@
 
 <p>以下代码，最终会产生三个alert依次为“A”、“B”、“C”。</p>
 
-<p>```</p>
-
-<!-- HTML Code -->
+ <pre class="prettyprint linenums">
 
 
 <script>alert("A");</script>
@@ -146,12 +144,12 @@
 
 <script>alert("C");</script>
 
+</pre>
 
-<pre><code>
 我们再考虑有网络请求的情况2：
-</code></pre>
 
-<!-- HTML code -->
+
+ <pre class="prettyprint linenums">
 
 
 <script  src="https://snipt.net/raw/7b08744009c450e07c0bfc1d606fc72e/"></script>
@@ -163,19 +161,21 @@
 <script  src="https://snipt.net/raw/4fab3017d3d46cbfc4bbd88aab006650/"></script>
 
 
-<pre><code>
+</pre>
 三个文件都需要先下载再运行，且第二个文件的尺寸远大于另外两个文件。但结果依然是弹出三个alert，内容分别是”A”、”B”、”C”。
-javascript脚本一般情况有三种嵌入页面的方式：
 
-* 把它放在head标签内。在下载script引入的外部脚本时，浏览器处于阻塞状态，网络不好或者script文件过大时，页面处于空白停顿状态，体验是并不够好。
-* 把它放入页面底部。这是大家公认的提高前端页面性能和体验的方法，但还是存在一定的问题，放在页面底部的脚本是要等到页面文档流下载完毕才去下载、执行，页面中的交互会存在一个延迟的时间去实现。虽然页面显示时间变短了，但交互却被延后了。体验也不够好。
-* 按需执行。在head标签内引入部分公共脚本，在每一个需要交互的HTML元素之后插入script立即执行，需要特定条件才执行的脚本放到页面最底部。这也不是一个完美的解决方案，一则页面内穿插过多的script标签引起维护不便，二来底部脚本还未加载完时用户便触发了某个条件该怎么办？虽有方法实现，但体验仍不够好。
 
+<h3>javascript脚本一般情况有三种嵌入页面的方式：</h3>
+<ul>
+<li>把它放在head标签内。在下载script引入的外部脚本时，浏览器处于阻塞状态，网络不好或者script文件过大时，页面处于空白停顿状态，体验是并不够好。</li>
+<li>把它放入页面底部。这是大家公认的提高前端页面性能和体验的方法，但还是存在一定的问题，放在页面底部的脚本是要等到页面文档流下载完毕才去下载、执行，页面中的交互会存在一个延迟的时间去实现。虽然页面显示时间变短了，但交互却被延后了。体验也不够好。</li>
+<li>按需执行。在head标签内引入部分公共脚本，在每一个需要交互的HTML元素之后插入script立即执行，需要特定条件才执行的脚本放到页面最底部。这也不是一个完美的解决方案，一则页面内穿插过多的script标签引起维护不便，二来底部脚本还未加载完时用户便触发了某个条件该怎么办？虽有方法实现，但体验仍不够好。</li>
+</ul>
 为了解决以上问题，我们要想办法实现脚本的异步执行。
 
-### 动态创建`&lt;script&gt;`标签
-</code></pre>
+<h3>动态创建`&lt;script&gt;`标签</h3>
 
+ <pre class="prettyprint linenums">
 <script> 
 var oScript= document.createElement("script"); 
 oScript.type = "text/javascript"; 
@@ -183,9 +183,8 @@ oScript.src="test.js";
 document.body.appendChild( oScript); 
 </script>
 
+</pre>
 
-<p>
-```</p>
 
 <p>通过动态创建script标签，让脚本延迟执行。</p>
 
@@ -193,10 +192,7 @@ document.body.appendChild( oScript);
 
 <p>async表示该script标签并不阻塞，也不同步执行。浏览器只需要在脚本下载完毕后再执行即可——不必阻塞页面渲染等待该脚本的下载和执行。
 如下代码，会得到三个alert，但是alert的内容分别是”A”,”C”,”B”。表明脚本二并没有阻塞脚本三的执行。原理跟方法1近似。</p>
-
-<p>```</p>
-
-<!-- HTML code -->
+ <pre class="prettyprint linenums">
 
 
 <script  src="https://snipt.net/raw/7b08744009c450e07c0bfc1d606fc72e/"></script>
@@ -207,18 +203,15 @@ document.body.appendChild( oScript);
 
 <script  src="https://snipt.net/raw/4fab3017d3d46cbfc4bbd88aab006650/"></script>
 
+</pre>
 
-<pre><code>
-### defer属性
+<h3> defer属性</h3>
 
-带有defer属性的脚本，同样会推迟脚本的执行，并且不会阻止文档解析。就如同这个脚本，放置到了文档的末尾（&lt;/body&gt;之前）。
+<p>带有defer属性的脚本，同样会推迟脚本的执行，并且不会阻止文档解析。就如同这个脚本，放置到了文档的末尾（&lt;/body&gt;之前）。</p>
 
-如下代码的宏观现象和加了async属性的例子是一样的，都会得到”A”、”C”、”B”的三个alert。但是其原理是不一样的。
-</code></pre>
+<p>如下代码的宏观现象和加了async属性的例子是一样的，都会得到”A”、”C”、”B”的三个alert。但是其原理是不一样的。</p>
 
-<!-- HTML code -->
-
-
+ <pre class="prettyprint linenums">
 <script  src="https://snipt.net/raw/7b08744009c450e07c0bfc1d606fc72e/"></script>
 
 
@@ -228,7 +221,7 @@ document.body.appendChild( oScript);
 <script  src="https://snipt.net/raw/4fab3017d3d46cbfc4bbd88aab006650/"></script>
 
 
-<p>```</p>
+</pre>
 
 <p>defer属性是会确保脚本在文档解析完毕后执行的——即使这个脚本在文档解析过程中就已经下载完毕变成可执行的状态，浏览器也会推迟这个脚本的执行，直到文档解析完毕。</p>
 
