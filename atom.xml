@@ -4,7 +4,7 @@
  <title>寂寞先生</title>
  <link href="http://enml.github.io/blog/" rel="self"/>
  <link href="http://enml.github.io/blog"/>
- <updated>2014-08-28T09:55:39+08:00</updated>
+ <updated>2014-08-28T21:54:39+08:00</updated>
  <id>http://enml.github.io/blog</id>
  <author>
    <name>陈佳伟</name>
@@ -1626,6 +1626,29 @@ Point(x=3.0, y=5.0)
 &lt;h3&gt;&lt;strong&gt;机器人&lt;/strong&gt;&lt;/h3&gt;
 
 &lt;p&gt;　这条路任重而道远，真的要发展出人工智能的话，很可能要对现有的计算机体系、软硬架构、甚至编程思想统统进行颠覆才有可能。但是，100年后每个人身边陪着个高度智能的机器人作助手甚至伴侣应该没什么好争议的。那时候什么手机电脑手表眼镜通通可以扔掉了，人可以真正得到解放，这个随时随地跟着你的机器人就是你最好最强大的电子设备了。你要打电话，你就跟它说帮我call一下奥巴马；你要玩游戏，它转过身来可能后背就是一块触摸屏；你要写代码，哦，那时候应该不用写代码了……&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>javascript：正则表达式</title>
+   <link href="http://enml.github.io/blog/2013/11/13/js-regexp"/>
+   <updated>2013-11-13T00:00:00+08:00</updated>
+   <id>http://enml.github.io/blog/2013/11/13/js-regexp</id>
+   <content type="html">&lt;h1&gt;javascript：正则表达式&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;h2&gt;这是一段检测浏览器名称及版本号的代码，里面涉及到正则表达式的匹配&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;function detectBrowser(){
+    var ua = navigator.userAgent.toLowerCase();
+    var reg = /(opera|firefox|chrome|safari|msie|trident(?=\/))\/?\s*([\d.]+)/i;
+    var result = reg.exec(ua);
+    if(result[1] == &quot;trident&quot;){result[2] = ua.match(/\brv\:\s*([\d.]+)/)[1];result[1]=&quot;IE&quot;;}
+    return [result[1],result[2]];
+}
+alert(&#39;浏览器:&#39;+detectBrowser()[0]+&quot; &quot;+detectBrowser()[1]);
+&lt;/code&gt;&lt;/pre&gt;
 </content>
  </entry>
  

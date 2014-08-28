@@ -5,8 +5,8 @@
         <description>寂寞先生 - 陈佳伟</description>
         <link>http://enml.github.io/blog</link>
         <link>http://enml.github.io/blog</link>
-        <lastBuildDate>2014-08-28T09:55:39+08:00</lastBuildDate>
-        <pubDate>2014-08-28T09:55:39+08:00</pubDate>
+        <lastBuildDate>2014-08-28T21:54:39+08:00</lastBuildDate>
+        <pubDate>2014-08-28T21:54:39+08:00</pubDate>
         <ttl>1800</ttl>
 
 
@@ -1625,6 +1625,29 @@ Point(x=3.0, y=5.0)
                 <link>http://enml.github.io/blog/2014/04/21/future</link>
                 <guid>http://enml.github.io/blog/2014/04/21/future</guid>
                 <pubDate>2014-04-21T00:00:00+08:00</pubDate>
+        </item>
+
+        <item>
+                <title>javascript：正则表达式</title>
+                <description>&lt;h1&gt;javascript：正则表达式&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;h2&gt;这是一段检测浏览器名称及版本号的代码，里面涉及到正则表达式的匹配&lt;/h2&gt;
+
+&lt;pre&gt;&lt;code&gt;function detectBrowser(){
+    var ua = navigator.userAgent.toLowerCase();
+    var reg = /(opera|firefox|chrome|safari|msie|trident(?=\/))\/?\s*([\d.]+)/i;
+    var result = reg.exec(ua);
+    if(result[1] == &quot;trident&quot;){result[2] = ua.match(/\brv\:\s*([\d.]+)/)[1];result[1]=&quot;IE&quot;;}
+    return [result[1],result[2]];
+}
+alert(&#39;浏览器:&#39;+detectBrowser()[0]+&quot; &quot;+detectBrowser()[1]);
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+                <link>http://enml.github.io/blog/2013/11/13/js-regexp</link>
+                <guid>http://enml.github.io/blog/2013/11/13/js-regexp</guid>
+                <pubDate>2013-11-13T00:00:00+08:00</pubDate>
         </item>
 
         <item>

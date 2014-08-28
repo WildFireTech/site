@@ -135,38 +135,38 @@
 
 <h2>函数声明语句</h2>
 
-<pre><code>function plus(x ,y) {
+<pre class="prettyprint linenums">function plus(x ,y) {
 }
-</code></pre>
+</pre>
 
 <h3>函数定义表达式</h3>
 
-<pre><code>
+<pre class="prettyprint linenums">
 var plus = function (x, y) {
 }
-</code></pre>
+</pre>
 
 <h2>函数调用</h2>
 
 <h3>作为函数调用</h3>
 
-<pre><code>
+<pre class="prettyprint linenums">
 function a(){};
 a();
-</code></pre>
+</pre>
 
 <h3>作为方法调用</h3>
 
-<pre><code>a={};
+<pre class="prettyprint linenums">a={};
 a.x = function(){};
 a.x();
-</code></pre>
+</pre>
 
 <h2>通过call和apply间接调用函数(改变this)</h2>
 
 <p>call 和 apply带有多个参数，call和apply把当前函数的this指向第一个参数给定的函数或对象中，并传递其余所有的参数作为当前函数的参数。</p>
 
-<pre><code>var O = function () {
+<pre class="prettyprint linenums">var O = function () {
     this.foo  = 'hello';
     this.hello = function () {
         return 'world';
@@ -178,7 +178,7 @@ var fn = function () {
 
 var o = new O();
 fn.call(o);//此时fn的this指向o
-</code></pre>
+</pre>
 
 <p>call和apply的不同之处，在于call传递的参数是作为arguments依次传入的，例如</p>
 
@@ -192,7 +192,7 @@ fn.call(o);//此时fn的this指向o
 
 <p>Javascript允许传入参数的个数大于声明时制定的参数个数。可以用arguments来访问这些参数</p>
 
-<pre><code>
+<pre class="prettyprint linenums">
 function f(){
     var i;
     for( i = 0; i &lt; arguments.length ; i++) {
@@ -201,7 +201,7 @@ function f(){
 }
 
 f(1,2,3,4,5,6);
-</code></pre>
+</pre>
 
 <h3>函数通过取得arguments的长度得到传入参数的个数，使用一个循环获取每一个参数。</h3>
 
@@ -214,7 +214,7 @@ f(1,2,3,4,5,6);
 
 <p>例如</p>
 
-<pre><code>function f(){
+<pre class="prettyprint linenums">function f(){
     console.log(arguments.callee);//[Function: f]
     console.log(arguments.callee.caller);[Function: g]
     var i;
@@ -228,17 +228,17 @@ function g(){
 }
 
 g();
-</code></pre>
+</pre>
 
 <h3>callee 的重要用法之一是在匿名函数中实现递归</h3>
 
-<pre><code>var result = function (x) {
+<pre class="prettyprint linenums">var result = function (x) {
     if (x &lt;= 1) return 1;
     return x * arguments.callee(x - 1);
 }(3);
 
 console.log(result);
-</code></pre>
+</pre>
 
 <p>上例使用了一个匿名函数和callee实现了一个阶乘。</p>
 
@@ -246,21 +246,21 @@ console.log(result);
 
 <h3>javascript中的函数可以作为值来传递</h3>
 
-<pre><code>function square(x) {
+<pre class="prettyprint linenums">function square(x) {
     return x * x;
 }
 
 var s = square;
 s(4);
-</code></pre>
+</pre>
 
 <h3>作为命名空间的函数</h3>
 
-<pre><code>
+<pre class="prettyprint linenums">
 (function() {
 
 }());
-</code></pre>
+</pre>
 
 <h2>闭包</h2>
 
@@ -268,7 +268,7 @@ s(4);
 
 <p>例如</p>
 
-<pre><code>var scope = 'global scope';
+<pre class="prettyprint linenums">var scope = 'global scope';
 function checkscope() {
     var scope = 'local scope';
     function f() { 
@@ -278,19 +278,19 @@ function checkscope() {
 }
 
 checkscope()();
-</code></pre>
+</pre>
 
 <p>这段checkscope声明了一个局部变量，定义了一个函数f，函数f返回了这个局部变量的值，最后返回了这个函数f。在定义函数f的作用域外调用f，得到的返回仍然是函数f创建时所在的作用域的局部变量scope。</p>
 
 <p>又例如</p>
 
-<pre><code>var counter = (function() {
+<pre class="prettyprint linenums">var counter = (function() {
     var count = 0;
     return function () {
         return count++ ;
     }
 }());
-</code></pre>
+</pre>
 
 <p>代码定义了一个立即执行函数并返回给counter，这个函数定义了一个局部变量count，返回了一个子函数，该子函数每次调用，都会吧count加一并返回。</p>
 
@@ -302,7 +302,7 @@ checkscope()();
 
 <p>示例</p>
 
-<pre><code>
+<pre class="prettyprint linenums">
 var name = "The Window";
 var object = {
     name: "My Object",
@@ -318,7 +318,7 @@ var object = {
 
 console.log(object.getNameFunc()());
 console.log(object.getName());
-</code></pre>
+</pre>
 
 <p>getNameFunction()返回了一个匿名函数，这个匿名函数在调用的时候，上下文是window（浏览器中），所以在浏览器中输出的是the Window</p>
 
@@ -328,13 +328,13 @@ console.log(object.getName());
 <code>object.getNameFunc()()</code>
 等效于</p>
 
-<pre><code>var fnc = object.getNameFunc();//这时候的fnc已经脱离了object对象
+<pre class="prettyprint linenums">var fnc = object.getNameFunc();//这时候的fnc已经脱离了object对象
 fnc();
-</code></pre>
+</pre>
 
 <p>所以如果想要getNameFunction()正确返回Object的Name，需要在返回的匿名函数的闭包中保存在函数声明时的this，</p>
 
-<pre><code>getNameFunc: function () {
+<pre class="prettyprint linenums">getNameFunc: function () {
         var that = this;
         return function () {
             return that.name;
@@ -348,7 +348,7 @@ fnc();
 函数柯里化是指，把接受多个参数的函数转换成接受一个单一参数的函数，并且返回接受余下的参数而且返回结果的新函数的技术。
 
 示例
-</code></pre>
+</pre>
 
 <p>var add1 = add.curry(1);
 console.log(add1(2));
@@ -358,7 +358,7 @@ console.log(add1(2));
 
 <p>javascript并不原生支持curry，可以用prototype来模拟</p>
 
-<pre><code>
+<pre class="prettyprint linenums">
 Function.prototype.curry = function () {
     var slice = Array.prototype.slice,
         args = slice.apply(arguments),
@@ -375,7 +375,7 @@ function add(n1, n2) {
 
 var add1 = add.curry(1);
 console.log(add1(2));
-</code></pre>
+</pre>
 
 <p>curry创建了一个新函数，在新函数的闭包中保存了原先传递的参数。</p>
 

@@ -24,6 +24,7 @@ http://enml.github.io/blog/2014/05/10/template
 http://enml.github.io/blog/2014/05/03/view_render
 http://enml.github.io/blog/2014/04/25/python-code
 http://enml.github.io/blog/2014/04/21/future
+http://enml.github.io/blog/2013/11/13/js-regexp
 http://enml.github.io/blog/2013/11/02/js-compare
 http://enml.github.io/blog/2013/10/17/javascript-typeof
 http://enml.github.io/blog/2013/09/26/js-leak
