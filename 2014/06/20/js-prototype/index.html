@@ -235,6 +235,8 @@ newObj1.num; //变成200了。
 
 <p>它生效了。因为构造函数创建实例的过程是直接给实例赋值，而不是引用，因此已经生成的实例是无法再从构造函数里获得更新的，而原型是引用，我们看图：</p>
 <img src="/site/image/prototype1.png" ><br>
+
+<p><strong>为什么一般情况下会把属性直接写在构造函数内，而方法通过prototype添加呢？</strong>这两种方式的区别上面已经有所展现了，属性的更改频率很明显要低于方法的更改，但还有另外重要的一点就是：大部分的instance的属性都是不同的，比如说name，因此在构造函数内通过this直接绑定给instance无疑是个好方案，而方法通常是通用的，使用prototype可以让每个instance共享同一个方法，而不用每个都copy一次。</p>
 <br><h3>原型链</h3>
 
 <p>我们通过上图可以看到所有的实例都是引用了同一个prototype，它们共享了prototype里的所有变量和方法。事实上，javascript中，所有的对象都有一个原型对象（prototype），原型对象中有一个constructor属性指向包含prototype属性的函数，当访问一个对象的属性（包括方法）时，首先查找这个对象自身有没有该属性，如果没有就查找它的原型（也就是<strong>proto</strong>指向的prototype对象），如果还没有就查找原型的原型（prototype也有它自己的<strong>proto</strong>，prototype对象），依此类推一直找到 Object 为止。</p>

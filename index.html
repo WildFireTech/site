@@ -765,10 +765,7 @@ function prime(num){
     </div>
 
     <script>
-        window.onload = function () {
-            canvasDrawClock();
-            prettyPrint();
-        }
+        window.onload = function(){canvasDrawClock();prettyPrint();}
         document.getElementById("startCountdown").addEventListener("click", canvasDrawClock);
 
         function canvasDrawClock() {

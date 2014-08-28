@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>javascript的比较规则(转)</title>
+
+    <meta name="author" content="陈佳伟">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/site/assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css" rel="stylesheet">
+    <link href="/site/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="/site/assets/themes/twitter/css/prettify.css" rel="stylesheet" type="text/css">
+    <script src="/site/assets/themes/twitter/js/prettify.js"></script>
+    <!-- Le fav and touch icons -->
+    <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+
+    <!-- atom & rss feed -->
+    <link href="/site/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/site/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+    <!--    font-awesome-->
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
+</head>
+
+<body onload="prettyPrint()">
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="nav-narrow">
+                <a class="brand" href="/site"><span class="fa fa-mortar-board (alias)">寂寞先生</span></a>
+                <ul class="nav">
+
+
+
+
+
+
+
+
+
+                    <li><a href="/site/archive.html">文章</a>
+                    </li>
+
+
+
+
+
+
+
+
+
+
+                    <li><a href="/site/categories.html">分类</a>
+                    </li>
+
+
+
+
+
+
+
+
+
+
+                    <li><a href="/site/pages.html">页面</a>
+                    </li>
+
+
+
+
+
+
+
+
+
+
+                    <li><a href="/site/tags.html">标签</a>
+                    </li>
+
+
+
+
+
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-narrow">
+
+        <div class="content">
+
+            <!--
+<div class="page-header">
+  <h1>javascript的比较规则(转) <small>Supporting tagline</small></h1>
+</div>
+-->
+
+
+            <div class="row-fluid post-full">
+                <div class="span12 ">
+                    <div class="content card">
+                        <div class="date_label">
+                            <div class="day_month">
+                                11/02
+                            </div>
+                            <div class="year">
+                                2013
+                            </div>
+                        </div>
+                        <h1>javascript的比较规则(转)</h1>
+
+                        <hr />
+
+                        <h2>抽象相等比较算法</h2>
+
+                        <p>比较运算 x==y, 其中 x 和 y 是值，产生 true 或者 false。这样的比较按如下方式进行：</p>
+                        <ol>
+                            <li>若 Type(x) 与 Type(y) 相同， 则
+                                <ul>
+                                    <li>若 Type(x) 为 Undefined， 返回 true。</li>
+                                    <li>若 Type(x) 为 Null， 返回 true。</li>
+                                    <li>若 Type(x) 为 Number， 则
+                                        <ul>
+                                            <li>若 x 为 NaN， 返回 false</li>。
+                                            <li>若 y 为 NaN， 返回 false。</li>
+                                            <li>若 x 与 y 为相等数值， 返回 true。</li>
+                                            <li>若 x 为 +0 且 y 为 −0， 返回 true。</li>
+                                            <li>若 x 为 −0 且 y 为 +0， 返回 true。</li>
+                                            <li>返回 false。</li>
+                                        </ul>
+                                    </li>
+                                    <li>若 Type(x) 为 String, 则当 x 和 y 为完全相同的字符序列（长度相等且相同字符在相同位置）时返回 true。 否则， 返回 false</li>。
+                                    <li>若 Type(x) 为 Boolean, 当 x 和 y 为同为 true 或者同为 false 时返回 true。 否则， 返回 false。</li>
+                                    <li>当 x 和 y 为引用同一对象时返回 true。否则，返回 false。</li>
+                                </ul>
+                            </li>
+
+
+
+
+                            <li>若 x 为 null 且 y 为 undefined， 返回 true。</li>
+                            <li>若 x 为 undefined 且 y 为 null， 返回 true。</li>
+                            <li>若 Type(x) 为 Number 且 Type(y) 为 String， 返回 comparison x == ToNumber(y) 的结果。</li>
+                            <li>若 Type(x) 为 String 且 Type(y) 为 Number，返回比较 ToNumber(x) == y 的结果。</li>
+
+                            <li>若 Type(x) 为 Boolean， 返回比较 ToNumber(x) == y 的结果。</li>
+                            <li>若 Type(y) 为 Boolean， 返回比较 x == ToNumber(y) 的结果。</li>
+                            <li>若 Type(x) 为 String 或 Number，且 Type(y) 为 Object，返回比较 x == ToPrimitive(y) 的结果。</li>
+                            <li>若 Type(x) 为 Object 且 Type(y) 为 String 或 Number， 返回比较 ToPrimitive(x) == y 的结果。</li>
+                            <li>返回 false。</li>
+                        </ol>
+                        <strong>注：按以上相等之定义：</strong>
+
+                        <ul>
+                            <li>字符串比较可以按这种方式强制执行: "" + a == "" + b。</li>
+                            <li>数值比较可以按这种方式强制执行: +a == +b。</li>
+                            <li>布尔值比较可以按这种方式强制执行: !a == !b。</li>
+                        </ul>
+                        <strong>注：等值比较操作保证以下不变：</strong>
+
+                        <ul>
+                            <li>A != B 等价于 !(A==B)。</li>
+                            <li>A == B 等价于 B == A，除了 A 与 B 的执行顺序。</li>
+                        </ul>
+                        <strong>注：相等运算符不总是传递的。 例如，两个不同的 String 对象，都表示相同的字符串值；== 运算符认为每个 String 对象都与字符串值相等，但是两个字符串对象互不相等。例如：</strong>
+
+                        <ul>
+                            <li><code>new String("a") == "a"</code> 和<code>"a" == new String("a")</code> 皆为 true。</li>
+                            <li><code>new String("a") == new String("a")</code> 为 false。</li>
+                        </ul>
+                        <p>字符串比较使用的方式是简单地检测字符编码单元序列是否相同。不会做更复杂的、基于语义的字符或者字符串相等的定义以及 Unicode 规范中定义的 collating order。所以 Unicode 标准中认为相等的 String 值可能被检测为不等。实际上这一算法认为两个字符串已经是经过规范化的形式。</p>
+
+                        <h2>严格等于比较算法</h2>
+
+                        <p>比较 x===y，x 和 y 为值，需要产出 true 或 false。比较过程如下：</p>
+
+                        <ol>
+                            <li>如果 Type(x) 与 Type(y) 的结果不一致，返回 false，否则 如果 Type(x) 结果为 Undefined，返回 true 如果 Type(x) 结果为 Null，返回 true 如果 Type(x) 结果为 Number，则
+
+                                <ul><li>如果 x 为 NaN，返回 false </li><li>如果 y 为 NaN，返回 false</li><li>如果 x 与 y 为同一个数字，返回 true </li><li>如果 x 为 +0，y 为 -0，返回 true</li><li>如果 x 为 -0，y 为 +0，返回 true 返回 false</li></ul>  </li>
+                            <li>如果 Type(x) 结果为 String，如果 x 与 y 为完全相同的字符序列（相同的长度和相同的字符对应相同的位置），返回 true，否则，返回 false</li>
+                            <li>如果 Type(x) 结果为 Boolean，如果 x 与 y 都为 true 或 false，则返回 true，否则，返回 false</li>
+                            <li>如果 x 和 y 引用到同一个 Object 对象，返回 true，否则，返回 false</li>
+
+                        </ol>
+                        <p>注：文章引用自[http://www.ecma-international.org/ecma-262/5.1/#sec-11.9.3]</p>
+
+                    </div>
+
+
+                    <!--
+    <ul class="tag_box inline ">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/site/categories.html#技术分享-ref">
+    		技术分享 <span>25</span>
+    	</a></li>
+    
+  
+
+
+    </ul>
+    
+
+  
+    <ul class="tag_box inline ">
+      <li><i class="icon-tags"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/site/tags.html#javascript-ref">javascript <span>19</span></a></li>
+    
+  
+
+
+
+    </ul>
+    -->
+
+                    <div class="pagination clearfix">
+                        <ul class="pull-right">
+
+                            <li class="prev"><a class="fa fa-arrow-circle-left" href="/site/2013/10/17/javascript-typeof" title="javascript：判断变量类型"> 前一篇</a>
+                            </li>
+
+                            <li><a class="fa fa-th" href="/site/archive.html"> 所有日志</a>
+                            </li>
+
+                            <li class="next"><a href="/site/2014/04/21/future" title="后智能手机时代">后一篇 <span class="fa fa-arrow-circle-right">  </span></a>
+                            </li>
+
+                        </ul>
+                    </div>
+
+
+
+
+                    <div id="disqus_thread"></div>
+                    <script type="text/javascript">
+                        var disqus_developer = 1;
+                        var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+
+                        /* * * DON'T EDIT BELOW THIS LINE * * */
+                        (function () {
+                            var dsq = document.createElement('script');
+                            dsq.type = 'text/javascript';
+                            dsq.async = true;
+                            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                        })();
+                    </script>
+                    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+                    </noscript>
+                    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+                </div>
+            </div>
+
+
+        </div>
+
+        <footer class="card clearfix">
+            <span style="font-size:30px;" class="fa fa-github pull-left"></span><a href="https://github.com/enml/blog/tree/jekyll-blog" style="display:inline-block;padding-right:80px;border-right:1px solid #bbb">fork me on GitHub</a>
+            <p class="pull-right">&copy; 2011 陈佳伟 with help from <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+            </p>
+
+        </footer>
+
+    </div>
+
+
+</body>
+
+</html>
+
