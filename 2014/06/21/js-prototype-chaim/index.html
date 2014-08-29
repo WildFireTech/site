@@ -130,48 +130,49 @@
 
                         <h2>最基本的构造函数与实例的关系：</h2>
 
-                        <pre class="prettyprint linenums">var Sub = function () {
-    this.name = "Super";
-    this.bra = [1, 2, 3];
+                        <pre class="prettyprint linenums">
+var Sub = function (color,list) {
+    this.color = color;
+    this.list = list
 }
-var sub1 = new Sub();
-var sub2 = new Sub();
-sub1.name = "new";
-alert(sub1.name);//"new"
-alert(sub2.name);//"Super",说明了name不会被sub1影响
-sub1.bra.push(4);
-alert(sub1.bra);//[1,2,3,4]
-alert(sub2.bra);//[1,2,3]，说明引用类型array仍然不会被sub1影响
+var sub1 = new Sub("red",[1]);
+var sub2 = new Sub("green",[2]);
+sub1.color = "new";
+alert(sub1.color);//"new"
+alert(sub2.color);//"green",说明了sub2.color不会被sub1影响
+sub1.list.push(4);
+alert(sub1.list);//[1,4]
+alert(sub2.list);//[2]，说明引用类型array仍然不会被sub1影响
 </pre>
 
                         <p>可以看出构造函数自身的属性（无论直接类型还是引用类型），都是赋值一份copy给它的所有instance，因此每一个instance 的修改互相不影响。我们继续看：</p>
 
                         <h2>自身属性和prototype属性的区别：</h2>
 
-                        <pre class="prettyprint linenums">var Super = function () {
-    this.name = "Super";
-    this.bra = [1, 2, 3];
+                        <pre class="prettyprint linenums">var Super = function(color,list) {
+    this.color = color;
+    this.list = list
 }
-Super.prototype.newBra = [1,1,1,1];
+Super.prototype.newList = [10,10,10,10];
 
 //创建Super的instance：①super1；②我们可以把Sub.prototype看成是Super的instance。
-var super1 = new Super();
+var super1 = new Super("red",[1,1,1,1]);
 var Sub = function () {};
-Sub.prototype = new Super();//到这里我们可以看成 Sub.prototype和super1都是Super的instance
+Sub.prototype = new Super("green",[1]);//到这里我们可以看成 Sub.prototype和super1都是Super的instance
 
 var sub1 = new Sub();
 var sub2 = new Sub();
 
 //修改Super的`自身属性`
-Sub.prototype.bra.push(4);//不影响兄弟(super1)，但会影响自身的instance（sub1,sub2）
-alert(sub1.bra);//[1,2,3,4]
-alert(sub2.bra);//[1,2,3,4]
-alert(super1.bra);//[1,2,3] 构造函数`自身属性`是直接赋值给它的所有instance，也就是说Super本身的属性（name,bra，不管是直接类型还是引用类型）都是分别复制一份给super1和Sub.prototype，因此修改了Sub.prototype的属性（bra）并不会影响到super1。反之亦然。
+Sub.prototype.list.push(4);//不影响兄弟(super1)，但会影响自身的instance（sub1,sub2）
+alert(sub1.list);//[1,4]
+alert(sub2.list);//[1,4]
+alert(super1.list);//[1,1,1,1] 构造函数`自身属性`是直接赋值给它的所有instance，也就是说Super本身的属性（color,list，不管是直接类型还是引用类型）都是分别复制一份给super1和Sub.prototype，因此修改了Sub.prototype的属性（list）并不会影响到super1。反之亦然。
 
 //修改Super的`prototype属性`
-Sub.prototype.newBra.push(2,2,2,2);
-sub1.newBra;//[1,1,1,1,2,2,2,2]
-super1.newBra;//[1,1,1,1,2,2,2,2];构造函数的prototype里的属性只是提供一个指针给所有的instance，因此修改了Sub.prototype的属性（newBra：引用类型）会影响到super1。修改Sub.prototype相当于是直接修改Super.prototype属性，因为它们通过原型链引用着同一个属性。
+Sub.prototype.newList.push(2,2,2,2);
+sub1.newList;//[10,10,10,10,2,2,2,2]
+super1.newList;//[10,10,10,10,2,2,2,2];构造函数的prototype里的属性只是提供一个指针给所有的instance，因此修改了Sub.prototype的属性（newList：引用类型; 直接类型是无法修改的，只能覆写）会影响到super1。修改Sub.prototype相当于是直接修改Super.prototype属性，因为它们通过原型链引用着同一个属性。
 </pre>
 
                         <p>我们在来理清关于构造函数<code>自身属性</code>和<code>prototype属性</code>与instance之间的关系，先看图：</p>
@@ -180,51 +181,57 @@ super1.newBra;//[1,1,1,1,2,2,2,2];构造函数的prototype里的属性只是提�
                         <p>我们来总结一下：</p>
 
                         <ol>
-                            <li>Sub.prototype 和 super1 都是通过 new Super()产生的，我们把它们两个叫做兄弟；同理sub1和sub2也是兄弟</li>
+                            <li>Sub.prototype 和 super1 都是通过 new Super()产生的，这里我们把它们两个叫做兄弟；同理sub1和sub2也是兄弟</li>
                             <li>
                                 <ul>
                                     <li>自身属性(图中a,B)：无论是直接类型还是引用类型，兄弟间互不影响，各自拥有一份父函数的copy。修改只是在自身作用域里修改。比如说③和⑤都是①的实例，都拥有①中所有属性的copy，修改③的属性相当于在③中修改，不会影响其他人。</li>
-                                    <pre class="prettyprint linenums">var Super = function () {
-    this.name = "Super";
-    this.bra = [1, 2, 3];
+                                    <pre class="prettyprint linenums">var Super = function(color,list) {
+    this.color = color;
+    this.list = list
 }
-Super.prototype.newBra = [1,1,1,1];
+Super.prototype.newList = [10,10,10,10];
 
 //创建Super的instance：①super1；②我们可以把Sub.prototype看成是Super的instance。
-var super1 = new Super();
+var super1 = new Super("red",[1,1,1,1]);
 var Sub = function () {};
-Sub.prototype = new Super();//到这里我们可以看成 Sub.prototype和super1都是Super的instance
+Sub.prototype = new Super("green",[1]);//到这里我们可以看成 Sub.prototype和super1都是Super的instance
 
 var sub1 = new Sub();
 var sub2 = new Sub();
 
 //修改Super的`自身属性`
-Sub.prototype.bra.push(4);//不影响兄弟(super1)，但会影响自身的instance（sub1,sub2）
-alert(sub1.bra);//[1,2,3,4]
-alert(sub2.bra);//[1,2,3,4]
-alert(super1.bra);//[1,2,3] 构造函数`自身属性`是直接赋值给它的所有instance，也就是说Super本身的属性（name,bra，不管是直接类型还是引用类型）都是分别复制一份给super1和Sub.prototype，因此修改了Sub.prototype的属性（bra）并不会影响到super1。反之亦然。
+Sub.prototype.list.push(4);//不影响兄弟(super1)，但会影响自身的instance（sub1,sub2）,因为对于sub1,sub2来说list是原型属性而不是自身属性了，这里理解起来可能有点乱。
+alert(sub1.list);//[1,4]
+alert(sub2.list);//[1,4]
+alert(super1.list);//[1,1,1,1] 构造函数`自身属性`是直接赋值给它的所有instance，也就是说Super本身的属性（color,list，不管是直接类型还是引用类型）都是分别复制一份给super1和Sub.prototype，因此修改了Sub.prototype的属性（list）并不会影响到super1。反之亦然。
+
+//覆写
+Sub.prototype.list = [0];
+sub1.list;//[0]
+sub2.list;//[0]
+super1.list;//[1,1,1,1]
 </pre>
 
                                     <li>prototype属性(图中XXXXX)：
                                         <ul>
-                                            <li>修改：比如说通过⑥去修改①的prototype的属性——sub1.newBra.push(2,2,2,2)，那么因为原型属性是引用而非复制，因此sub1.newBra.push(2,2,2,2) ==&gt; Sub.prototype.newBra.push(2,2,2,2) ==&gt; Super.prototype.newBra.push(2,2,2,2)，也就是sub1会沿着原型链一直查找到最终的Super.prototype，在Super.prototype里去修改newBra属性，因此原型链上所有引用了改属性的实例都会被影响。
+                                            <li>修改：比如说通过⑥去修改①的prototype的属性——sub1.newList.push(2,2,2,2)，那么因为原型属性是引用而非复制，因此sub1.newList.push(2,2,2,2) ==&gt; Sub.prototype.newList.push(2,2,2,2) ==&gt; Super.prototype.newList.push(2,2,2,2)，也就是sub1会沿着原型链一直查找到最终的Super.prototype，在Super.prototype里去修改newList属性，因此原型链上所有引用了改属性的实例都会被影响。
 
                                                 <pre class="prettyprint linenums">
-var Super = function () {
-this.name = "Super";
-this.bra = [1, 2, 3];
+var Super = function(color,list) {
+this.color = color;
+this.list = list
 }
-Super.prototype.newBra = [1,1,1,1];//创建Super的instance：①super1；②我们可以把Sub.prototype看成是Super的instance。
-var super1 = new Super();
+Super.prototype.newList = [10,10,10,10];//创建Super的instance：①super1；②我们可以把Sub.prototype看成是Super的instance。
+var super1 = new Super("red",[1,1,1,1]);
 var Sub = function () {};
-Sub.prototype = new Super();//到这里我们可以看成 Sub.prototype和super1都是Super的instance
+Sub.prototype = new Super("green",[1]);//到这里我们可以看成 Sub.prototype和super1都是Super的instance
 
 var sub1 = new Sub();
 var sub2 = new Sub();
 //修改Super的<code>prototype属性</code>
-Sub.prototype.newBra.push(2,2,2,2);
-sub1.newBra;//[1,1,1,1,2,2,2,2]
-super1.newBra;//[1,1,1,1,2,2,2,2];构造函数的prototype里的属性只是提供一个指针给所有的instance，因此修改了Sub.prototype的属性（newBra：引用类型）会影响到super1。修改Sub.prototype相当于是直接修改Super.prototype属性，因为它们通过原型链引用着同一个属性。
+Sub.prototype.newList.push(2,2,2,2);
+sub1.newList;//[10,10,10,10,2,2,2,2]
+super1.newList;//[10,10,10,10,2,2,2,2];构造函数的prototype里的属性只是提供一个指针给所有的instance，因此修改了Sub.prototype的属性（newList：引用类型）会影响到super1。修改Sub.prototype相当于是直接修改Super.prototype属性，因为它们通过原型链引用着同一个属性。
 </pre>
                                             </li>
 
@@ -233,65 +240,65 @@ super1.newBra;//[1,1,1,1,2,2,2,2];构造函数的prototype里的属性只是提�
                                                     <li>instance方法重载：
 
                                                         <pre class="prettyprint linenums">
-var Super = function () {
-    this.name = "Super";
-    this.bra = [1, 2, 3];
+var Super = function(color,list) {
+    this.color = color;
+    this.list = list
 }
-Super.prototype.newBra = [1,1,1,1];
+Super.prototype.newList = [10,10,10,10];
 
 //创建Super的instance：①super1；②我们可以把Sub.prototype看成是Super的instance。
-var super1 = new Super();
+var super1 = new Super("red",[1,1,1,1]);
 var Sub = function () {};
-Sub.prototype = new Super();//到这里我们可以看成 Sub.prototype和super1都是Super的instance
+Sub.prototype = new Super("green",[1]);//到这里我们可以看成 Sub.prototype和super1都是Super的instance
 
 var sub1 = new Sub();
 var sub2 = new Sub();
 
-sub1.newBra = [2,2,2,2];
-sub1.newBra;//[2,2,2,2]
-sub2.newBra;//[2,2,2,2]
-super1.newBra;//[1,1,1,1] super1不受影响，实例覆写方法只会在sub2.__proto__的作用域里添加此方法，而不会修改到Super.prototype的方法
+sub1.newList = [2,2,2,2];//覆写
+sub1.newList;//[2,2,2,2]
+sub2.newList;//[10,10,10,10]
+super1.newList;//[10,10,10,10] sub2和super1不受影响，实例覆写方法只会在sub1自身的作用域里添加此方法，而不会修改到Super.prototype的方法
 </pre>
 
                                                         <p>由于是覆写而不是修改，因此不会沿着原型链查找，而是在当前的作用域里添加该属性，而原来原型链上的那个属性依然还在，不受影响。这就实现了方法的重载。</p>
                                                     </li>
 
-                                                    <li>父函数方法覆写：假如是在Super.prototype里对newBra进行覆写，那么所有引用该属性的实例都将被影响。(我们可以看成是添加新方法)
+                                                    <li>父函数方法覆写：假如是在Super.prototype里对newList进行覆写，那么所有引用该属性的实例都将被影响。(我们可以看成是添加新方法,把就方法覆盖了)
 
                                                         <pre class="prettyprint linenums">
-var Super = function () {
-    this.name = "Super";
-    this.bra = [1, 2, 3];
+var Super = function(color,list) {
+    this.color = color;
+    this.list = list
 }
-Super.prototype.newBra = [1,1,1,1];
+Super.prototype.newList = [10,10,10,10];
 
 //创建Super的instance：①super1；②我们可以把Sub.prototype看成是Super的instance。
-var super1 = new Super();
+var super1 = new Super("red",[1,1,1,1]);
 var Sub = function () {};
-Sub.prototype = new Super();//到这里我们可以看成 Sub.prototype和super1都是Super的instance
+Sub.prototype = new Super("green",[1]);//到这里我们可以看成 Sub.prototype和super1都是Super的instance
 
 var sub1 = new Sub();
 var sub2 = new Sub();
 
-Super.prototype.newBra = [2,2,2,2];
-sub1.newBra;//[2,2,2,2]
-sub2.newBra;//[2,2,2,2]
-super1.newBra;//[2,2,2,2]
+Super.prototype.newList = [2,2,2,2];
+sub1.newList;//[2,2,2,2]
+sub2.newList;//[2,2,2,2]
+super1.newList;//[2,2,2,2]
 </pre>
                                                     </li>
                                                     <li>完全对prototype覆写：当我们使用<code>XXX.prototype = YYY;</code>对XXX.prototype进行完全覆写时，会彻底改变原型链。但是我们应该注意一点，覆写前的instance依然保持着对原有prototype的引用，因此原有的prototype中的属性不会被GC，依然保存在内存中，完全覆写后我们依然可以访问原来的instance所引用的属性和方法；而新创建的instance会指向新的prototype，因此无法再访问覆写前prototype中的属性。
                                                         <pre class="prettyprint linenums">
-var Super = function () {
-    this.name = "Super";
-    this.bra = [1, 2, 3];
+var Super = function(color,list) {
+    this.color = color;
+    this.list = list
 }
-Super.prototype.newBra = [1,1,1,1];
+Super.prototype.newList = [10,10,10,10];
 
-var super1 = new Super(); 
+new Super; 
 var Sub = function () {};
 Sub.prototype.sayHello = function(){return "hello"};
 var sub1 = new Sub();//完全覆写Sub.prototype前创建的instance
-Sub.prototype = new Super();//这里可以理解为对Sub的prototype进行完全覆写，因此会重新创建一个新的prototype指向Super.prototype
+Sub.prototype = new Super("green",[1]);//这里可以理解为对Sub的prototype进行完全覆写，因此会重新创建一个新的prototype指向Super.prototype
 var sub2 = new Sub();//完全覆写Sub.prototype后创建的instance
 //验证
 sub1.__proto__.constructor == Sub;//true。依然引用着原来的原型链
@@ -302,6 +309,8 @@ sub2.sayHello();//"对象不支持sayHello"，新的实例无法再引用原有�
 
                                                     </li>
                                                 </ul>
+                                                <p>我画了一张神一样的图，看得懂的话基本就能理清原型继承关系了</p>
+                                                <img src="/site/image/changeyuanxinglian.png"><br>
                                             </li>
                                         </ul>
                                     </li>

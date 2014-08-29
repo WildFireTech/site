@@ -187,9 +187,10 @@ var newObj1 = new NewObj("keti","red");
 
 <br><h3>原型</h3>
 
-<p>原型是javascript里一个相当复杂的属性，那么我们先想想为什么要用原型呢？重新看看上面构造函数的例子，看上去很完美，但是假如我们现在想添加一个新的method，那怎么办？直接添加到构造函数里面？没错，这样是可以，但假如这个方法我们经常需要变动，比如说</p>
+<p>原型是javascript里一个相当复杂的属性，那么我们先想想为什么要用原型呢？重新看看上面构造函数的例子，看上去很完美，但是我们发现有个问题，对于changeColor()这个方法事实上对所有instance来说是相同的，也就是说可以共享，不像name和color那样需要绑定给每个instance。而构造函数这种形式每次都会把自身的属性全部copy一份给每个instance，这就造成了不必要的浪费；并且，当我们想修改这个方法时，就必须重新生成所有的instance才能获得更新：</p>
 
- <pre class="prettyprint linenums">function NewObj(name,num){
+ <pre class="prettyprint linenums">
+function NewObj(name,num){
     this.name = name;
     this.num = num;
     this.changNum = function(c){
@@ -203,7 +204,8 @@ newObj1.num; //很明显是100
 
 <p>我现在想修改changNum()这个函数：</p>
 
- <pre class="prettyprint linenums">function NewObj(name,num){
+ <pre class="prettyprint linenums">
+function NewObj(name,num){
     this.name = name;
     this.num = num;
     this.changNum = function(c){
@@ -214,9 +216,10 @@ newObj1.changNum(100);
 newObj1.num; //依然是100，也就是说这个对象并不受我们修改的模板影响到
 </pre>
 
-<p>我们修改了构造函数里的属性和方法，就必须重新创建实例才能应用到新的修改。而原型出现了，它将改变这种情况，我们用原型来创建一个method：</p>
+<p>原型对象里的属性和方法并不是像构造函数自身属性一样copy给每个instance，而是“引用”，也可以理解为给每个instance提供一个指向该原型对象的指针，这样每个instance就能找到原型对象里的属性，而很明显，这是一种共享，也就是说，当你修改了这个原型里的属性，那么所有共享该属性的instance都能获得这个修改。因此，原型恰好解决了上面提到的两个问题。</p>
 
- <pre class="prettyprint linenums">function NewObj(name,num){
+ <pre class="prettyprint linenums">
+function NewObj(name,num){
     this.name = name;
     this.num = num;
 }
@@ -236,7 +239,7 @@ newObj1.num; //变成200了。
 <p>它生效了。因为构造函数创建实例的过程是直接给实例赋值，而不是引用，因此已经生成的实例是无法再从构造函数里获得更新的，而原型是引用，我们看图：</p>
 <img src="/site/image/prototype1.png" ><br>
 
-<p><strong>为什么一般情况下会把属性直接写在构造函数内，而方法通过prototype添加呢？</strong>这两种方式的区别上面已经有所展现了，属性的更改频率很明显要低于方法的更改，但还有另外重要的一点就是：大部分的instance的属性都是不同的，比如说name，因此在构造函数内通过this直接绑定给instance无疑是个好方案，而方法通常是通用的，使用prototype可以让每个instance共享同一个方法，而不用每个都copy一次。</p>
+<p><strong>为什么一般情况下会把属性直接写在构造函数内，而方法通过prototype添加呢？</strong>这两种方式的区别上面已经有所展现了：大部分的instance的属性都是不同的，比如说name，因此在构造函数内通过this直接绑定给instance无疑是个好方案，而方法通常是通用的，使用prototype可以让每个instance共享同一个方法，而不用每个都copy一次。</p>
 <br><h3>原型链</h3>
 
 <p>我们通过上图可以看到所有的实例都是引用了同一个prototype，它们共享了prototype里的所有变量和方法。事实上，javascript中，所有的对象都有一个原型对象（prototype），原型对象中有一个constructor属性指向包含prototype属性的函数，当访问一个对象的属性（包括方法）时，首先查找这个对象自身有没有该属性，如果没有就查找它的原型（也就是<strong>proto</strong>指向的prototype对象），如果还没有就查找原型的原型（prototype也有它自己的<strong>proto</strong>，prototype对象），依此类推一直找到 Object 为止。</p>

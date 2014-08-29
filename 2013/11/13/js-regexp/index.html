@@ -131,13 +131,14 @@
 
 <hr />
 
-<h2>这是一段检测浏览器名称及版本号的代码，里面涉及到正则表达式的匹配</h2>
-<button id="detect" class="big button">检测浏览器</button>
+<h3>这是一段检测浏览器名称及版本号的代码，里面涉及到正则表达式的匹配</h3>
+<button id="detect" class="btn">检测浏览器</button>
 <pre class="prettyprint linenums">function detectBrowser(){
     var ua = navigator.userAgent.toLowerCase();
     var reg = /(opera|firefox|chrome|safari|msie|trident(?=\/))\/?\s*([\d.]+)/i;
     var result = reg.exec(ua);
     if(result[1] == "trident"){result[2] = ua.match(/\brv\:\s*([\d.]+)/)[1];result[1]="IE";}
+    if(result[1] == "safari"){result[2] = ua.match(/\bversion\/([\d.]+)/i)[1];}
     return [result[1],result[2]];
 }
 alert('浏览器:'+detectBrowser()[0]+" "+detectBrowser()[1]);
