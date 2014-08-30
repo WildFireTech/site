@@ -4,13 +4,165 @@
  <title>寂寞先生</title>
  <link href="http://enml.github.io/blog/" rel="self"/>
  <link href="http://enml.github.io/blog"/>
- <updated>2014-08-28T21:54:39+08:00</updated>
+ <updated>2014-08-30T10:58:27+08:00</updated>
  <id>http://enml.github.io/blog</id>
  <author>
    <name>陈佳伟</name>
    <email>blah@email.test</email>
  </author>
 
+ 
+ <entry>
+   <title>javascript代码规范</title>
+   <link href="http://enml.github.io/blog/2014/07/04/js-code_optimize"/>
+   <updated>2014-07-04T00:00:00+08:00</updated>
+   <id>http://enml.github.io/blog/2014/07/04/js-code_optimize</id>
+   <content type="html">&lt;h1&gt;javascript代码规范&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;今天看了别人的文章后才发现以前自己写的代码很不规范，对于后期维护以及团队合作将是一个噩耗，所以总结了以下的一些规范规则，希望以后的代码能更优雅一点。&lt;/p&gt;
+
+&lt;h2&gt;命名规则&lt;/h2&gt;
+
+&lt;h3&gt;变量命名：加一个类型前缀&lt;/h3&gt;
+
+&lt;blockquote&gt;&lt;p&gt;s：表示字符串。例如：sName，sHtml；
+n：表示数字。例如：nPage，nTotal；
+b：表示逻辑。例如：bChecked，bHasLogin；
+a：表示数组。例如：aList，aGroup；
+r：表示正则表达式。例如：rDomain，rEmail；
+f：表示函数。例如：fGetHtml，fInit；
+o：表示以上未涉及到的其他对象，例如：oButton，oDate；
+g：表示全局变量，例如：gUserName，gLoginTime；
+大写字母开头的函数：表示构造函数，例如：function Super(){};
+大写字母的变量：表示静态常量，例如：PI&lt;/p&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;为什么需要这样强制定义变量前缀？正式因为javascript是弱语言造成的。在定义大量变量的时候，我们需要很明确的知道当前变量是什么属性，如果只通过普通单词，是很难区分的。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;//普通代码
+var checked = false;
+var check = function() {
+    return true;
+}
+/**
+some code
+**/
+
+if(check) {//已经无法很确切知道这里是要用checked还是check()从而导致逻辑错误
+    //do some thing
+}
+
+//规范后代码
+var bChecked = false;
+var fnCheck = function() {
+    return true;
+}
+/**
+some code
+**/
+
+if(bChecked) {
+    // do some thing
+}
+if(fnCheck()) {
+    // do other thing
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h3&gt;函数命名：动词+名词&lt;/h3&gt;
+
+&lt;p&gt;统一使用动词或者动词+名词形式，例如：fnGetVersion()，fnSubmitForm()，fnInit()；涉及返回逻辑值的函数可以使用is，has，contains等表示逻辑的词语代替动词，例如：fnIsObject()，fnHasClass()，fnContainsElment()。
+如果有内部函数，使用_fn+动词+名词形式，内部函数必需在函数最后定义。例如：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function fnGetNumber(nTotal) {
+    if (nTotal &amp;lt; 100) {
+        nTotal = 100;
+    }
+    return _fnAdd(nTotal);
+ 
+    function _fnAdd(nNumber) {
+        nNumber++;
+        return nNumber;
+    }
+}
+alert(fGetNumber(10)); //alert 101
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2&gt;构造函数的面向对象写法&lt;/h2&gt;
+
+&lt;p&gt;上一篇文章讲到构造函数以及自身属性跟prototype属性的区别，里面的例子是采用内部定义私有属性加prototype定义共享属性的形式，代码如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var fnSuper = function (sName,aList,sColor,nAge) {
+        this.name = sName;
+        this.list = aList;
+        this.color = sColor;
+        this.age = nAge;
+};
+fnSuper.prototype.aNewList = [1,1,1,1];
+
+    var oSuper1 = new fnSuper(&quot;super1&quot;,[2,2,2,2]);
+    var fnSub = function () {};
+    fnSub.prototype = new fnSuper(&quot;sub&quot;,[3,3,3,3]);//继承。只能在这里绑定数据，没办法对sub1绑定。下面例子可以解决这个问题
+
+    var oSub1 = new fnSub();
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;对于上面的代码，总体来说没什么原则性错误，无伤大雅；但我们需要分别在两个地方初始化变量，代码一多维护困难度会急剧增大。因此我们可以使用类似于面向对象语言中的Class写法：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+var fnSuper = function () {};
+fnSuper.prototype = {
+    init: function (sName,aList,sColor=&quot;green&quot;,nAge=&quot;18&quot;) {
+        this.name = sName;
+        this.list = aList;
+        this.color = sColor;
+        this.age = nAge;
+    },
+    aNewList:[1, 1, 1, 1]
+}//把初始化集中在一个地方，又能实现上面例子的功能
+
+var oSuper1 = new fnSuper();
+oSuper1.init(&quot;super1&quot;,[2,2,2,2]);
+oSuper1.list.push(2);//修改oSuper1的list
+console.log(oSuper1.list);//[2,2,2,2,2]
+var oSuper2 = new fnSuper();
+oSuper2.init(&quot;oSuper2&quot;,[1,1,1,1]);//通过init进行数据绑定
+oSuper2.list;//[1,1,1,1]，不会被上面的oSuper1影响，也就是说实现了数据的绑定
+
+var fnSub = function(){};
+fnSub.prototype = new fnSuper();
+var oSub1 = new fnSub();
+oSub1.init(&quot;sub1&quot;,[1],21);//我们试图跳过sColor直接给nAge赋值，但失败了
+oSub1.color;//&quot;21&quot;,也就是说我们无法跳过中间参数
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这样把初始化集中在了prototype里面，又能给instance绑定数据，甚至可以instance的instance绑定数据，比如上例中的sub1和sub2。写到这里我们又发现了另一个问题，就是初始化需要的参数很多，我们在初始化时必须严格按照位置进行参数传入，这种参数叫做位置参数；位置参数可以忽略后面的参数，但不允许你跳过中间的参数；所以很多时候参数一多就容易出错。因此我们可以改写成一下的形式：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;var fnSuper = function () {};
+fnSuper.prototype = {
+    init: function (oOption) {//把参数集中在一个object里面
+        this.name = oOption.sName;
+        this.list = oOption.aList;
+        this.color = oOption.sColor;
+        this.age = oOption.nAge;
+    },
+    aNewList:[1, 1, 1, 1]
+}
+
+var oSuper1 = new fnSuper();
+oSuper1.init({
+    sName:&quot;super1&quot;,
+    aList:[1,2,3],
+    nAge:20
+});
+oSuper1.age;//20；
+oSuper1.color;//undefined;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这种方式使我们可以通过命名参数进行赋值，减少出错，而且可以跳过中间的参数，因为命名参数本来就跟位置无关。&lt;/p&gt;
+</content>
+ </entry>
  
  <entry>
    <title>javascript——自身属性与原型属性</title>
@@ -1638,7 +1790,7 @@ Point(x=3.0, y=5.0)
 
 &lt;hr /&gt;
 
-&lt;h2&gt;这是一段检测浏览器名称及版本号的代码，里面涉及到正则表达式的匹配&lt;/h2&gt;
+&lt;h3&gt;这是一段检测浏览器名称及版本号的代码，里面涉及到正则表达式的匹配&lt;/h3&gt;
 
 &lt;pre&gt;&lt;code&gt;function detectBrowser(){
     var ua = navigator.userAgent.toLowerCase();

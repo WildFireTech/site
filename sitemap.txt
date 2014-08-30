@@ -8,6 +8,7 @@ http://enml.github.io/blog/rss.xml
 http://enml.github.io/blog/sitemap.txt
 http://enml.github.io/blog/tags.html
 
+http://enml.github.io/blog/2014/07/04/js-code_optimize
 http://enml.github.io/blog/2014/06/21/js-prototype-chaim
 http://enml.github.io/blog/2014/06/20/js-prototype
 http://enml.github.io/blog/2014/06/14/js-closesure
