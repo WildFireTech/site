@@ -127,7 +127,7 @@
           2013
           </div>
         </div>
-      <h1>css：position</h1>
+      <h1>css：position(转)</h1>
 
 <hr />
  <h2 id="header_1">包含块简介</h2>
@@ -152,7 +152,7 @@
            答案是否定的。此节中，将给出各类元素包含块的判断以及包含块的区域范围。
            如果不存在符合判断标准的祖先元素，那么元素的包含块就是初始包含块。</p>
         <p>包含块判定总流程图如下：</p>
-        <p><img src="008/CB4.png" alt="" /></p>
+        <p><img src="/site/CB4.png" alt="" /></p>
 
         <h3>根元素</h3>
         <p>根元素，就是处于文档树最顶端的元素，它没有父节点。</p>
@@ -224,7 +224,7 @@
 &lt;/p&gt;</pre>
         <p>以上代码中，文字采取默认从左到右的方式排列。红 XX 和 蓝 XX 和黄 XX 都是绝对定位元素，它的包含块是相对定位的 SPAN。
             它们定位需要参照包含块，按照标准来说，它们包含块的左顶边是 SPAN 形成的第一个框（即第一行的灰色部分）的顶、左内边距边，包含块的右、下边是 SPAN 生成的最后一个框（最后一行灰色的部分）的右、下内边距边界。</p>
-        <p>示意图：<br/><img src="008/CB1.png" alt="" /></p>
+        <p>示意图：<br/><img src="/site/CB1.png" alt="" /></p>
         <p>行内元素内形成的包含块，在各浏览器中各不相同，存在兼容性问题。可以通过上面的例子可以证明这一点。蓝色的 &quot;XX&quot; 的位置在各浏览器中都不一样。</p>
         <p>包含块的宽度可能是<span class="hl_2">负</span>的。</p>
         <p>示例代码：</p>
@@ -238,7 +238,7 @@
         &lt;em style=&quot;<span class="hl_4">position:absolute;</span> color:blue; bottom:0; right:0;&quot;&gt;XX&lt;/em&gt;
     &lt;/span&gt;
 &lt;/p&gt;</pre>
-        <p>示意图：<br/><img src="008/CB2.png" alt="" /></p>
+        <p>示意图：<br/><img src="/site/CB2.png" alt="" /></p>
         <p>以上的边界无法围成一个区域，在这种情况下，包含块的宽度是负的。</p>
         <p><strong>2). 如果 'direction' 是 'rtl'，包含块的顶、右边是祖先元素生成的第一个框的顶、右内边距边界 (padding edges) ，左、下边是祖先元素生成的最后一个框的左、下内边距边界 (padding edges)</strong></p>
         <p>示例代码：</p>
@@ -252,7 +252,7 @@
         &lt;em style=&quot;<span class="hl_2">position:absolute;</span> color:blue; bottom:0; right:0;&quot;&gt;XX&lt;/em&gt;
     &lt;/span&gt;
 &lt;/p&gt;</pre>
-        <p>示意图：<br/><img src="008/CB3.png" alt="" /></p>
+        <p>示意图：<br/><img src="/site/CB3.png" alt="" /></p>
         <h4>其他情况下，如果祖先元素不是行内元素，那么包含块的区域应该是祖先元素的<span class="hl_2">内边距</span>边界</h4>
         <p>示例代码：</p>
         <pre>
@@ -262,7 +262,7 @@
     &lt;/div&gt;
 &lt;/div&gt;</pre>
         <p>以上代码中，content 的父元素虽是 div1，但，按照标准它的包含块应该是 container。</p>
-
+<p>文章转自<a href="http://www.w3help.org/zh-cn/kb/008/">http://www.w3help.org/zh-cn/kb/008/</a></p>
     </div>
 
  
