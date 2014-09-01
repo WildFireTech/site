@@ -4,7 +4,7 @@
  <title>寂寞先生</title>
  <link href="http://enml.github.io/blog/" rel="self"/>
  <link href="http://enml.github.io/blog"/>
- <updated>2014-08-30T10:58:27+08:00</updated>
+ <updated>2014-09-01T10:25:11+08:00</updated>
  <id>http://enml.github.io/blog</id>
  <author>
    <name>陈佳伟</name>
@@ -3073,6 +3073,17 @@ alert(a);    //上文已经定义了a，因此此处弹出0。这也说明了两
 &lt;p&gt;　　除了包含innerHTML的全部内容外, 还包含对象标签本身。&lt;/p&gt;
 
 &lt;p&gt;　　上例中的test.outerHTML的值也就是&lt;code&gt;&amp;lt;div id=&quot;test&quot;&amp;gt;&amp;lt;span style=&quot;color:red&quot;&amp;gt;hello&amp;lt;/span&amp;gt; world!&amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/p&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>css：position</title>
+   <link href="http://enml.github.io/blog/2013/06/09/css-position"/>
+   <updated>2013-06-09T00:00:00+08:00</updated>
+   <id>http://enml.github.io/blog/2013/06/09/css-position</id>
+   <content type="html">&lt;h1&gt;css：position&lt;/h1&gt;
+
+&lt;hr /&gt;
 </content>
  </entry>
  

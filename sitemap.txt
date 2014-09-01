@@ -36,6 +36,7 @@ http://enml.github.io/blog/2013/08/11/javascript-array
 http://enml.github.io/blog/2013/08/03/javascript-function
 http://enml.github.io/blog/2013/07/27/js-var
 http://enml.github.io/blog/2013/07/01/js-innerHtml
+http://enml.github.io/blog/2013/06/09/css-position
 http://enml.github.io/blog/2013/01/12/prime
 http://enml.github.io/blog/2012/04/24/directory
 http://enml.github.io/blog/2012/04/23/chinese-messy-code

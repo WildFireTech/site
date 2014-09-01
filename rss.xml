@@ -5,8 +5,8 @@
         <description>寂寞先生 - 陈佳伟</description>
         <link>http://enml.github.io/blog</link>
         <link>http://enml.github.io/blog</link>
-        <lastBuildDate>2014-08-30T10:58:27+08:00</lastBuildDate>
-        <pubDate>2014-08-30T10:58:27+08:00</pubDate>
+        <lastBuildDate>2014-09-01T10:25:11+08:00</lastBuildDate>
+        <pubDate>2014-09-01T10:25:11+08:00</pubDate>
         <ttl>1800</ttl>
 
 
@@ -3072,6 +3072,17 @@ alert(a);    //上文已经定义了a，因此此处弹出0。这也说明了两
                 <link>http://enml.github.io/blog/2013/07/01/js-innerHtml</link>
                 <guid>http://enml.github.io/blog/2013/07/01/js-innerHtml</guid>
                 <pubDate>2013-07-01T00:00:00+08:00</pubDate>
+        </item>
+
+        <item>
+                <title>css：position</title>
+                <description>&lt;h1&gt;css：position&lt;/h1&gt;
+
+&lt;hr /&gt;
+</description>
+                <link>http://enml.github.io/blog/2013/06/09/css-position</link>
+                <guid>http://enml.github.io/blog/2013/06/09/css-position</guid>
+                <pubDate>2013-06-09T00:00:00+08:00</pubDate>
         </item>
 
         <item>
