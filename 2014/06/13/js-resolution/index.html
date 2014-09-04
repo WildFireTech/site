@@ -3,7 +3,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>javascript：innerHTML</title>
+    <title>javascript变量声明优先级</title>
     
     <meta name="author" content="陈佳伟">
 
@@ -111,7 +111,7 @@
         
 <!--
 <div class="page-header">
-  <h1>javascript：innerHTML <small>Supporting tagline</small></h1>
+  <h1>javascript变量声明优先级 <small>Supporting tagline</small></h1>
 </div>
 -->
  
@@ -121,52 +121,147 @@
     <div class="content card">
         <div class="date_label">
           <div class="day_month">
-          07/01
+          06/13
           </div>
           <div class="year">
-          2013
+          2014
           </div>
         </div>
-      <h1>javascript：innerHTML</h1>
+      <h1>javascript变量声明优先级</h1>
 
 <hr />
-<pre>
-    
-<div id="test">
-   <span style="color:red">hello</span> world!
-</div>
-</pre>
 
+<p>上一篇post讲了javascript的作用域和hoisting，在里面我也提到了<code>function声明</code>的优先级比<code>var声明</code>高，也就意味着当两个同名变量同时被<code>function</code>和<code>var</code>声明时，<code>function</code>声明会覆盖<code>var</code>声明，如下：</p>
 
-<a href="javascript:alert(test.innerHTML)" class="btn">test.innerHTML内容</a>
-<a href="javascript:alert(test.innerText)" class="btn">test.inerText内容</a>
-<a href="javascript:alert(test.outerHTML)" class="btn">test.outerHTML内容</a>
+<pre><code>
+alert(a);//输出：function a(){ alert('我是函数') }
 
+function a(){ alert('我是函数') }//
+var a = '我是变量';
 
-<p>以上代码很好的说明了<code>innerHTML</code>、<code>innerText</code>、<code>outerHTML</code>的功能。</p>
-<code>test.innerHTML</code>:
+alert(a);   //输出：'我是变量'
+</code></pre>
 
-<p>　　也就是从对象的起始位置到终止位置的全部内容,包括Html标签。</p>
+<p>这代码等效于：</p>
 
-<p>　　上例中的test.innerHTML的值也就是“<code>&lt;span style="color:red"&gt;hello&lt;/span&gt; world!</code>”。</p>
+<pre><code>
+function a(){alert('我是函数')} 
+var a;    //hoisting
+alert(a);    //输出：function a(){ alert('我是函数') }
+a = '我是变量';//赋值
+alert(a);   //输出：'我是变量'
+</code></pre>
+
+<p>这短短的代码里面其实说明了两个问题：</p>
 
 <ul>
-<li><code>test.innerText</code>:</li>
+<li>function声明的优先级高于var声明：第一个alert输出可以看出<code>var a;</code>被<code>function a(){}</code>覆盖掉了。</li>
+<li>赋值优先于函数声明：第二个alert输出可以看出<code>a='我是变量'</code>又把<code>function a(){}</code>覆盖掉了。</li>
 </ul>
 
 
-<p>　　从起始位置到终止位置的内容, 但它去除Html标签</p>
-
-<p>　　上例中的test.innerText的值也就是“<code>hello world!</code>”, 其中span标签去除了。</p>
+<p><strong>把一个变量添加到作用域中除有很多方法</strong>，如下：</p>
 
 <ul>
-<li><code>test.outerHTML</code>:</li>
+<li>javascript语言预定义的，比如说this,arguments</li>
+<li><code>formal parameter</code>(也就是中文说的形参吧)</li>
+<li><code>var</code>声明并赋值，比如说<code>var a = 10;</code></li>
+<li><code>var</code>声明不赋值，比如说<code>var a;</code></li>
+<li><code>function</code>声明，比如说<code>function a(){};</code></li>
 </ul>
 
 
-<p>　　除了包含innerHTML的全部内容外, 还包含对象标签本身。</p>
+<p>我们来看看他们之间的优先级：</p>
 
-<p>　　上例中的test.outerHTML的值也就是<code>&lt;div id="test"&gt;&lt;span style="color:red"&gt;hello&lt;/span&gt; world!&lt;/div&gt;</code></p>
+<ul>
+<li><p><code>var声明并赋值</code>优先级高于<code>function声明</code>
+这个上面已经说了。</p></li>
+<li><p><code>function声明</code>优先级高于<code>formal parameter</code></p></li>
+</ul>
+
+
+<pre><code>function fnTest(a){
+    alert(a);
+    function a(){return "我优先"}
+}
+fnTest(100);//:function a(){return "我优先"}。可以看出function声明覆盖了`formal parameter`。
+</code></pre>
+
+<ul>
+<li><code>formal parameter</code>优先级高于<code>预定义变量</code></li>
+</ul>
+
+
+<pre><code>function fnTest(arguments){
+    alert(arguments);
+}
+fnTest(100);//:100。说明`formal parameter`优先级比预定义的arguments高
+</code></pre>
+
+<p>对比以下：</p>
+
+<pre><code>function fnTest(a){
+    alert(arguments);
+}
+fnTest(100);//:[Object Arguments] {0:100,length:1}。当没有冲突时输出便是预定义的arguments
+</code></pre>
+
+<ul>
+<li><code>formal parameter</code>优先级高于<code>var声明不赋值</code></li>
+</ul>
+
+
+<pre><code>function fnTest(a){
+    alert(a);
+    var a;
+}
+fnTest(100);//:100。很明显，不多说
+</code></pre>
+
+<ul>
+<li><code>预定义变量</code>优先级高于 <code>var声明不赋值</code></li>
+</ul>
+
+
+<pre><code>function fnTest(){
+    alert(arguments);
+    var arguments;
+}
+fnTest();//:[Object Arguments]。不是undefined，说明arguments没有被var声明覆盖
+</code></pre>
+
+<ul>
+<li><code>var声明不赋值</code>优先级高于函数外部作用域的其他所有声明</li>
+</ul>
+
+
+<pre><code>function fnTest(){
+    alert(fnTest);
+    var fnTest;
+}
+fnTest();//:undefined。
+</code></pre>
+
+<p>对比如下：</p>
+
+<pre><code>function fnTest(){    //
+    alert(fnTest);    //    
+}    //
+fnTest();    //输出function fnTest(){alert(fnTest);}
+</code></pre>
+
+<p>这也正好印证了作用域链查找变量的方式：<strong>在局部作用域里查找（若找到则返回，不必往下继续查找） ==> 在上一级作用域里查找... ==> 直到全局作用域（若找不到则返回typeError）</strong></p>
+
+<p><strong>最后看看下面的综合例子：</strong></p>
+
+<pre><code>function fnTest(arguments){
+    alert(arguments);//function arguments(){return "hello world"}
+    var arguments = 99;
+    function arguments(){return "hello world"};
+    alert(arguments);//99
+}
+fnTest(100);
+</code></pre>
 
     </div>
 
@@ -181,7 +276,7 @@
   
      
     	<li><a href="/site/categories.html#技术分享-ref">
-    		技术分享 <span>23</span>
+    		技术分享 <span>29</span>
     	</a></li>
     
   
@@ -199,7 +294,7 @@
 
   
      
-    	<li><a href="/site/tags.html#javascript-ref">javascript <span>17</span></a></li>
+    	<li><a href="/site/tags.html#javascript-ref">javascript <span>22</span></a></li>
     
   
 
@@ -211,11 +306,11 @@
     <div class="pagination clearfix">
       <ul class = "pull-right">
       
-        <li class="prev"><a class="fa fa-arrow-circle-left" href="/site/2013/01/12/prime" title="javascript 算出某值以内的质数"> 前一篇</a></li>
+        <li class="prev"><a class="fa fa-arrow-circle-left" href="/site/2014/06/12/js-scope" title="javascript作用域和声明提升"> 前一篇</a></li>
       
         <li><a class="fa fa-th" href="/site/archive.html"> 所有日志</a></li>
       
-        <li class="next"><a  href="/site/2013/08/03/javascript-function" title="javascript——函数">后一篇 <span class="fa fa-arrow-circle-right">  </span></a></li>
+        <li class="next"><a  href="/site/2014/06/14/js-closesure" title="javascript闭包">后一篇 <span class="fa fa-arrow-circle-right">  </span></a></li>
       
       </ul>
     </div>

@@ -4,7 +4,7 @@
  <title>寂寞先生</title>
  <link href="http://enml.github.io/blog/" rel="self"/>
  <link href="http://enml.github.io/blog"/>
- <updated>2014-09-01T10:25:11+08:00</updated>
+ <updated>2014-09-04T17:24:22+08:00</updated>
  <id>http://enml.github.io/blog</id>
  <author>
    <name>陈佳伟</name>
@@ -165,11 +165,11 @@ oSuper1.color;//undefined;
  </entry>
  
  <entry>
-   <title>javascript——自身属性与原型属性</title>
+   <title>javascript自身属性与原型属性</title>
    <link href="http://enml.github.io/blog/2014/06/21/js-prototype-chaim"/>
    <updated>2014-06-21T00:00:00+08:00</updated>
    <id>http://enml.github.io/blog/2014/06/21/js-prototype-chaim</id>
-   <content type="html">&lt;h1&gt;javascript——自身属性与原型属性&lt;/h1&gt;
+   <content type="html">&lt;h1&gt;javascript自身属性与原型属性&lt;/h1&gt;
 
 &lt;hr /&gt;
 
@@ -333,11 +333,11 @@ super1.newBra;//[2,2,2,2]
  </entry>
  
  <entry>
-   <title>javascript——构造函数与原型简介</title>
+   <title>javascript构造函数与原型简介</title>
    <link href="http://enml.github.io/blog/2014/06/20/js-prototype"/>
    <updated>2014-06-20T00:00:00+08:00</updated>
    <id>http://enml.github.io/blog/2014/06/20/js-prototype</id>
-   <content type="html">&lt;h1&gt;javascript——构造函数与原型简介&lt;/h1&gt;
+   <content type="html">&lt;h1&gt;javascript构造函数与原型简介&lt;/h1&gt;
 
 &lt;hr /&gt;
 
@@ -485,11 +485,11 @@ console.log(b.constructor); //Object
  </entry>
  
  <entry>
-   <title>javascript——闭包</title>
+   <title>javascript闭包</title>
    <link href="http://enml.github.io/blog/2014/06/14/js-closesure"/>
    <updated>2014-06-14T00:00:00+08:00</updated>
    <id>http://enml.github.io/blog/2014/06/14/js-closesure</id>
-   <content type="html">&lt;h1&gt;javascript——闭包&lt;/h1&gt;
+   <content type="html">&lt;h1&gt;javascript闭包&lt;/h1&gt;
 
 &lt;hr /&gt;
 
@@ -731,11 +731,154 @@ var object = {
  </entry>
  
  <entry>
-   <title>javascript——作用域</title>
+   <title>javascript变量声明优先级</title>
+   <link href="http://enml.github.io/blog/2014/06/13/js-resolution"/>
+   <updated>2014-06-13T00:00:00+08:00</updated>
+   <id>http://enml.github.io/blog/2014/06/13/js-resolution</id>
+   <content type="html">&lt;h1&gt;javascript变量声明优先级&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt;上一篇post讲了javascript的作用域和hoisting，在里面我也提到了&lt;code&gt;function声明&lt;/code&gt;的优先级比&lt;code&gt;var声明&lt;/code&gt;高，也就意味着当两个同名变量同时被&lt;code&gt;function&lt;/code&gt;和&lt;code&gt;var&lt;/code&gt;声明时，&lt;code&gt;function&lt;/code&gt;声明会覆盖&lt;code&gt;var&lt;/code&gt;声明，如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+alert(a);//输出：function a(){ alert(&#39;我是函数&#39;) }
+
+function a(){ alert(&#39;我是函数&#39;) }//
+var a = &#39;我是变量&#39;;
+
+alert(a);   //输出：&#39;我是变量&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这代码等效于：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+function a(){alert(&#39;我是函数&#39;)} 
+var a;    //hoisting
+alert(a);    //输出：function a(){ alert(&#39;我是函数&#39;) }
+a = &#39;我是变量&#39;;//赋值
+alert(a);   //输出：&#39;我是变量&#39;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这短短的代码里面其实说明了两个问题：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;function声明的优先级高于var声明：第一个alert输出可以看出&lt;code&gt;var a;&lt;/code&gt;被&lt;code&gt;function a(){}&lt;/code&gt;覆盖掉了。&lt;/li&gt;
+&lt;li&gt;赋值优先于函数声明：第二个alert输出可以看出&lt;code&gt;a=&#39;我是变量&#39;&lt;/code&gt;又把&lt;code&gt;function a(){}&lt;/code&gt;覆盖掉了。&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;&lt;strong&gt;把一个变量添加到作用域中除有很多方法&lt;/strong&gt;，如下：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;javascript语言预定义的，比如说this,arguments&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;formal parameter&lt;/code&gt;(也就是中文说的形参吧)&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;var&lt;/code&gt;声明并赋值，比如说&lt;code&gt;var a = 10;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;var&lt;/code&gt;声明不赋值，比如说&lt;code&gt;var a;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;function&lt;/code&gt;声明，比如说&lt;code&gt;function a(){};&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;p&gt;我们来看看他们之间的优先级：&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;var声明并赋值&lt;/code&gt;优先级高于&lt;code&gt;function声明&lt;/code&gt;
+这个上面已经说了。&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;code&gt;function声明&lt;/code&gt;优先级高于&lt;code&gt;formal parameter&lt;/code&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;pre&gt;&lt;code&gt;function fnTest(a){
+    alert(a);
+    function a(){return &quot;我优先&quot;}
+}
+fnTest(100);//:function a(){return &quot;我优先&quot;}。可以看出function声明覆盖了`formal parameter`。
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;formal parameter&lt;/code&gt;优先级高于&lt;code&gt;预定义变量&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;pre&gt;&lt;code&gt;function fnTest(arguments){
+    alert(arguments);
+}
+fnTest(100);//:100。说明`formal parameter`优先级比预定义的arguments高
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;对比以下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function fnTest(a){
+    alert(arguments);
+}
+fnTest(100);//:[Object Arguments] {0:100,length:1}。当没有冲突时输出便是预定义的arguments
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;formal parameter&lt;/code&gt;优先级高于&lt;code&gt;var声明不赋值&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;pre&gt;&lt;code&gt;function fnTest(a){
+    alert(a);
+    var a;
+}
+fnTest(100);//:100。很明显，不多说
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;预定义变量&lt;/code&gt;优先级高于 &lt;code&gt;var声明不赋值&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;pre&gt;&lt;code&gt;function fnTest(){
+    alert(arguments);
+    var arguments;
+}
+fnTest();//:[Object Arguments]。不是undefined，说明arguments没有被var声明覆盖
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;var声明不赋值&lt;/code&gt;优先级高于函数外部作用域的其他所有声明&lt;/li&gt;
+&lt;/ul&gt;
+
+
+&lt;pre&gt;&lt;code&gt;function fnTest(){
+    alert(fnTest);
+    var fnTest;
+}
+fnTest();//:undefined。
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;对比如下：&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function fnTest(){    //
+    alert(fnTest);    //    
+}    //
+fnTest();    //输出function fnTest(){alert(fnTest);}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;这也正好印证了作用域链查找变量的方式：&lt;strong&gt;在局部作用域里查找（若找到则返回，不必往下继续查找） ==&gt; 在上一级作用域里查找... ==&gt; 直到全局作用域（若找不到则返回typeError）&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;最后看看下面的综合例子：&lt;/strong&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;function fnTest(arguments){
+    alert(arguments);//function arguments(){return &quot;hello world&quot;}
+    var arguments = 99;
+    function arguments(){return &quot;hello world&quot;};
+    alert(arguments);//99
+}
+fnTest(100);
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+ </entry>
+ 
+ <entry>
+   <title>javascript作用域和声明提升</title>
    <link href="http://enml.github.io/blog/2014/06/12/js-scope"/>
    <updated>2014-06-12T00:00:00+08:00</updated>
    <id>http://enml.github.io/blog/2014/06/12/js-scope</id>
-   <content type="html">&lt;h1&gt;javascript——作用域&lt;/h1&gt;
+   <content type="html">&lt;h1&gt;javascript作用域和声明提升&lt;/h1&gt;
 
 &lt;hr /&gt;
 
@@ -3077,11 +3220,11 @@ alert(a);    //上文已经定义了a，因此此处弹出0。这也说明了两
  </entry>
  
  <entry>
-   <title>css：position</title>
+   <title>css：position(转)</title>
    <link href="http://enml.github.io/blog/2013/06/09/css-position"/>
    <updated>2013-06-09T00:00:00+08:00</updated>
    <id>http://enml.github.io/blog/2013/06/09/css-position</id>
-   <content type="html">&lt;h1&gt;css：position&lt;/h1&gt;
+   <content type="html">&lt;h1&gt;css：position(转)&lt;/h1&gt;
 
 &lt;hr /&gt;
 </content>
