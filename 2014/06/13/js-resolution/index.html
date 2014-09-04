@@ -131,7 +131,7 @@
 
 <hr />
 
-<p>上一篇post讲了javascript的作用域和hoisting，在里面我也提到了<code>function声明的优先级比<code>var声明高，也就意味着当两个同名变量同时被<code>function和<code>var声明时，<code>function声明会覆盖<code>var声明，如下：</p>
+<p>上一篇post讲了javascript的作用域和hoisting，在里面我也提到了<code>function声明</code>的优先级比<code>var声明</code>高，也就意味着当两个同名变量同时被<code>function</code>和<code>var</code>声明时，<code>function</code>声明会覆盖<code>var</code>声明，如下：</p>
 
 <pre class="prettyprint linenums">
 alert(a);//输出：function a(){ alert('我是函数') }
@@ -155,8 +155,8 @@ alert(a);   //输出：'我是变量'
 <p>这短短的代码里面其实说明了两个问题：</p>
 
 <ul>
-<li>function声明的优先级高于var声明：第一个alert输出可以看出<code>var a;被<code>function a(){}覆盖掉了。</li>
-<li>赋值优先于函数声明：第二个alert输出可以看出<code>a='我是变量'又把<code>function a(){}覆盖掉了。</li>
+<li>function声明的优先级高于var声明：第一个alert输出可以看出<code>var a;</code>被<code>function a(){}</code>覆盖掉了。</li>
+<li>赋值优先于函数声明：第二个alert输出可以看出<code>a='我是变量'</code>又把<code>function a(){}</code>覆盖掉了。</li>
 </ul>
 
 
@@ -164,19 +164,19 @@ alert(a);   //输出：'我是变量'
 
 <ul>
 <li>javascript语言预定义的，比如说this,arguments</li>
-<li><code>formal parameter(也就是中文说的形参吧)</li>
-<li><code>var声明并赋值，比如说<code>var a = 10;</li>
-<li><code>var声明不赋值，比如说<code>var a;</li>
-<li><code>function声明，比如说<code>function a(){};</li>
+<li><code>formal parameter</code>(也就是中文说的形参吧)</li>
+<li><code>var</code>声明并赋值，比如说<code>var a = 10;</code></li>
+<li><code>var</code>声明不赋值，比如说<code>var a;</code></li>
+<li><code>function</code>声明，比如说<code>function a(){};</code></li>
 </ul>
 
 
 <p>我们来看看他们之间的优先级：</p>
 
 <ul>
-<li><p><code>var声明并赋值优先级高于<code>function声明
+<li><p><code>var声明并赋值</code>优先级高于<code>function声明</code>
 这个上面已经说了。</p></li>
-<li><p><code>function声明优先级高于<code>formal parameter</p></li>
+<li><p><code>function声明</code>优先级高于<code>formal parameter</code></p></li>
 </ul>
 
 
@@ -188,7 +188,7 @@ fnTest(100);//:function a(){return "我优先"}。可以看出function声明覆�
 </pre>
 
 <ul>
-<li><code>formal parameter优先级高于<code>预定义变量</li>
+<li><code>formal parameter</code>优先级高于<code>预定义变量</code></li>
 </ul>
 
 
@@ -207,7 +207,7 @@ fnTest(100);//:[Object Arguments] {0:100,length:1}。当没有冲突时输出便
 </pre>
 
 <ul>
-<li><code>formal parameter优先级高于<code>var声明不赋值</li>
+<li><code>formal parameter</code>优先级高于<code>var声明不赋值</code></li>
 </ul>
 
 
@@ -219,7 +219,7 @@ fnTest(100);//:100。很明显，不多说
 </pre>
 
 <ul>
-<li><code>预定义变量优先级高于 <code>var声明不赋值</li>
+<li><code>预定义变量</code>优先级高于 <code>var声明不赋值</code></li>
 </ul>
 
 
@@ -231,7 +231,7 @@ fnTest();//:[Object Arguments]。不是undefined，说明arguments没有被var�
 </pre>
 
 <ul>
-<li><code>var声明不赋值优先级高于函数外部作用域的其他所有声明</li>
+<li><code>var声明不赋值</code>优先级高于函数外部作用域的其他所有声明</li>
 </ul>
 
 
