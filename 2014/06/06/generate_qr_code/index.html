@@ -127,12 +127,14 @@
                         <h1>javascript生成二维码</h1>
 
                         <hr />
-
-                        <form method="get" action="">
-                            <input type="text" id="QRstr" placeholder="输入要生成二维码的内容" class="input text" value="">
-                            <input type="button" value="生成二维码" id="creatQRcode" class="big button">
-                        </form>
-                        <div id="output"></div>
+                        <div class="outer" style="min-height:150px;">
+                            <form method="get" action="">
+                                <input type="text" id="QRstr" placeholder="输入要生成二维码的内容" class="input text" value="" style="width:400px;">
+                                <input type="button" value="生成二维码" id="creatQRcode" class="big button" style="width:70px;padding:10px;">
+                            </form>
+                            <div id="output" style="float:right;margin-right:50px;"></div><br clear="all">
+                        </div>
+                        <br>
                         <p>二维码可以理解为一种信息标签，它将信息转化为二进制然后通过一定的规则进行编码形成几何图形，这样有利于机器识别。二维码在国内普通用户间的流行应该很大程度上归功于微信的推动，并且我发现很多人对二维码始终有着一种“不明觉厉”的感觉，不过假如我们理解了技术细节，便会知道事实上它就是一种信息格式转换，并没有什么神秘之处。</p>
 
                         <p>网上生成二维码的应用多如牛毛，但大多数都是基于服务端，今天我闲着想使用比较熟悉的javascript来实现一下，网上搜了一下发现还是挺多使用javascript来生成二维码的，但绝大多数甚至说我搜到的全部都是使用现成的库，比如jquery-qrcode、Google Chart API。使用库的好处就是快捷方便，但弊端就是你会像一个傻子一样什么原理细节都不懂，你只是把人家封装好的黑盒子拿过来，接上几根线就可以用了，但这个黑盒子里面到底是什么你都不知道。这就是为什么同样是程序员，有的人可以成为封装黑盒子的高级工程师，而有的人却当个苦逼的码农。</p>
@@ -208,14 +210,13 @@
                         var canvas = document.createElement('canvas'),
                             context;
                         context = canvas.getContext('2d');
-                        if (context){
-                            addEvent(creatQR_btn, "click", function(){
+                        if (context) {
+                            addEvent(creatQR_btn, "click", function () {
                                 var png = QRCode.generatePNG(QR_str.value);
-                                outputDiv.innerHTML = "<img src=\'"+png+"\'>";
+                                outputDiv.innerHTML = "<img src=\'" + png + "\'>";
                             });
-                        }
-                        else{
-                            addEvent(creatQR_btn, "click", function(){
+                        } else {
+                            addEvent(creatQR_btn, "click", function () {
                                 var table = QRCode.generateHTML(QR_str.value);
                                 outputDiv.innerHTML = table;
                             });
@@ -789,7 +790,7 @@
                                     options = options || {};
                                     var ver = options.version || -1;
                                     var ecclevel = ECCLEVELS["Q"];
-                                    var mode =-1;
+                                    var mode = -1;
                                     var mask = -1;
 
                                     if (mode < 0) {
@@ -867,7 +868,7 @@
 
                                     context.fillStyle = '#fff';
                                     context.fillRect(0, 0, size, size);
-                                    context.fillStyle = '#000';
+                                    context.fillStyle = '#db4949';
                                     for (var i = 0; i < n; ++i) {
                                         for (var j = 0; j < n; ++j) {
                                             if (matrix[i][j]) {

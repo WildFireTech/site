@@ -114,6 +114,7 @@ h1 {
     width: 200px;
     /*            padding:0;*/
     float: left;
+    border-radius: 0;
 }
 .big.button{
     background-color: #00a9a9;
