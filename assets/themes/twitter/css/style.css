@@ -119,7 +119,7 @@ h1 {
 .big.button{
     background-color: #00a9a9;
     height: 50px;
-    width: 80px;
+    min-width: 80px;
     border: 1px solid #00acac;
     color: #fff;
     float: left;
