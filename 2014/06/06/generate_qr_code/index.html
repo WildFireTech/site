@@ -208,7 +208,7 @@
                             context;
                         context = canvas.getContext('2d');
                         if (context){
-                            addEvent(creatQR_btn, "click", QRCode.generatePNG(QR_str.value,));
+                            addEvent(creatQR_btn, "click", QRCode.generatePNG(QR_str.value));
                         }
                         else{
                             addEvent(creatQR_btn, "click", QRCode.generateHTML(QR_str.value));
