@@ -270,6 +270,7 @@
 </body>
 <script>
     window.onload = function(){canvasDrawClock();prettyPrint();}
+    document.getElementById("endTime").onmouseover=function(){this.select()};
     document.getElementById("startCountdown").addEventListener("click", canvasDrawClock);
 
     function canvasDrawClock() {

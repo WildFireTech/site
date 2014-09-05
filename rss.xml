@@ -5,8 +5,8 @@
         <description>寂寞先生 - 陈佳伟</description>
         <link>http://enml.github.io/blog</link>
         <link>http://enml.github.io/blog</link>
-        <lastBuildDate>2014-09-04T17:24:22+08:00</lastBuildDate>
-        <pubDate>2014-09-04T17:24:22+08:00</pubDate>
+        <lastBuildDate>2014-09-05T20:47:36+08:00</lastBuildDate>
+        <pubDate>2014-09-05T20:47:36+08:00</pubDate>
         <ttl>1800</ttl>
 
 
@@ -1112,6 +1112,23 @@ var object = {
                 <link>http://enml.github.io/blog/2014/06/12/js-scope</link>
                 <guid>http://enml.github.io/blog/2014/06/12/js-scope</guid>
                 <pubDate>2014-06-12T00:00:00+08:00</pubDate>
+        </item>
+
+        <item>
+                <title>javascript生成二维码(纯粹javascript代码，不依赖库，离线可用)</title>
+                <description>&lt;h1&gt;javascript生成二维码&lt;/h1&gt;
+
+&lt;hr /&gt;
+
+&lt;p&gt; 二维码可以理解为一种信息标签，它将信息转化为二进制然后通过一定的规则进行编码形成几何图形，这样有利于机器识别。二维码在国内普通用户间的流行应该很大程度上归功于微信的推动，并且我发现很多人对二维码始终有着一种“不明觉厉”的感觉，不过假如我们理解了技术细节，便会知道事实上它就是一种信息格式转换，并没有什么神秘之处。&lt;/p&gt;
+
+&lt;p&gt; 网上生成二维码的应用多如牛毛，但大多数都是基于服务端，今天我闲着想使用比较熟悉的javascript来实现一下，网上搜了一下发现还是挺多使用javascript来生成二维码的，但绝大多数甚至说我搜到的全部都是使用现成的库，比如jquery-qrcode、Google Chart API。使用库的好处就是快捷方便，但弊端就是你会像一个傻子一样什么原理细节都不懂，你只是把人家封装好的黑盒子拿过来，接上几根线就可以用了，但这个黑盒子里面到底是什么你都不知道。这就是为什么同样是程序员，有的人可以成为封装黑盒子的高级工程师，而有的人却当个苦逼的码农。&lt;/p&gt;
+
+&lt;p&gt; 后来查找了一下ISO/IEC 18004:2006文档，足足100页的英文文档看的够呛了，不过说实话写的很详细条理很清晰，相信只要有耐心的人基本都能看懂它的实现原理。不过技术原理看懂了，不代表项目就实现了。编程的精髓并且也是最大的难点不在于语言本身，而是一种对客观事物进行抽象的思维能力；学会一门语言的语法很容易，有点基础的人学一门新语言基本一两天就搞定了，但仅仅只是语法是没有用的，能使用语言处理问题才是最重要的，把客观事物抽象处理是一件很费脑力的事情，我现在仍然感到很吃力。看完ISO/IEC 18004:2006文档我能清楚的理解二维码构造的原理，但要抽象成代码就很吃力了，网上不依赖库完全使用javascript实现的例子非常罕见，所以我花了几天最终才完成了这个小项目。&lt;/p&gt;
+</description>
+                <link>http://enml.github.io/blog/2014/06/06/generate_qr_code</link>
+                <guid>http://enml.github.io/blog/2014/06/06/generate_qr_code</guid>
+                <pubDate>2014-06-06T00:00:00+08:00</pubDate>
         </item>
 
         <item>
