@@ -200,7 +200,8 @@
                     <div id="disqus_thread"></div>
                     <script>
                         var QR_str = document.getElementById("QRstr"),
-                            creatQR_btn = document.getElementById("creatQRcode");
+                            creatQR_btn = document.getElementById("creatQRcode"),
+                            outputDiv = document.getElementById("output");
                         addEvent(QR_str, "mouseover", function () {
                             this.select();
                         });
@@ -208,10 +209,16 @@
                             context;
                         context = canvas.getContext('2d');
                         if (context){
-                            addEvent(creatQR_btn, "click", QRCode.generatePNG(QR_str.value));
+                            addEvent(creatQR_btn, "click", function(){
+                                var png = QRCode.generatePNG(QR_str.value);
+                                outputDiv.innerHTML = "<img src=\'"+png+"\'>";
+                            });
                         }
                         else{
-                            addEvent(creatQR_btn, "click", QRCode.generateHTML(QR_str.value));
+                            addEvent(creatQR_btn, "click", function(){
+                                var table = QRCode.generateHTML(QR_str.value);
+                                outputDiv.innerHTML = table;
+                            });
                         };
 
                         function addEvent(ele, event, fn) {
