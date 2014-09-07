@@ -103,12 +103,7 @@ h1 {
 .post_list {
     margin-left: 20px;
 }
-.post_list li{
-    margin-left: 60px;
-    transition: margin 1s;
-    -webkit-transition: margin 1s;
-    -o-transition: margin 1s;
-}
+
 .page.card {
     background: url("img/card_bg.jpg") repeat top center;
 }
@@ -127,4 +122,24 @@ h1 {
 }
 #countdown {
     padding-bottom: 5px;
+}
+form{
+    width: 100%;
+}
+.input.big.text{width: 70%;}
+.input.text{
+    height: 40px;
+    width: 30%;
+    min-width: 180px;
+    float: left;
+    border-radius: 0;
+}
+.big.button{
+    background-color: #00a9a9;
+    height: 50px;
+    min-width: 80px;
+    border: 1px solid #00acac;
+    color: #fff;
+    float: left;
+    transition:box-shadow 0.5s ease-out;
 }

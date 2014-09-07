@@ -790,7 +790,7 @@
                                     };
 
                                     options = options || {};
-                                    var ver = options.version || -1;
+                                    var ver = 3;
                                     var ecclevel = ECCLEVELS["Q"];
                                     var mode = -1;
                                     var mask = -1;
@@ -857,7 +857,7 @@
                                 'generatePNG': function (data, options) {
                                     options = options || {};
                                     var matrix = QRCode['generate'](data, options);
-                                    var modsize = 7;
+                                    var modsize = 10;
                                     var margin = 2;
                                     var n = matrix.length;
                                     var size = modsize * (n + 2 * margin);
