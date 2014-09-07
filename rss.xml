@@ -5,8 +5,8 @@
         <description>寂寞先生 - 陈佳伟</description>
         <link>http://enml.github.io/blog</link>
         <link>http://enml.github.io/blog</link>
-        <lastBuildDate>2014-09-05T20:47:36+08:00</lastBuildDate>
-        <pubDate>2014-09-05T20:47:36+08:00</pubDate>
+        <lastBuildDate>2014-09-07T22:11:48+08:00</lastBuildDate>
+        <pubDate>2014-09-07T22:11:48+08:00</pubDate>
         <ttl>1800</ttl>
 
 
@@ -1937,6 +1937,17 @@ Point(x=3.0, y=5.0)
                 <link>http://enml.github.io/blog/2014/04/21/future</link>
                 <guid>http://enml.github.io/blog/2014/04/21/future</guid>
                 <pubDate>2014-04-21T00:00:00+08:00</pubDate>
+        </item>
+
+        <item>
+                <title>拼图游戏</title>
+                <description>&lt;h1&gt;拼图游戏&lt;/h1&gt;
+
+&lt;hr /&gt;
+</description>
+                <link>http://enml.github.io/blog/2014/03/29/puzzle</link>
+                <guid>http://enml.github.io/blog/2014/03/29/puzzle</guid>
+                <pubDate>2014-03-29T00:00:00+08:00</pubDate>
         </item>
 
         <item>
