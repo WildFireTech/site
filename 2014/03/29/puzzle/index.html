@@ -247,12 +247,18 @@
                                     //获取图片的尺寸
                                     imgWidth = img.width;
                                     imgHeight = img.height;
-                                    if (vvg.step <= 4) {
-                                        var myw = Math.floor(imgWidth / (1 + vvg.step)),
-                                            myh = Math.floor(imgHeight / (1 + vvg.step));
-                                    } else {
+                                    if (vvg.step <= 2) {
+                                        var piece = 3;
+                                        var myw = Math.floor(imgWidth / (piece)),
+                                            myh = Math.floor(imgHeight / (piece));
+                                    } else if (vvg.step <= 4) {
+                                        var piece = 4;
                                         myw = Math.floor(imgWidth / 4),
                                         myh = Math.floor(imgHeight / 4);
+                                    } else {
+                                        var piece = 5;
+                                        myw = Math.floor(imgWidth / 5),
+                                        myh = Math.floor(imgHeight / 5);
                                     }
                                     vvgBox.style.width = imgWidth + 'px';
                                     vvgBox.style.height = imgHeight + 'px';
@@ -265,25 +271,25 @@
                                     // 文档碎片
                                     var oFragment = document.createDocumentFragment();
                                     //循环生成方块状态的小图，以背景的形式展现，生成16格,并添加到数组
-                                    for (var i = 0; i < Math.pow((1 + vvg.step), 2); i++) {
+                                    for (var i = 0; i < Math.pow((piece), 2); i++) {
                                         var li = document.createElement('li');
                                         li.style.width = myw + 'px';
                                         li.style.height = myh + 'px';
                                         li.style.backgroundImage = 'url(' + url + ')';
                                         // 计算坐标
 
-                                        if (i < (1 + vvg.step)) { //第一排
+                                        if (i < (piece)) { //第一排
                                             top = 0;
                                             left = i * myw;
-                                        } else if (i >= (1 + vvg.step) && i < 2 * (1 + vvg.step)) { // 第二排
+                                        } else if (i >= (piece) && i < 2 * (piece)) { // 第二排
                                             top = myh;
-                                            left = (i - (1 + vvg.step)) * myw;
-                                        } else if (i >= 2 * (1 + vvg.step) && i < 3 * (1 + vvg.step)) { // 第三排
+                                            left = (i - (piece)) * myw;
+                                        } else if (i >= 2 * (piece) && i < 3 * (piece)) { // 第三排
                                             top = 2 * myh;
-                                            left = (i - 2 * (1 + vvg.step)) * myw;
+                                            left = (i - 2 * (piece)) * myw;
                                         } else if (i >= 3 * (vvg.step)) { //第四排
                                             top = 3 * myh;
-                                            left = (i - 3 * (1 + vvg.step)) * myw;
+                                            left = (i - 3 * (piece)) * myw;
                                         }
                                         // 记录还未打乱次序的初始ID对应的每个id的正确位置，用于比较拼图是否完成
                                         posArray.push([i, left, top]);
@@ -451,7 +457,7 @@
                                         obj.timer = null;
                                         // 通过拼图检查，并已经执行了拼图成功后的效果，避免成功动画也执行拼图成功，产生循环
                                         if (!!check() && !effectEnd) {
-                                            
+
                                             successTimer && clearTimeout(successTimer);
                                             successTimer = setTimeout(tipNextStep, 800);
                                         }
@@ -524,7 +530,7 @@
                                     setOpacity(mask, 80);
                                     var playBtn = document.createElement('div');
                                     playBtn.id = 'button';
-                                    if (vvg.step < 5) {
+                                    if (vvg.step < 4) {
                                         playBtn.onclick = function () {
                                             canvas.removeChild(mask);
                                             vvgBox.removeChild(playBtn);
@@ -569,7 +575,7 @@
                             }
 
                              // 默认播放第一关
-                            makeGame('/site/image/20140806_172307_469.jpg');
+                            makeGame('/site/image/c1.png');
                         </script>
                     </div>
 
