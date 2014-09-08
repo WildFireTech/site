@@ -277,7 +277,25 @@ newObj.changeColor = function(color){
 
                     </div>
 
+                    <div class="card">
+                        <div class="date_label">
+                            <div class="day_month">
+                                06/06
+                            </div>
+                            <div class="year">
+                                2014
+                            </div>
+                        </div>
+                        <h1>javascript生成二维码</h1>
 
+                        <hr />
+                        <img src="image/qrcode.jpg" style="padding:20px;">
+                        <p>二维码可以理解为一种信息标签，它将信息转化为二进制然后通过一定的规则进行编码形成几何图形，这样有利于机器识别。二维码在国内普通用户间的流行应该很大程度上归功于微信的推动，并且我发现很多人对二维码始终有着一种“不明觉厉”的感觉，不过假如我们理解了技术细节，便会知道事实上它就是一种信息格式转换，并没有什么神秘之处。</p>
+                        <div class="read_more">
+                            <a class="fa fa-link" href="/site/2014/06/06/generate_qr_code">  查看全文&hellip;</a>
+                        </div>
+
+                    </div>
 
 
                     <div class="card">
@@ -306,24 +324,6 @@ newObj.changeColor = function(color){
 
 
 
-                    <div class="card">
-                        <div class="date_label">
-                            <div class="day_month">
-                                05/24
-                            </div>
-                            <div class="year">
-                                2014
-                            </div>
-                        </div>
-                        <h1>canvas总结之图像处理</h1>
-
-                        <hr />
-
-                        <div class="read_more">
-                            <a class="fa fa-link" href="/site/2014/05/24/canvas-image">  查看全文&hellip;</a>
-                        </div>
-
-                    </div>
 
 
 
@@ -331,124 +331,129 @@ newObj.changeColor = function(color){
                     <div class="card">
                         <div class="date_label">
                             <div class="day_month">
-                                05/24
+                                09/26
+                            </div>
+                            <div class="year">
+                                2013
+                            </div>
+                        </div>
+                        <h1>javascript：内存泄漏</h1>
+
+                        <hr />
+
+                        <p>一、静态分配( Static Allocation ):静态变量和全局变量的分配形式.如果把房间看做一个程序,我们可以把静态分配的内存当成是房间里的耐用家具.通常,它们无需释放和回收,因为没人会天天把大衣柜当作垃圾扔到窗外.</p>
+
+                        <p>二、自动分配( Automatic Allocation ):在栈中为局部变量分配内存的方法.栈中的内存可以随着代码块退出时的出栈操作被自动释放.这类似于到房间中办事的人,事情一旦完成,就会自己离开,而他们所占用的空间,也随着这些人的离开而自动释放了.</p>
+
+                        <p>三、动态分配( Dynamic Allocation ):在堆中动态分配内存空间以存储数据的方式.也就是程序运行时用malloc或new申请的内存,我们需要自己用free或delete释放.动态内存的生存期由程序员自己决定.一旦忘记释放,势必造成内存泄露.这种情况下,堆中的内存块好像我们日常使用的餐巾纸,用过了
+                            <div class="read_more">
+                                <a class="fa fa-link" href="/site/2013/09/26/js-leak">  查看全文&hellip;</a>
+                            </div>
+
+                    </div>
+
+
+
+
+                    <div class="card">
+                        <div class="date_label">
+                            <div class="day_month">
+                                05/21
                             </div>
                             <div class="year">
                                 2014
                             </div>
                         </div>
-                        <h1>canvas总结之Pixel Manipulation</h1>
+                        <h1>canvas总结之method</h1>
+
+                        <hr />
+                        <h2>canvas介绍</h2>
+
+                        <p><code>canvas</code>还没出现之前，开发人员通常使用 SVG，VML 等技术进行 Web 绘图操作，但这些基于XML的绘图语言声明式的绘图方式并不能满足复杂绘图操作在性能上的需求，特别是需要像素级别绘图能力的游戏。canvas提供了一系列用于绘图的API,我们可以使用JavaScript脚本语言在canvas中进行一系列基于命令的图形绘制操作。我们的绘图和动画终于可以摆脱第三方插件了，虽然前端的标准问题始终是个大坑。</p>
+
+                        <p><code>&lt;canvas id="canvas"&gt;&lt;/canvas&gt;</code> 这就是canvas，它就是一个html标签，它除了提供一块画布和一系列的API让你可以在javascript中使用之外，看上去什么都没有。但是一块画布和一系列API就等于给了你一张纸和一套画图工具，你可以在上面发挥你的想象，至于画什么以及画的好不好那就是开发者功底的事了。接下来主要是对canvas的API进行分类和总结。</p>
+
+                        <div class="read_more">
+                            <a class="fa fa-link" href="/site/2014/05/21/canvas-method">  查看全文&hellip;</a>
+                        </div>
+
+                    </div>
+
+                    <div class="card">
+                        <div class="date_label">
+                            <div class="day_month">
+                                05/20
+                            </div>
+                            <div class="year">
+                                2014
+                            </div>
+                        </div>
+                        <h1>HTTP协议的简析</h1>
 
                         <hr />
 
+                        <p>HTTP协议是一种可靠的数据传输协议，位于应用层，在TCP协议的上层。我们现在使用的web服务几乎都是建立在HTTP协议之上，HTTP是互联网通信的公共语言。</p>
+
+                        <p>从宏观角度来看，HTTP连接是一个很简单的过程，客户端发起请求，服务端相应响应的数据，断开连接。这就是一个完整的连接过程，我们每天上网都在经历这个过程，当你访问一个url时，浏览器会把这个url进行解析，通过dns获取域名对应的IP地址，然后向这个IP地址发送一个HTTP请求，告诉服务器我需要什么数据，服务器处理这个HTTP请求后调用对应的资源，给客户端一个HTTP响应，这个响应中就包含了我们请求的资源。</p>
                         <div class="read_more">
-                            <a class="fa fa-link" href="/site/2014/05/24/canvas-Pixel-Manipulation">  查看全文&hellip;</a>
+                            <a class="fa fa-link" href="/site/2014/05/20/HTTP">  查看全文&hellip;</a>
+                        </div>
+                    </div>
+
+
+                    <div class="card">
+                        <div class="date_label">
+                            <div class="day_month">
+                                05/20
+                            </div>
+                            <div class="year">
+                                2014
+                            </div>
+                        </div>
+                        <h1>收藏颜色的工具</h1>
+
+                        <hr />
+
+                        <p>
+                            <img src="http://enml.github.io/blog/image/collect_color.jpg" alt="collect_color" />
+                        </p>
+
+                        <p>用了三个小时完成了上图的功能，满足了我的需求。</p>
+
+                        <p>只要在输入框输入颜色数值，便可记录到数据库，并把颜色作为该数值背景色输出页面。</p>
+
+
+                        <div class="read_more">
+                            <a class="fa fa-link" href="/site/2014/05/20/collect_color">  查看全文&hellip;</a>
                         </div>
 
                     </div>
 
 
 
-            
-                <div class="card">
-                    <div class="date_label">
-                        <div class="day_month">
-                            05/21
+
+                    <div class="card">
+                        <div class="date_label">
+                            <div class="day_month">
+                                05/10
+                            </div>
+                            <div class="year">
+                                2014
+                            </div>
                         </div>
-                        <div class="year">
-                            2014
-                        </div>
-                    </div>
-                    <h1>canvas总结之method</h1>
+                        <h1>Template</h1>
 
-                    <hr />
-                    <h2>canvas介绍</h2>
+                        <hr />
 
-                    <p><code>canvas</code>还没出现之前，开发人员通常使用 SVG，VML 等技术进行 Web 绘图操作，但这些基于XML的绘图语言声明式的绘图方式并不能满足复杂绘图操作在性能上的需求，特别是需要像素级别绘图能力的游戏。canvas提供了一系列用于绘图的API,我们可以使用JavaScript脚本语言在canvas中进行一系列基于命令的图形绘制操作。我们的绘图和动画终于可以摆脱第三方插件了，虽然前端的标准问题始终是个大坑。</p>
+                        <p><strong>在view里面，我们获取了相关的数据，但我们的目的是将数据呈现出来。</strong>
+                        </p>
 
-                    <p><code>&lt;canvas id="canvas"&gt;&lt;/canvas&gt;</code> 这就是canvas，它就是一个html标签，它除了提供一块画布和一系列的API让你可以在javascript中使用之外，看上去什么都没有。但是一块画布和一系列API就等于给了你一张纸和一套画图工具，你可以在上面发挥你的想象，至于画什么以及画的好不好那就是开发者功底的事了。接下来主要是对canvas的API进行分类和总结。</p>
+                        <p>于是：</p>
 
-                    <div class="read_more">
-                        <a class="fa fa-link" href="/site/2014/05/21/canvas-method">  查看全文&hellip;</a>
-                    </div>
+                        <p><strong>1.首先我们想到的是直接把数据硬编码到html代码里面，然后通过<code>HttpResponse</code>对象传递给浏览器进行渲染：</strong>
+                        </p>
 
-                </div>
-
-                <div class="card">
-                    <div class="date_label">
-                        <div class="day_month">
-                            05/20
-                        </div>
-                        <div class="year">
-                            2014
-                        </div>
-                    </div>
-                    <h1>HTTP协议的简析</h1>
-
-                    <hr />
-
-                    <p>HTTP协议是一种可靠的数据传输协议，位于应用层，在TCP协议的上层。我们现在使用的web服务几乎都是建立在HTTP协议之上，HTTP是互联网通信的公共语言。</p>
-
-                    <p>从宏观角度来看，HTTP连接是一个很简单的过程，客户端发起请求，服务端相应响应的数据，断开连接。这就是一个完整的连接过程，我们每天上网都在经历这个过程，当你访问一个url时，浏览器会把这个url进行解析，通过dns获取域名对应的IP地址，然后向这个IP地址发送一个HTTP请求，告诉服务器我需要什么数据，服务器处理这个HTTP请求后调用对应的资源，给客户端一个HTTP响应，这个响应中就包含了我们请求的资源。</p>
-                    <div class="read_more">
-                        <a class="fa fa-link" href="/site/2014/05/20/HTTP">  查看全文&hellip;</a>
-                    </div>
-                </div>
-
-
-                <div class="card">
-                    <div class="date_label">
-                        <div class="day_month">
-                            05/20
-                        </div>
-                        <div class="year">
-                            2014
-                        </div>
-                    </div>
-                    <h1>收藏颜色的工具</h1>
-
-                    <hr />
-
-                    <p>
-                        <img src="http://enml.github.io/blog/image/collect_color.jpg" alt="collect_color" />
-                    </p>
-
-                    <p>用了三个小时完成了上图的功能，满足了我的需求。</p>
-
-                    <p>只要在输入框输入颜色数值，便可记录到数据库，并把颜色作为该数值背景色输出页面。</p>
-
-
-                    <div class="read_more">
-                        <a class="fa fa-link" href="/site/2014/05/20/collect_color">  查看全文&hellip;</a>
-                    </div>
-
-                </div>
-
-
-
-
-                <div class="card">
-                    <div class="date_label">
-                        <div class="day_month">
-                            05/10
-                        </div>
-                        <div class="year">
-                            2014
-                        </div>
-                    </div>
-                    <h1>Template</h1>
-
-                    <hr />
-
-                    <p><strong>在view里面，我们获取了相关的数据，但我们的目的是将数据呈现出来。</strong>
-                    </p>
-
-                    <p>于是：</p>
-
-                    <p><strong>1.首先我们想到的是直接把数据硬编码到html代码里面，然后通过<code>HttpResponse</code>对象传递给浏览器进行渲染：</strong>
-                    </p>
-
-                    <pre class="prettyprint linenums">from django.http import HttpResponse
+                        <pre class="prettyprint linenums">from django.http import HttpResponse
 import datetime
 
 def current_datetime(request):
@@ -458,36 +463,36 @@ def current_datetime(request):
 </pre>
 
 
-                    <div class="read_more">
-                        <a class="fa fa-link" href="/site/2014/05/10/template">  查看全文&hellip;</a>
+                        <div class="read_more">
+                            <a class="fa fa-link" href="/site/2014/05/10/template">  查看全文&hellip;</a>
+                        </div>
+
                     </div>
 
-                </div>
 
 
 
-
-                <div class="card">
-                    <div class="date_label">
-                        <div class="day_month">
-                            05/03
+                    <div class="card">
+                        <div class="date_label">
+                            <div class="day_month">
+                                05/03
+                            </div>
+                            <div class="year">
+                                2014
+                            </div>
                         </div>
-                        <div class="year">
-                            2014
-                        </div>
-                    </div>
-                    <h1>view传递context的方式</h1>
+                        <h1>view传递context的方式</h1>
 
-                    <hr />
+                        <hr />
 
-                    <p><strong> 通过view的render()方法填充template可以有以下方式：</strong>
-                    </p>
+                        <p><strong> 通过view的render()方法填充template可以有以下方式：</strong>
+                        </p>
 
-                    <p>1.适合于数据量小且静态的数据。在template中直接使用相关键值为标签：
-                        <code></code>
-                    </p>
+                        <p>1.适合于数据量小且静态的数据。在template中直接使用相关键值为标签：
+                            <code></code>
+                        </p>
 
-                    <pre class="prettyprint linenums">def test1(request):
+                        <pre class="prettyprint linenums">def test1(request):
     return render(request,'test/raw.htm',{
                 'name':'Enm',
                 'age':22,
@@ -497,64 +502,36 @@ def current_datetime(request):
 </pre>
 
 
-                    <div class="read_more">
-                        <a class="fa fa-link" href="/site/2014/05/03/view_render">  查看全文&hellip;</a>
+                        <div class="read_more">
+                            <a class="fa fa-link" href="/site/2014/05/03/view_render">  查看全文&hellip;</a>
+                        </div>
+
                     </div>
 
-                </div>
 
 
 
 
-                <div class="card">
-                    <div class="date_label">
-                        <div class="day_month">
-                            04/27
+
+
+
+
+                    <div class="card">
+                        <div class="date_label">
+                            <div class="day_month">
+                                04/25
+                            </div>
+                            <div class="year">
+                                2014
+                            </div>
                         </div>
-                        <div class="year">
-                            2014
-                        </div>
-                    </div>
-                    <h1>install jekyll 流程</h1>
+                        <h1>Python list的一些技巧</h1>
 
-                    <hr />
+                        <hr />
 
-                    <ul>
-                        <li>
-                            <p>首先下载<code>ruby</code><a href="http://rubyinstaller.org/downloads/">安装ruby download</a> ，然后下载<strong>DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe</strong>。安装完<code>ruby</code>后，再安装<code>rubyGems</code>:运行<code>gem update --system</code>即可。</p>
-                        </li>
-                        <li>
-                            <p>解压DevKit，然后命令行cd到该目录，运行</p>
-                        </li>
-                    </ul>
+                        <p>列表相邻元素压缩器</p>
 
-
-
-                    <div class="read_more">
-                        <a class="fa fa-link" href="/site/2014/04/27/install-jekyll">  查看全文&hellip;</a>
-                    </div>
-
-                </div>
-
-
-
-
-                <div class="card">
-                    <div class="date_label">
-                        <div class="day_month">
-                            04/25
-                        </div>
-                        <div class="year">
-                            2014
-                        </div>
-                    </div>
-                    <h1>Python list的一些技巧</h1>
-
-                    <hr />
-
-                    <p>列表相邻元素压缩器</p>
-
-                    <pre class="prettyprint linenums">&gt;&gt;&gt; a = [1, 2, 3, 4, 5, 6]
+                        <pre class="prettyprint linenums">&gt;&gt;&gt; a = [1, 2, 3, 4, 5, 6]
 &gt;&gt;&gt; zip(*([iter(a)] * 2))
 [(1, 2), (3, 4), (5, 6)]
 &gt;&gt;&gt; group_adjacent = lambda a, k: zip(*([iter(a)] * k))
@@ -578,194 +555,74 @@ def current_datetime(request):
 </pre>
 
 
-                    <div class="read_more">
-                        <a class="fa fa-link" href="/site/2014/04/25/python-code">  查看全文&hellip;</a>
+                        <div class="read_more">
+                            <a class="fa fa-link" href="/site/2014/04/25/python-code">  查看全文&hellip;</a>
+                        </div>
+
                     </div>
+
+
+
+
+
+
+
+
+
+
+                    <div class="card">
+                        <div class="date_label">
+                            <div class="day_month">
+                                04/21
+                            </div>
+                            <div class="year">
+                                2014
+                            </div>
+                        </div>
+                        <h1>谁将取代智能手机</h1>
+
+                        <hr />
+
+                        <p>
+                            <img src="http://www.wccbr.com/wp-content/uploads/2013/03/Robot_Wallpaper_1.jpg" alt="robot" />
+                        </p>
+
+                        <h3><strong>智能手表</strong></h3>
+
+                        <p>　现在手表被炒的很热，但以目前来看，手表只是一个辅佐设备；注定手表不可能超越智能手机。手表的特点在于屏幕小，便携，查看信息快速直接；但屏幕小也是它的极限性（屏幕扩大了跟智能手机就没差别了），决定了它不适合发展成独立的终端，你能想象拿着手表刷微博看知乎发邮件吗？</p>
+
+
+                        <div class="read_more">
+                            <a class="fa fa-link" href="/site/2014/04/21/future">  查看全文&hellip;</a>
+                        </div>
+
+                    </div>
+
+
+
+
+
 
                 </div>
-
-
-
-
-                <div class="card">
-                    <div class="date_label">
-                        <div class="day_month">
-                            04/24
-                        </div>
-                        <div class="year">
-                            2014
-                        </div>
-                    </div>
-                    <h1>jekyll加载图片的路径问题</h1>
-
-                    <hr />
-
-                    <p>　一开始使用根目录<code>/assets/…/img/bg.png</code>的方式，在localhost调试成功，但在github pages失败。 　后来试了一下当前目录方式
-                        <code>./img/bg.png</code>成功。也可以用<code>img/bg.png</code>表示当前目录。</p>
-
-
-                    <div class="read_more">
-                        <a class="fa fa-link" href="/site/2014/04/24/directory">  查看全文&hellip;</a>
-                    </div>
-
-                </div>
-
-
-
-
-                <div class="card">
-                    <div class="date_label">
-                        <div class="day_month">
-                            04/23
-                        </div>
-                        <div class="year">
-                            2014
-                        </div>
-                    </div>
-                    <h1>完成基于jekyll的第一个blog</h1>
-
-                    <hr />
-
-                    <p>　今天差不多把blog完成了，这是我第一个基于jekyll的blog，定制了主题，修改了相关配置，以及解决了中文bug。现在把这5天的心得分享一下：</p>
-
-                    <ul>
-                        <li>首先是中文问题，这个困扰我了很久，也花费了不少时间，不过最后总算找到解决办法。给我最大的感触就是，即使碰壁，也得硬着头皮找下去，如果放弃，那就前功尽弃了。</li>
-                    </ul>
-
-
-
-                    <div class="read_more">
-                        <a class="fa fa-link" href="/site/2014/04/23/finish-jekyll">  查看全文&hellip;</a>
-                    </div>
-
-                </div>
-
-
-
-
-                <div class="card">
-                    <div class="date_label">
-                        <div class="day_month">
-                            04/23
-                        </div>
-                        <div class="year">
-                            2014
-                        </div>
-                    </div>
-                    <h1>解决invalid byte sequence in GBK</h1>
-
-                    <hr />
-
-                    <p>　jekyll对中文的支持不太好，导致经常出现乱码甚至无法运行<code>jekyll server</code>命令。解决post内容乱码问题可以通过修改convertible.rb文件的第27行：</p>
-
-                    <pre class="prettyprint linenums">self.content = File.read(File.join(base, name));
-</pre>
-
-                    <p>为</p>
-
-                    <pre class="prettyprint linenums">self.content = File.read(File.join(base, name), :encoding =&gt; "utf-8");
-</pre>
-
-                    <p>　原因File.read()可能采用系统默认编码读取文件，中文系统为GBK，但markdown文件均为utf-8编码，所以导致无法正确展现中文。</p>
-
-
-                    <div class="read_more">
-                        <a class="fa fa-link" href="/site/2014/04/23/chinese-messy-code">  查看全文&hellip;</a>
-                    </div>
-
-                </div>
-
-
-
-
-                <div class="card">
-                    <div class="date_label">
-                        <div class="day_month">
-                            04/21
-                        </div>
-                        <div class="year">
-                            2014
-                        </div>
-                    </div>
-                    <h1>谁将取代智能手机</h1>
-
-                    <hr />
-
-                    <p>
-                        <img src="http://www.wccbr.com/wp-content/uploads/2013/03/Robot_Wallpaper_1.jpg" alt="robot" />
-                    </p>
-
-                    <h3><strong>智能手表</strong></h3>
-
-                    <p>　现在手表被炒的很热，但以目前来看，手表只是一个辅佐设备；注定手表不可能超越智能手机。手表的特点在于屏幕小，便携，查看信息快速直接；但屏幕小也是它的极限性（屏幕扩大了跟智能手机就没差别了），决定了它不适合发展成独立的终端，你能想象拿着手表刷微博看知乎发邮件吗？</p>
-
-
-                    <div class="read_more">
-                        <a class="fa fa-link" href="/site/2014/04/21/future">  查看全文&hellip;</a>
-                    </div>
-
-                </div>
-
-
-
-
-                <div class="card">
-                    <div class="date_label">
-                        <div class="day_month">
-                            01/12
-                        </div>
-                        <div class="year">
-                            2011
-                        </div>
-                    </div>
-                    <h1>js 算出某值以内的质数</h1>
-
-                    <hr />
-
-                    <pre class="prettyprint linenums">
-    //算出 num 以内的所有质数
- 
-function prime(num){
-    var list = [];
-    for(var i = 2; i <= num; i++){ list.push(i); } //create a Array
-    
-    for(var i = 0; i < list.length; i++){
-        for(var j = 2; j < list[i]; j++){
-            if(list[i] % j == 0){
-                list.splice(i,1); //delete the non prime number.it will change the index of other elements
-                j = 2; //由于splice导致list[i+1]的index变为i,因此把j置为2以便对list[i+1]进行重新计算
-        }
-    }
-}
-</pre>
-
-
-                    <div class="read_more">
-                        <a class="fa fa-link" href="/site/2011/01/12/prime">  查看全文&hellip;</a>
-                    </div>
-
-                </div>
-
-
-
-
             </div>
+
+
         </div>
+<div><a style = "font-size:20px;font-family:'幼圆';padding:10px;width:300px;display:block;margin:50px auto;text-align:center;" href="http://enml.github.io/site/archive.html">查看更多文章   >>></a></div>
+        <footer class="card clearfix">
+            <span style="font-size:30px;" class="fa fa-github pull-left"></span><a href="https://github.com/enml/blog/tree/jekyll-blog" style="display:inline-block;padding-right:80px;border-right:1px solid #bbb">fork me on GitHub</a>
+            <p class="pull-right">&copy; 2011 陈佳伟 with help from <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+            </p>
 
-
-    </div>
-
-    <footer class="card clearfix">
-        <span style="font-size:30px;" class="fa fa-github pull-left"></span><a href="https://github.com/enml/blog/tree/jekyll-blog" style="display:inline-block;padding-right:80px;border-right:1px solid #bbb">fork me on GitHub</a>
-        <p class="pull-right">&copy; 2011 陈佳伟 with help from <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
-        </p>
-
-    </footer>
+        </footer>
 
     </div>
 
     <script>
-        window.onload = function(){canvasDrawClock();prettyPrint();}
+        window.onload = function () {
+            canvasDrawClock();
+            prettyPrint();
+        }
         document.getElementById("startCountdown").addEventListener("click", canvasDrawClock);
 
         function canvasDrawClock() {

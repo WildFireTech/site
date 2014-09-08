@@ -271,7 +271,7 @@
                                     // 文档碎片
                                     var oFragment = document.createDocumentFragment();
                                     //循环生成方块状态的小图，以背景的形式展现，生成16格,并添加到数组
-                                    for (var i = 0; i < Math.pow((piece), 2); i++) {
+                                    for (var i = 0; i < Math.pow(piece, 2); i++) {
                                         var li = document.createElement('li');
                                         li.style.width = myw + 'px';
                                         li.style.height = myh + 'px';
@@ -287,7 +287,7 @@
                                         } else if (i >= 2 * (piece) && i < 3 * (piece)) { // 第三排
                                             top = 2 * myh;
                                             left = (i - 2 * (piece)) * myw;
-                                        } else if (i >= 3 * (vvg.step)) { //第四排
+                                        } else if (i >= 3 * (piece)) { //第四排
                                             top = 3 * myh;
                                             left = (i - 3 * (piece)) * myw;
                                         }

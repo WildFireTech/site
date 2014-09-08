@@ -4,7 +4,7 @@
  <title>寂寞先生</title>
  <link href="http://enml.github.io/blog/" rel="self"/>
  <link href="http://enml.github.io/blog"/>
- <updated>2014-09-07T22:11:48+08:00</updated>
+ <updated>2014-09-08T10:44:47+08:00</updated>
  <id>http://enml.github.io/blog</id>
  <author>
    <name>陈佳伟</name>
@@ -3260,9 +3260,9 @@ alert(a);    //上文已经定义了a，因此此处弹出0。这也说明了两
  
  <entry>
    <title>javascript 算出某值以内的质数</title>
-   <link href="http://enml.github.io/blog/2013/01/12/prime"/>
-   <updated>2013-01-12T00:00:00+08:00</updated>
-   <id>http://enml.github.io/blog/2013/01/12/prime</id>
+   <link href="http://enml.github.io/blog/2013/05/12/prime"/>
+   <updated>2013-05-12T00:00:00+08:00</updated>
+   <id>http://enml.github.io/blog/2013/05/12/prime</id>
    <content type="html">&lt;h1&gt;javascript 算出某值以内的质数&lt;/h1&gt;
 
 &lt;hr /&gt;
@@ -3289,9 +3289,9 @@ function prime(num){
  
  <entry>
    <title>jekyll加载图片的路径问题</title>
-   <link href="http://enml.github.io/blog/2012/04/24/directory"/>
-   <updated>2012-04-24T00:00:00+08:00</updated>
-   <id>http://enml.github.io/blog/2012/04/24/directory</id>
+   <link href="http://enml.github.io/blog/2012/12/24/directory"/>
+   <updated>2012-12-24T00:00:00+08:00</updated>
+   <id>http://enml.github.io/blog/2012/12/24/directory</id>
    <content type="html">&lt;h1&gt;jekyll加载图片的路径问题&lt;/h1&gt;
 
 &lt;hr /&gt;
@@ -3306,9 +3306,9 @@ function prime(num){
  
  <entry>
    <title>解决invalid byte sequence in GBK</title>
-   <link href="http://enml.github.io/blog/2012/04/23/chinese-messy-code"/>
-   <updated>2012-04-23T00:00:00+08:00</updated>
-   <id>http://enml.github.io/blog/2012/04/23/chinese-messy-code</id>
+   <link href="http://enml.github.io/blog/2012/12/23/chinese-messy-code"/>
+   <updated>2012-12-23T00:00:00+08:00</updated>
+   <id>http://enml.github.io/blog/2012/12/23/chinese-messy-code</id>
    <content type="html">&lt;h1&gt;解决invalid byte sequence in GBK&lt;/h1&gt;
 
 &lt;hr /&gt;
@@ -3334,9 +3334,9 @@ function prime(num){
  
  <entry>
    <title>对5天来关于jekyll的心得</title>
-   <link href="http://enml.github.io/blog/2012/04/21/finish-jekyll"/>
-   <updated>2012-04-21T00:00:00+08:00</updated>
-   <id>http://enml.github.io/blog/2012/04/21/finish-jekyll</id>
+   <link href="http://enml.github.io/blog/2012/12/21/finish-jekyll"/>
+   <updated>2012-12-21T00:00:00+08:00</updated>
+   <id>http://enml.github.io/blog/2012/12/21/finish-jekyll</id>
    <content type="html">&lt;h1&gt;完成基于jekyll的第一个blog&lt;/h1&gt;
 
 &lt;hr /&gt;
@@ -3363,9 +3363,9 @@ function prime(num){
  
  <entry>
    <title>install jekyll 流程</title>
-   <link href="http://enml.github.io/blog/2012/04/17/install-jekyll"/>
-   <updated>2012-04-17T00:00:00+08:00</updated>
-   <id>http://enml.github.io/blog/2012/04/17/install-jekyll</id>
+   <link href="http://enml.github.io/blog/2012/12/17/install-jekyll"/>
+   <updated>2012-12-17T00:00:00+08:00</updated>
+   <id>http://enml.github.io/blog/2012/12/17/install-jekyll</id>
    <content type="html">&lt;h1&gt;install jekyll 流程&lt;/h1&gt;
 
 &lt;hr /&gt;
