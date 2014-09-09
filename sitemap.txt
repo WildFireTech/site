@@ -28,6 +28,7 @@ http://enml.github.io/blog/2014/05/03/view_render
 http://enml.github.io/blog/2014/04/25/python-code
 http://enml.github.io/blog/2014/04/21/future
 http://enml.github.io/blog/2014/03/29/puzzle
+http://enml.github.io/blog/2014/03/08/sorting
 http://enml.github.io/blog/2013/11/13/js-regexp
 http://enml.github.io/blog/2013/11/02/js-compare
 http://enml.github.io/blog/2013/10/17/javascript-typeof
@@ -38,6 +39,7 @@ http://enml.github.io/blog/2013/09/08/js-object
 http://enml.github.io/blog/2013/08/11/javascript-array
 http://enml.github.io/blog/2013/08/03/javascript-function
 http://enml.github.io/blog/2013/07/27/js-var
+http://enml.github.io/blog/2013/07/11/js-function
 http://enml.github.io/blog/2013/07/01/js-innerHtml
 http://enml.github.io/blog/2013/06/09/css-position
 http://enml.github.io/blog/2013/05/12/prime

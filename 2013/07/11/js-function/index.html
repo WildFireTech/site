@@ -1,0 +1,394 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>javascript函数总结</title>
+    
+    <meta name="author" content="陈佳伟">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/site/assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css" rel="stylesheet">
+    <link href="/site/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="/site/assets/themes/twitter/css/prettify.css" rel="stylesheet" type="text/css">
+    <script src="/site/assets/themes/twitter/js/prettify.js"></script>
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+
+    <!-- atom & rss feed -->
+    <link href="/site/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/site/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+    
+<!--    font-awesome-->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  </head>
+
+  <body onload="prettyPrint()">
+    <div class="navbar">
+      <div class="navbar-inner">
+       <div class="nav-narrow">
+          <a class="brand" href="/site"><span class="fa fa-mortar-board (alias)">寂寞先生</span></a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/site/archive.html">文章</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/site/categories.html">分类</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/site/pages.html">页面</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/site/tags.html">标签</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-narrow">
+
+      <div class="content">
+        
+<!--
+<div class="page-header">
+  <h1>javascript函数总结 <small>Supporting tagline</small></h1>
+</div>
+-->
+ 
+
+<div class="row-fluid post-full">
+  <div class="span12 ">
+    <div class="content card">
+        <div class="date_label">
+          <div class="day_month">
+          07/11
+          </div>
+          <div class="year">
+          2013
+          </div>
+        </div>
+      <h1>javascript函数总结</h1>
+
+<hr />
+
+<p><strong>函数的调用方式：</strong></p>
+
+<p>　　1. 普通调用：functionName(实际参数...)</p>
+
+<p>　　2. 通过指向函数的变量去调用：</p>
+
+<p>　　　　　　<code>var myVar = 函数名;</code></p>
+
+<p>　　　　　　<code>myVar(实际参数...);</code></p>
+
+<p><strong>函数返回值（return）：</strong></p>
+
+<p>　　1. 当函数无明确返回值时，返回的值就是"undefined"。</p>
+
+<p>　　2. 当函数有返回值时，返回值是什么就返回什么。</p>
+
+<p>我们可以通过使用 return 语句实现将函数返回调用它的地方。</p>
+
+<p>在使用 return 语句时，函数会停止执行，并返回指定的值。</p>
+
+<p>ECMAScript所有函数的参数都是按值传递的，言下之意就是参数不会按引用传递。</p>
+
+<p>PS：如果存在按引用传递的话，那么函数里的那个变量将会是全局变量，在外部也可以访问。</p>
+
+<p>（1）值类型：数值、布尔值、null、undefined。
+（2）引用类型：对象、数组、函数。</p>
+
+<p>引用类型值：指的是那些保存在堆内存中的对象，意思是，变量中保存的实际上只是一个指针，这个指针执行内存中的另一个位置，由该位置保存对象；</p>
+
+<p><strong>创建匿名函数：</strong></p>
+
+<pre><code>function(){
+return ‘Lee’;     //单独的匿名函数是无法运行的，就算能运行也无法调用，因为没有名字
+}
+</code></pre>
+
+<p>这种匿名函数的用法在JQuery中非常多。直接声明一个匿名函数，立即使用。用匿名函数的好处就是省得定义一个用一次就不用的函数，而且免了命名冲突的问题，js中没有命名空间的概念，因此很容易函数名字冲突，一旦命名冲突以最后声明的为准。</p>
+
+<p><strong>通过自执行来执行匿名函数：</strong></p>
+
+<pre><code>  (function (){         // (匿名函数)()；第一圆括号放匿名函数，第二个圆括号执行
+       alert('Lee');
+  })();
+</code></pre>
+
+<p><strong>把匿名函数自我执行的返回值赋给变量：</strong></p>
+
+<pre><code>
+    var box =  (function (){           
+           alert('Lee');
+      })(); 
+    alert(box);       //弹出”Lee”；
+</code></pre>
+
+<p><strong>自我执行匿名函数的传参：</strong></p>
+
+<pre><code>    (function (age){
+     alert(age);
+    })(100);          //弹出100
+</code></pre>
+
+<p><strong>javascript创建动态函数：</strong></p>
+
+<p>　　JavaScript支持创建动态函数，动态函数必须用Function对象来定义（Function是javascript中的一个对象，是固定不变的，规定Function对象的"F"必须大写，当是function的时候，我们知道是定义函数的时候所使用的一个关键字：function funName(x，y)，当是Function的时候（F大写的时候），我们知道是javascript中的对象）</p>
+
+<p>创建动态函数的基本格式：var 变量名 = new Function("参数1"，"参数2"，"参数n"，"执行语句");
+看下面的一段代码：</p>
+
+<pre><code>var square = new Function ("x","y","var sum ; sum = x+y;return sum;");
+alert("square(2,3)的结果是："+square(2,3));  //square(2,3)的结果是：5
+</code></pre>
+
+<p>square是动态创建的函数，在Function对象后面的括号里的每一部分内容都必须是字符串形式的，也就是说都必须用引号（""或者是''）括起来</p>
+
+<p>这段代码：</p>
+
+<pre><code>var square = new Function ("x","y","var sum ; sum = x+y;return sum;");
+</code></pre>
+
+<p>和下面这段代码：</p>
+
+<pre><code>function square (x,y){
+          var sum;
+          sum = x+y;
+          return sum;
+     }
+</code></pre>
+
+<p>是一摸一样的，只不过一个是动态函数，一个是静态函数。
+我们为什么要把代码分成一小段一小段的代码呢？，把一个字符串分成了若干个独立的字符串的优点就在于我们可以通过修改其中的某些字符串来随时改变函数的作用。</p>
+
+<p><strong>回调函数：</strong></p>
+
+<p>回调就是一个函数的调用过程。那么就从理解这个调用过程开始吧。函数a有一个参数，这个参数是个函数b，当函数a执行完以后执行函数b。那么这个过程就叫回调。</p>
+
+<p>其实中文也很好理解：回调，回调，就是回头调用的意思。函数a的事先干完，回头再调用函数b。</p>
+
+<p>这里必须清楚一点：函数b是你以参数形式传给函数a的，那么函数b就叫回调函数。</p>
+
+<p><strong>关于方法和函数的区别：</strong></p>
+
+<pre><code>var arr = [1,2,3,4,5]
+var a =12;   // 变量：自由的
+arr.a= 5;     //属性：属于一个对象
+function show()     //函数：自由的
+{
+     alert(‘a’);
+}
+arr.fn = function()   //方法：属于一个对象
+{
+     alert(‘b’);
+}
+</code></pre>
+
+<p>其实方法就是函数，只不过方法是有所属的对象。</p>
+
+<p>我们所熟知的，将函数绑定到 click 事件
+语法：</p>
+
+<p>$(selector).click(function)
+参数  描述
+function    可选。规定当发生 click 事件时运行的函数。
+这种形式在jquery中经常见到。</p>
+
+<p>js全局函数：</p>
+
+<p>全局函数与内置对象的属性或方法不是一个概念。全局函数它不属于任何一个内置对象。
+JavaScript 中包含以下 7 个全局函数，用于完成一些常用的功能：escape( )、eval( )、isFinite( )、isNaN( )、parseFloat( )、parseInt( )、unescape( )。</p>
+
+<p><strong>函数的几个作用：</strong></p>
+
+<p>作为一个类构造器使用：</p>
+
+<pre><code>function class(){}
+class.prototype={};
+var item=new class(); 
+</code></pre>
+
+<p>作为闭包使用：</p>
+
+<pre><code>(function(){
+//独立作用域
+})(); 
+</code></pre>
+
+<p>作为构造函数调用</p>
+
+<p>所谓构造函数，就是通过这个函数生成一个新对象（object）。</p>
+
+<pre><code>        function test(){
+            this.x = 10;
+        }
+
+        var obj = new test();
+        alert(obj.x); //弹出 10；
+</code></pre>
+
+<p>可以使用 new 运算符结合像 Object()、Date() 和 Function() 这样的预定义的构造函数来创建对象并对其初始化。面向对象的编程其强有力的特征是定义自定义构造函数以创建脚本中使用的自定义对象的能力。创建了自定义的构造函数，这样就可以创建具有已定义属性的对象。下面是自定义函数的示例（注意 this 关键字的使用）。</p>
+
+<pre><code>function Circle (xPoint, yPoint, radius) {
+    this.x = xPoint;  // 圆心的 x 坐标。
+    this.y = yPoint;  // 圆心的 y 坐标。
+    this.r = radius;  // 圆的半径。
+}
+</code></pre>
+
+<p>调用 Circle 构造函数时，给出圆心点的值和圆的半径（所有这些元素是完全定义一个独特的圆对象所必需的）。结束时 Circle 对象包含三个属性。<code>var aCircle = new Circle(5, 11, 99);</code></p>
+
+    </div>
+
+ 
+<!--
+    <ul class="tag_box inline ">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/site/categories.html#技术分享-ref">
+    		技术分享 <span>30</span>
+    	</a></li>
+    
+  
+
+
+    </ul>
+    
+
+  
+    <ul class="tag_box inline ">
+      <li><i class="icon-tags"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/site/tags.html#javascript-ref">javascript <span>25</span></a></li>
+    
+  
+
+
+
+    </ul>
+    -->
+    
+    <div class="pagination clearfix">
+      <ul class = "pull-right">
+      
+        <li class="prev"><a class="fa fa-arrow-circle-left" href="/site/2013/07/01/js-innerHtml" title="javascript：innerHTML"> 前一篇</a></li>
+      
+        <li><a class="fa fa-th" href="/site/archive.html"> 所有日志</a></li>
+      
+        <li class="next"><a  href="/site/2013/07/27/js-var" title="javascript：预解析">后一篇 <span class="fa fa-arrow-circle-right">  </span></a></li>
+      
+      </ul>
+    </div>
+    
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+</div>
+
+
+      </div>
+      
+      <footer class="card clearfix">
+        <span style="font-size:30px;"class="fa fa-github pull-left"></span><a href="https://github.com/enml/blog/tree/jekyll-blog" style="display:inline-block;padding-right:80px;border-right:1px solid #bbb">fork me on GitHub</a>
+        <p class="pull-right">&copy; 2011 陈佳伟
+          with help from <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+        
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
+

@@ -129,7 +129,7 @@ form{
 .input.big.text{width: 70%;}
 .input.text{
     height: 40px;
-    width: 30%;
+    width: 25%;
     min-width: 180px;
     float: left;
     border-radius: 0;
@@ -137,7 +137,7 @@ form{
 .big.button{
     background-color: #00a9a9;
     height: 50px;
-    min-width: 80px;
+    min-width: 9%;
     border: 1px solid #00acac;
     color: #fff;
     float: left;

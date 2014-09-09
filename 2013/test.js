@@ -89,122 +89,122 @@ var QRCode = (function () {
     var MASKFUNCS = [
 
  function (i, j) {
-        return (i + j) % 2 == 0;
+            return (i + j) % 2 == 0;
         },
  function (i, j) {
-        return i % 2 == 0;
+            return i % 2 == 0;
         },
  function (i, j) {
-        return j % 3 == 0;
+            return j % 3 == 0;
         },
  function (i, j) {
-        return (i + j) % 3 == 0;
+            return (i + j) % 3 == 0;
         },
  function (i, j) {
-        return (((i / 2) | 0) + ((j / 3) | 0)) % 2 == 0;
+            return (((i / 2) | 0) + ((j / 3) | 0)) % 2 == 0;
         },
  function (i, j) {
-        return (i * j) % 2 + (i * j) % 3 == 0;
+            return (i * j) % 2 + (i * j) % 3 == 0;
         },
  function (i, j) {
-        return ((i * j) % 2 + (i * j) % 3) % 2 == 0;
+            return ((i * j) % 2 + (i * j) % 3) % 2 == 0;
         },
  function (i, j) {
-        return ((i + j) % 2 + (i * j) % 3) % 2 == 0;
+            return ((i + j) % 2 + (i * j) % 3) % 2 == 0;
         }];
 
-var needsverinfo = function (ver) {
-    return ver > 6;
-};
-var getsizebyver = function (ver) {
-    return 4 * ver + 17;
-};
+    var needsverinfo = function (ver) {
+        return ver > 6;
+    };
+    var getsizebyver = function (ver) {
+        return 4 * ver + 17;
+    };
 
-var nfullbits = function (ver) {
+    var nfullbits = function (ver) {
 
-    var v = VERSIONS[ver];
-    var nbits = 16 * ver * ver + 128 * ver + 64; // finder, timing and format info.
-    if (needsverinfo(ver)) nbits -= 36; // version information
-    if (v[2].length) { // alignment patterns
-        nbits -= 25 * v[2].length * v[2].length - 10 * v[2].length - 55;
-    }
-    return nbits;
-};
-
-
-var ndatabits = function (ver, ecclevel) {
-    var nbits = nfullbits(ver) & ~7; 
-    var v = VERSIONS[ver];
-    nbits -= 8 * v[0][ecclevel] * v[1][ecclevel]; // ecc bits
-    return nbits;
-}
-
-
-var ndatalenbits = function (ver, mode) {
-    switch (mode) {
-    case MODE_NUMERIC:
-        return (ver < 10 ? 10 : ver < 27 ? 12 : 14);
-    case MODE_ALPHANUMERIC:
-        return (ver < 10 ? 9 : ver < 27 ? 11 : 13);
-    case MODE_OCTET:
-        return (ver < 10 ? 8 : 16);
-    case MODE_KANJI:
-        return (ver < 10 ? 8 : ver < 27 ? 10 : 12);
-    }
-};
-
-var getmaxdatalen = function (ver, mode, ecclevel) {
-    var nbits = ndatabits(ver, ecclevel) - 4 - ndatalenbits(ver, mode);
-    switch (mode) {
-    case MODE_NUMERIC:
-        return ((nbits / 10) | 0) * 3 + (nbits % 10 < 4 ? 0 : nbits % 10 < 7 ? 1 : 2);
-    case MODE_ALPHANUMERIC:
-        return ((nbits / 11) | 0) * 2 + (nbits % 11 < 6 ? 0 : 1);
-    case MODE_OCTET:
-        return (nbits / 8) | 0;
-    case MODE_KANJI:
-        return (nbits / 13) | 0;
-    }
-};
-
-
-var validatedata = function (mode, data) {
-    switch (mode) {
-    case MODE_NUMERIC:
-        if (!data.match(NUMERIC_REGEXP)) return null;
-        return data;
-
-    case MODE_ALPHANUMERIC:
-        if (!data.match(ALPHANUMERIC_REGEXP)) return null;
-        return data.toUpperCase();
-
-    case MODE_OCTET:
-        if (typeof data === 'string') { // encode as utf-8 string
-            var newdata = [];
-            for (var i = 0; i < data.length; ++i) {
-                var ch = data.charCodeAt(i);
-                if (ch < 0x80) {
-                    newdata.push(ch);
-                } else if (ch < 0x800) {
-                    newdata.push(0xc0 | (ch >> 6),
-                        0x80 | (ch & 0x3f));
-                } else if (ch < 0x10000) {
-                    newdata.push(0xe0 | (ch >> 12),
-                        0x80 | ((ch >> 6) & 0x3f),
-                        0x80 | (ch & 0x3f));
-                } else {
-                    newdata.push(0xf0 | (ch >> 18),
-                        0x80 | ((ch >> 12) & 0x3f),
-                        0x80 | ((ch >> 6) & 0x3f),
-                        0x80 | (ch & 0x3f));
-                }
-            }
-            return newdata;
-        } else {
-            return data;
+        var v = VERSIONS[ver];
+        var nbits = 16 * ver * ver + 128 * ver + 64; // finder, timing and format info.
+        if (needsverinfo(ver)) nbits -= 36; // version information
+        if (v[2].length) { // alignment patterns
+            nbits -= 25 * v[2].length * v[2].length - 10 * v[2].length - 55;
         }
+        return nbits;
+    };
+
+
+    var ndatabits = function (ver, ecclevel) {
+        var nbits = nfullbits(ver) & ~7;
+        var v = VERSIONS[ver];
+        nbits -= 8 * v[0][ecclevel] * v[1][ecclevel]; // ecc bits
+        return nbits;
     }
-};
+
+
+    var ndatalenbits = function (ver, mode) {
+        switch (mode) {
+        case MODE_NUMERIC:
+            return (ver < 10 ? 10 : ver < 27 ? 12 : 14);
+        case MODE_ALPHANUMERIC:
+            return (ver < 10 ? 9 : ver < 27 ? 11 : 13);
+        case MODE_OCTET:
+            return (ver < 10 ? 8 : 16);
+        case MODE_KANJI:
+            return (ver < 10 ? 8 : ver < 27 ? 10 : 12);
+        }
+    };
+
+    var getmaxdatalen = function (ver, mode, ecclevel) {
+        var nbits = ndatabits(ver, ecclevel) - 4 - ndatalenbits(ver, mode);
+        switch (mode) {
+        case MODE_NUMERIC:
+            return ((nbits / 10) | 0) * 3 + (nbits % 10 < 4 ? 0 : nbits % 10 < 7 ? 1 : 2);
+        case MODE_ALPHANUMERIC:
+            return ((nbits / 11) | 0) * 2 + (nbits % 11 < 6 ? 0 : 1);
+        case MODE_OCTET:
+            return (nbits / 8) | 0;
+        case MODE_KANJI:
+            return (nbits / 13) | 0;
+        }
+    };
+
+
+    var validatedata = function (mode, data) {
+        switch (mode) {
+        case MODE_NUMERIC:
+            if (!data.match(NUMERIC_REGEXP)) return null;
+            return data;
+
+        case MODE_ALPHANUMERIC:
+            if (!data.match(ALPHANUMERIC_REGEXP)) return null;
+            return data.toUpperCase();
+
+        case MODE_OCTET:
+            if (typeof data === 'string') { // encode as utf-8 string
+                var newdata = [];
+                for (var i = 0; i < data.length; ++i) {
+                    var ch = data.charCodeAt(i);
+                    if (ch < 0x80) {
+                        newdata.push(ch);
+                    } else if (ch < 0x800) {
+                        newdata.push(0xc0 | (ch >> 6),
+                            0x80 | (ch & 0x3f));
+                    } else if (ch < 0x10000) {
+                        newdata.push(0xe0 | (ch >> 12),
+                            0x80 | ((ch >> 6) & 0x3f),
+                            0x80 | (ch & 0x3f));
+                    } else {
+                        newdata.push(0xf0 | (ch >> 18),
+                            0x80 | ((ch >> 12) & 0x3f),
+                            0x80 | ((ch >> 6) & 0x3f),
+                            0x80 | (ch & 0x3f));
+                    }
+                }
+                return newdata;
+            } else {
+                return data;
+            }
+        }
+    };
 
 
     var encode = function (ver, mode, data, maxbuflen) {
@@ -409,7 +409,7 @@ var validatedata = function (mode, data) {
         return matrix;
     };
 
-    
+
     var maskdata = function (matrix, reserved, mask) {
         var maskf = MASKFUNCS[mask];
         var n = matrix.length;
@@ -429,23 +429,23 @@ var validatedata = function (mode, data) {
             var r = [0, 1, 2, 3, 4, 5, 7, 8, n - 7, n - 6, n - 5, n - 4, n - 3, n - 2, n - 1][i];
             var c = [n - 1, n - 2, n - 3, n - 4, n - 5, n - 6, n - 7, n - 8, 7, 5, 4, 3, 2, 1, 0][i];
             matrix[r][8] = matrix[8][c] = (code >> i) & 1;
-            
+
         }
         return matrix;
     };
 
-    
+
     var evaluatematrix = function (matrix) {
-        
+
         var PENALTY_CONSECUTIVE = 3;
-        
+
         var PENALTY_TWOBYTWO = 3;
-       
+
         var PENALTY_FINDERLIKE = 40;
-        
+
         var PENALTY_DENSITY = 10;
 
-        var evaluategroup = function (groups) { 
+        var evaluategroup = function (groups) {
             var score = 0;
             for (var i = 0; i < groups.length; ++i) {
                 if (groups[i] >= 5) score += PENALTY_CONSECUTIVE + (groups[i] - 5);
@@ -467,7 +467,7 @@ var validatedata = function (mode, data) {
             var row = matrix[i];
             var groups;
 
-            groups = [0]; 
+            groups = [0];
             for (var j = 0; j < n;) {
                 var k;
                 for (k = 0; j < n && row[j]; ++k)++j;
@@ -502,7 +502,7 @@ var validatedata = function (mode, data) {
         return score;
     };
 
-    
+
     var generate = function (data, ver, mode, ecclevel, mask) {
         var v = VERSIONS[ver];
         var buf = encode(ver, mode, data, ndatabits(ver, ecclevel) >> 3);
@@ -649,3 +649,5 @@ var validatedata = function (mode, data) {
 
     return QRCode;
 })();
+
+
