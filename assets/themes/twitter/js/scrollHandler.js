@@ -5,9 +5,11 @@
      var event = e || window.event,
          target = event.target || event.srcElement;
      var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
-     if (scrollTop > 50) {
+     if (scrollTop > navbar.style.paddingTop) {
          navbar.classList.add("scrollChange");
+         nav_narrow.classList.add("scrollChange");
      } else {
          navbar.classList.remove("scrollChange");
+         nav_narrow.classList.remove("scrollChange");
      }
  }

@@ -19,6 +19,10 @@ h1 {
 
 .nav-narrow {
     margin: 0 auto;
+    max-width: 1000px;
+    transition: 1s;
+}
+.nav-narrow.scrollChange{
     max-width: 900px;
 }
 .card {
