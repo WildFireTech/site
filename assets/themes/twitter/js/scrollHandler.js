@@ -1,4 +1,5 @@
- var navbar = document.getElementsByClassName("navbar")[0];
+ var navbar = document.getElementsByClassName("navbar")[0],
+     nav_narrow = document.getElementsByClassName("nav-narrow")[0];
  window.addEventListener("scroll", scrollHandler);
 
  function scrollHandler(e) {
