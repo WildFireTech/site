@@ -16,7 +16,9 @@ h1 {
     float: right;
 }
 /*page container -- card style -- */
-
+.error{
+    color: #f22;
+}
 .nav-narrow {
     margin: 0 auto;
     max-width: 900px;
@@ -129,6 +131,12 @@ h1 {
 }
 form{
     width: 100%;
+}
+#output_value{
+    width: 300px;
+    border: 1px solid #eee;
+    height: 50px;
+    text-align: center;
 }
 .input.big.text{width: 70%;}
 .input.text{

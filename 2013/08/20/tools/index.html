@@ -1,0 +1,509 @@
+
+<!DOCTYPE html>
+<html lang="en" manifest="cache.manifest">
+  <head>
+    <meta charset="utf-8">
+    <title>tools</title>
+    
+    <meta name="author" content="陈佳伟">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+    <link href="/assets/themes/twitter/css/prettify.css" rel="stylesheet" type="text/css">
+    <script src="/assets/themes/twitter/js/prettify.js"></script>
+    <script src="/assets/themes/twitter/js/scrollHandler.js" defer="true"></script>
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+
+    <!-- atom & rss feed -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+    
+<!--    font-awesome-->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+  
+  </head>
+
+  <body onload="prettyPrint()">
+    <div class="navbar">
+      <div class="navbar-inner">
+       <div class="nav-narrow">
+          <a class="brand" href=""><span class="fa fa-mortar-board (alias)">寂寞先生</span></a>
+          <ul class="nav">
+            
+            
+            
+
+
+  
+    
+      
+      	
+      	<li><a href="/archive.html">文章</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/categories.html">分类</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/pages.html">页面</a></li>
+      	
+      
+    
+  
+    
+      
+    
+  
+    
+      
+    
+  
+    
+      
+      	
+      	<li><a href="/tags.html">标签</a></li>
+      	
+      
+    
+  
+
+
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-narrow">
+
+      <div class="content">
+        
+<!--
+<div class="page-header">
+  <h1>tools <small>Supporting tagline</small></h1>
+</div>
+-->
+ 
+
+<div class="row-fluid post-full">
+  <div class="span12 ">
+    <div class="content card">
+        <div class="date_label">
+          <div class="day_month">
+          08/20
+          </div>
+          <div class="year">
+          2013
+          </div>
+        </div>
+      <h1>工具箱</h1>
+
+<hr />
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>tools</title>
+    <style type="text/css">
+        .error {
+            color: #f22;
+        }
+    </style>
+
+
+</head>
+
+<body>
+
+    <div id="errorMess" class="error"></div>
+    <div class="content_area" id="input_area">
+      
+            <input id="input_value" type="text" value="" class="input text num_value" placeholder="在此输入待转换数字">
+        
+    </div>
+    <select id="input_num" class="input-small">
+        <option value="2">2进制</option>
+        <option value="3">3进制</option>
+        <option value="4">4进制</option>
+        <option value="5">5进制</option>
+        <option value="6">6进制</option>
+        <option value="7">7进制</option>
+        <option value="8">8进制</option>
+        <option value="9">9进制</option>
+        <option value="10" selected="">10进制</option>
+        <option value="11">11进制</option>
+        <option value="12">12进制</option>
+        <option value="13">13进制</option>
+        <option value="14">14进制</option>
+        <option value="15">15进制</option>
+        <option value="16">16进制</option>
+        <option value="17">17进制</option>
+        <option value="18">18进制</option>
+        <option value="19">19进制</option>
+        <option value="20">20进制</option>
+        <option value="21">21进制</option>
+        <option value="22">22进制</option>
+        <option value="23">23进制</option>
+        <option value="24">24进制</option>
+        <option value="25">25进制</option>
+        <option value="26">26进制</option>
+        <option value="27">27进制</option>
+        <option value="28">28进制</option>
+        <option value="29">29进制</option>
+        <option value="30">30进制</option>
+        <option value="31">31进制</option>
+        <option value="32">32进制</option>
+        <option value="33">33进制</option>
+        <option value="34">34进制</option>
+        <option value="35">35进制</option>
+        <option value="36">36进制</option>
+    </select>
+
+
+
+    <div class="content_area" id="output_area">
+        <select id="output_num" class="input-small">
+            <option value="2">2进制</option>
+            <option value="3">3进制</option>
+            <option value="4">4进制</option>
+            <option value="5">5进制</option>
+            <option value="6">6进制</option>
+            <option value="7">7进制</option>
+            <option value="8">8进制</option>
+            <option value="9">9进制</option>
+            <option value="10">10进制</option>
+            <option value="11">11进制</option>
+            <option value="12">12进制</option>
+            <option value="13">13进制</option>
+            <option value="14">14进制</option>
+            <option value="15">15进制</option>
+            <option value="16" selected="">16进制</option>
+            <option value="17">17进制</option>
+            <option value="18">18进制</option>
+            <option value="19">19进制</option>
+            <option value="20">20进制</option>
+            <option value="21">21进制</option>
+            <option value="22">22进制</option>
+            <option value="23">23进制</option>
+            <option value="24">24进制</option>
+            <option value="25">25进制</option>
+            <option value="26">26进制</option>
+            <option value="27">27进制</option>
+            <option value="28">28进制</option>
+            <option value="29">29进制</option>
+            <option value="30">30进制</option>
+            <option value="31">31进制</option>
+            <option value="32">32进制</option>
+            <option value="33">33进制</option>
+            <option value="34">34进制</option>
+            <option value="35">35进制</option>
+            <option value="36">36进制</option>
+        </select>
+
+
+            <div id="output_value" ></div>
+
+    </div>
+
+
+    <script type="text/javascript">
+        function pxparseFloat(x, y) {
+            x = x.toString();
+            var num = x;
+            var data = num.split(".");
+            var you = data[1].split(""); //将右边转换为数组 得到类似 [1,0,1]
+            var sum = 0; //小数部分的和
+            for (var i = 0; i < data[1].length; i++) {
+                sum += you[i] * Math.pow(y, -1 * (i + 1))
+            }
+            return parseInt(data[0], y) + sum;
+        }
+
+        function regE(x) {
+            var str;
+            x = parseInt(x);
+            if (x <= 10) {
+                str = new RegExp("^[+\\-]?[0-" + (x - 1) + "]*[.]?[0-" + (x - 1) + "]*$", "gi");
+            } else {
+                var letter = "";
+                switch (x) {
+                case 11:
+                    letter = "a";
+                    break;
+                case 12:
+                    letter = "b";
+                    break;
+                case 13:
+                    letter = "c";
+                    break;
+                case 14:
+                    letter = "d";
+                    break;
+                case 15:
+                    letter = "e";
+                    break;
+                case 16:
+                    letter = "f";
+                    break;
+                case 17:
+                    letter = "g";
+                    break;
+                case 18:
+                    letter = "h";
+                    break;
+                case 19:
+                    letter = "i";
+                    break;
+                case 20:
+                    letter = "j";
+                    break;
+                case 21:
+                    letter = "k";
+                    break;
+                case 22:
+                    letter = "l";
+                    break;
+                case 23:
+                    letter = "m";
+                    break;
+                case 24:
+                    letter = "n";
+                    break;
+                case 25:
+                    letter = "o";
+                    break;
+                case 26:
+                    letter = "p";
+                    break;
+                case 27:
+                    letter = "q";
+                    break;
+                case 28:
+                    letter = "r";
+                    break;
+                case 29:
+                    letter = "s";
+                    break;
+                case 30:
+                    letter = "t";
+                    break;
+                case 31:
+                    letter = "u";
+                    break;
+                case 32:
+                    letter = "v";
+                    break;
+                case 33:
+                    letter = "w";
+                    break;
+                case 34:
+                    letter = "x";
+                    break;
+                case 35:
+                    letter = "y";
+                    break;
+                case 36:
+                    letter = "z";
+                    break;
+                }
+                str = new RegExp("^[+\\-]?[0-9a-" + letter + "]*[.]?[0-9a-" + letter + "]*$", "gi");
+            }
+            return str;
+        }
+
+        function addEvent(ele, ev, fn) {
+            if (ev.length == 1) {
+
+                if (document.addEventListener) {
+                    for (var i = 0; i < ele.length; i++) {
+                        ele[i].addEventListener(ev[0], fn);
+                    }
+                } else if (ev.attachEvent) {
+                    for (var i = 0; i < ele.length; i++) {
+                        ele[i].attachEvent("on" + ev[0], fn);
+                    }
+                } else {
+                    for (var i = 0; i < ele.length; i++) {
+                        ele[i]["on" + ev[0]] = fn;
+                    }
+                }
+            } else {
+                if (document.addEventListener) {
+                    for (var i = 0; i < ele.length; i++) {
+                        ele[i].addEventListener(ev[i], fn);
+                    }
+                } else if (ev.attachEvent) {
+                    for (var i = 0; i < ele.length; i++) {
+                        ele[i].attachEvent("on" + ev[i], fn);
+                    }
+                } else {
+                    for (var i = 0; i < ele.length; i++) {
+                        ele[i]["on" + ev[i]] = fn;
+                    }
+                }
+            }
+        }
+
+        var flag = "";
+        var inVal = document.getElementById("input_value"),
+            outVal = document.getElementById("output_value"),
+            error = document.getElementById("errorMess"),
+            inNum = document.getElementById("input_num"),
+            outNum = document.getElementById("output_num");
+        addEvent([inVal, inNum, outNum], ["keyup", "change", "change"], px);
+
+        function px(y) {
+            if (inVal.value != flag || y) {
+                flag = inVal.value;
+                var px00 = inVal.value;
+                var px0 = px00.match(regE(inNum.value));
+                if (px0) {
+                    if (px0[0].indexOf(".") == -1) {
+                        var px1 = parseInt(px0, inNum.value);
+                    } else {
+                        var px1 = pxparseFloat(px0, inNum.value);
+                    }
+                    px1 = px1.toString(outNum.value);
+                    outVal.innerHTML = px1;
+                    error.innerHTML = "";
+                } else {
+                    error.innerHTML = "格式错误";
+//                    throw new Error("格式错误");
+                }
+            }
+            if (inVal.value == "") {
+                outVal.innerHTML = "";
+            }
+        }
+    </script>
+</body>
+
+</html>
+    </div>
+
+ 
+<!--
+    <ul class="tag_box inline ">
+      <li><i class="icon-folder-open"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/categories.html#小项目-ref">
+    		小项目 <span>5</span>
+    	</a></li>
+    
+  
+
+
+    </ul>
+    
+
+  
+    <ul class="tag_box inline ">
+      <li><i class="icon-tags"></i></li>
+      
+      
+
+
+  
+     
+    	<li><a href="/tags.html#python-ref">python <span>5</span></a></li>
+     
+    	<li><a href="/tags.html#django-ref">django <span>4</span></a></li>
+    
+  
+
+
+
+    </ul>
+    -->
+    
+    <div class="pagination clearfix">
+      <ul class = "pull-right">
+      
+        <li class="prev"><a class="fa fa-arrow-circle-left" href="/2013/08/11/javascript-array" title="javascript——数组"> 前一篇</a></li>
+      
+        <li><a class="fa fa-th" href="/archive.html"> 所有日志</a></li>
+      
+        <li class="next"><a  href="/2013/09/08/js-object" title="javascript——对象">后一篇 <span class="fa fa-arrow-circle-right">  </span></a></li>
+      
+      </ul>
+    </div>
+    
+    
+
+
+  <div id="disqus_thread"></div>
+<script type="text/javascript">
+    var disqus_developer = 1;
+    var disqus_shortname = 'jekyllbootstrap'; // required: replace example with your forum shortname
+    
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+
+
+  </div>
+</div>
+
+
+      </div>
+      
+      <footer class="card clearfix">
+        <span style="font-size:30px;"class="fa fa-github pull-left"></span><a href="https://github.com/enml/blog/tree/jekyll-blog" style="display:inline-block;padding-right:80px;border-right:1px solid #bbb">fork me on GitHub</a>
+        <p class="pull-right">&copy; 2011 陈佳伟
+          with help from <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+        
+      </footer>
+
+    </div>
+
+    
+  </body>
+</html>
+
