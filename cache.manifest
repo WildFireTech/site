@@ -11,6 +11,7 @@ CACHE:
 /site/assets/themes/twitter/css/prettify.css
 /site/assets/themes/twitter/css/img/body_bg.png
 /site/assets/themes/twitter/js/prettify.js
-/site/assets/themes/twitter/css/scrollHandler.js
+/site/assets/themes/twitter/js/scrollHandler.js
+
 NETWORK:
 *
